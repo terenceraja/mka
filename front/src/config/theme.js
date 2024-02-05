@@ -1,19 +1,21 @@
 import { createTheme } from "@mui/material";
-import { green, grey, indigo } from "@mui/material/colors";
 
 let theme = createTheme({
   palette: {
     primary: {
-      main: indigo[50],
+      main: "#1A3A48",
     },
     secondary: {
-      main: indigo[50],
+      main: "#06171f",
     },
-    neutral: {
-      light: grey[50],
+    highlight: {
+      main: "#445D68",
     },
-    green: {
-      main: green[800],
+    background: {
+      main: "#f2f4f3",
+    },
+    complementary: {
+      main: "#ef8026",
     },
   },
 });
@@ -23,8 +25,10 @@ theme = createTheme(theme, {
     link: {
       fontSize: "12px",
     },
-    cartTitle: {
-      fontSize: "15px",
+    logoSubtitle: {
+      fontSize: "18px",
+      margin: 0,
+      color: theme.palette.complementary.main,
     },
   },
 });
