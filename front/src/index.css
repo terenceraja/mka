@@ -10,7 +10,7 @@ body,
 }
 
 .css-1fgtnsp-MuiCardContent-root:last-child {
-  padding-bottom: 0px;
+  padding-bottom: 8px !important;
 }
 
 .icon {
@@ -123,4 +123,12 @@ td {
   white-space: nowrap;
   /* overflow: hidden; */
   -webkit-overflow-scrolling: touch;
+}
+
+.tabulator-placeholder-contents {
+  margin-left: 8px !important;
+}
+
+.tabulator .tabulator-footer .tabulator-page {
+  border: none;
 }

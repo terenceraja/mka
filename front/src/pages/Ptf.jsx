@@ -1,7 +1,23 @@
 import React from "react";
-import CardBox from "../components/CardBox";
+import Card from "../components/Card";
+
+// MUI
 import { Box } from "@mui/material";
 import Table from "../components/Table";
+import CardActions from "@mui/material/CardActions";
+import Button from "@mui/material/Button";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { styled } from "@mui/material/styles";
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  width: 1,
+  border: "1px solid red", // Add a red border to make it visible for debugging
+});
 
 // REACT
 import { useState, useEffect } from "react";
@@ -26,20 +42,17 @@ import {
 // HTTP REQUEST
 import { fetchPtf, fetchOpe, fetchLign } from "../utils/http";
 
+// TABLE COLUMNS
 import {
   columnsOpeLG,
   columnsOpeMD,
   columnsOpeSM,
 } from "../data/TabulatorData/Operation";
-
 import {
   columnsPtfSM,
   columnsPtfMD,
   columnsPtfLG,
 } from "../data/TabulatorData/Portefeuille";
-
-import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
 
 const Ptf = () => {
   const [isFetching, setIsFetching] = useState(false);
@@ -50,9 +63,12 @@ const Ptf = () => {
   const [dataClasses, setDataClasses] = useState({});
   const [dataDevises, setDataDevises] = useState({});
   const [error, setError] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
   const IdCtraCli = useSelector((state) => state.keys.value.IdCtraCli);
-  console.log("responsive", columnsOpe);
 
+  console.log(selectedFile);
+
+  // RESPONSIVE TABLE
   const isMobile = useMediaQuery({
     query: "(max-width: 425px)", // Define mobile breakpoint
   });
@@ -72,11 +88,11 @@ const Ptf = () => {
       setColumnsPtf(columnsPtfLG); // Set columns for mobile
     }
   }, [isMobile, isTablet]); // Update columns whenever the screen size changes
+  ///
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // PREV
   // GET FETCHING EXAMPLE
   useEffect(() => {
     const fetchDataFromServer = async () => {
@@ -126,23 +142,52 @@ const Ptf = () => {
   }, []);
   //
 
+  // TABLE ROWCLICK
   const rowClick = (activePtf) => {
     dispatch(addActivePtfToStore(activePtf));
     navigate("/layout/detPtf");
   };
+
+  // FILE SELECTION
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  // // Function to handle file upload
+  // const handleUpload = () => {
+  //   // Perform upload logic here
+  //   if (selectedFile) {
+  //     console.log("Uploading file:", selectedFile);
+  //     // You can perform the file upload logic here, e.g., send the file to the server
+  //   } else {
+  //     console.log("No file selected.");
+  //   }
+  // };
+
   return (
     <Box sx={styles.content}>
-      <CardBox title="VOS PORTEFEUILLE">
+      <Card title="PORTEFEUILLES">
         <Table columns={columnsPtf} data={dataPtf} parentClick={rowClick} />
         <CardActions>
-          <Button size="medium" sx={styles.consBtn}>
+          <Button size="small" sx={styles.consBtn}>
             Consolidation
           </Button>
         </CardActions>
-      </CardBox>
-      <CardBox title="OPERATIONS">
+      </Card>
+      <Card title="OPERATIONS">
         <Table columns={columnsOpe} data={dataOpe} />
-      </CardBox>
+      </Card>
+
+      <Button
+        component="label"
+        variant="contained"
+        startIcon={<CloudUploadIcon />}
+        // onClick={handleUpload}
+      >
+        Upload file
+        <VisuallyHiddenInput type="file" onChange={handleFileSelect} />
+      </Button>
     </Box>
   );
 };
@@ -154,9 +199,14 @@ const styles = {
     flexDirection: "column",
     gap: "10px",
   },
+
   consBtn: {
-    bgcolor: "darkBlue.main",
+    bgcolor: "primary.main",
     color: "white",
+    fontSize: "10px",
+    "&:hover": {
+      bgcolor: "complementary.main",
+    },
   },
 };
 

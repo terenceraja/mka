@@ -4,9 +4,9 @@ import Typography from "@mui/material/Typography";
 const Footer = () => {
   return (
     <Box sx={styles.footer}>
-      <Typography variant="labelTitle">Contact :</Typography>
-      <Typography variant="navLink">TEL : XXXXXXXXXX</Typography>
-      <Typography variant="navLink">E-MAIL : XXXXXXXXXX</Typography>
+      <Typography variant="labelTitle">CONTACT</Typography>
+      <Typography variant="navLink">tel: 00.00.00.00.00</Typography>
+      <Typography variant="navLink">e-mail: user@gmail.com</Typography>
       <Typography variant="navLink">Powered by KeeSystem</Typography>
     </Box>
   );
@@ -25,7 +25,6 @@ const styles = {
     borderRadius: 1,
     bgcolor: "card.main",
     gap: "5px",
-    marginTop: 10,
   },
 };
 

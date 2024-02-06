@@ -6,10 +6,9 @@ import { ReactTabulator } from "react-tabulator";
 const Table = ({ data, columns, parentClick }) => {
   const rowClickTable = (e, row) => {
     const activePtf = row.getData();
-    console.log("children", activePtf);
     parentClick(activePtf);
   };
-  console.log("render", columns);
+
   return (
     <ReactTabulator
       key={JSON.stringify(columns)} // FORCING RERENDER

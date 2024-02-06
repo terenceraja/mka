@@ -22,9 +22,12 @@ export default Layout;
 /**@type {import("@mui/material".SxProps)} */
 const styles = {
   mainContent: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
     bgcolor: "background.main",
     height: "calc(100% - 112px)", // MINUS NAV & HEADER
-    p: 1,
+    padding: "10px 0px 0px 0px",
     overflow: "auto",
   },
 };

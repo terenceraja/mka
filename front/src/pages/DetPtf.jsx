@@ -1,5 +1,5 @@
 import React from "react";
-import CardBox from "../components/CardBox";
+import CardBox from "../components/Card";
 import Table from "../components/Table";
 
 import { useState, useEffect } from "react";

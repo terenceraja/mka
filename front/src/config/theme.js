@@ -19,7 +19,7 @@ let theme = createTheme({
       main: "#ef8026",
     },
     card: {
-      main: "#ACB6C6",
+      main: "#FFFF",
     },
     darkBlue: {
       main: "#06171F",
@@ -38,12 +38,14 @@ theme = createTheme(theme, {
     },
     labelTitle: {
       fontSize: "14px",
-      color: "white",
+      color: "black",
       fontWeight: 800,
+      marginBottom: "5px",
     },
     navLink: {
       fontSize: "12px",
-      color: "white",
+      color: "#06171F",
+      fontWeight: 800,
     },
   },
 });
