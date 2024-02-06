@@ -36,7 +36,7 @@ const styles = {
     width: "100%",
     height: "70%",
     p: 5,
-    gap: 2.5,
+    gap: 5,
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
     boxSizing: "border-box",
   },

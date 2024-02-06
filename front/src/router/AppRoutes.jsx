@@ -4,6 +4,10 @@ import Ptf from "../pages/Ptf";
 import DetPtf from "../pages/DetPtf";
 import Mvt from "../pages/Mvt";
 import Log from "../pages/Log";
+import Doc from "../pages/Doc";
+import Quest from "../pages/Quest";
+import News from "../pages/News";
+import Chat from "../pages/Chat";
 import Layout from "../pages/Layout";
 
 // ROUTE DEFINITION
@@ -17,6 +21,10 @@ function AppRoutes() {
       element: <Layout />,
       children: [
         { path: "ptf", element: <Ptf /> },
+        { path: "doc", element: <Doc /> },
+        { path: "quest", element: <Quest /> },
+        { path: "news", element: <News /> },
+        { path: "chat", element: <Chat /> },
         { path: "detPtf", element: <DetPtf /> },
         { path: "cons", element: <Cons /> },
         { path: "mvt", element: <Mvt /> },

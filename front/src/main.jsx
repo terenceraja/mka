@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
+import "react-tabulator/lib/styles.css"; // required styles
+import "react-tabulator/lib/css/tabulator.min.css"; // theme
+import "./index.css";
 
 // IMPORT REDUX & REDUX PERSIST
 import { Provider } from "react-redux";

@@ -1,6 +1,9 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import { Box, TextField } from "@mui/material";
+import LinearProgress from "@mui/material/LinearProgress";
+import Alert from "@mui/material/Alert";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 // REACT
 import { useNavigate } from "react-router-dom";
@@ -79,8 +82,10 @@ const Form = () => {
       autoComplete="off"
       sx={styles.formContainer}
       onSubmit={(e) => handleLogin(e)}
+      id="yoyoyo"
     >
       <TextField
+        name="login"
         onChange={(e) => handleOnChange(e)}
         id="Login"
         label="Login"
@@ -88,15 +93,31 @@ const Form = () => {
         fullWidth
       />
       <TextField
+        name="password"
         onChange={(e) => handleOnChange(e)}
         id="Password"
         label="Password"
         variant="standard"
         fullWidth
       />
-      <Button type="submit" fullWidth variant="contained">
-        Contained
+      <Button type="submit" sx={styles.loginBtn} fullWidth variant="contained">
+        LOGIN
       </Button>
+      {isFetching ? (
+        <Box sx={{ width: "100%" }}>
+          <LinearProgress color="warning" />
+        </Box>
+      ) : serverMessage ? (
+        <Alert
+          icon={<ErrorOutlineIcon fontSize="inherit" />}
+          severity="success"
+          color="error"
+        >
+          {serverMessage}
+        </Alert>
+      ) : (
+        <></>
+      )}
     </Box>
   );
 };
@@ -109,8 +130,12 @@ const styles = {
     gap: 2.5,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 2.5,
     width: "100%",
+  },
+  loginBtn: {
+    marginTop: "20px",
+    bgcolor: "complementary.main",
+    height: "45px",
   },
 };
 

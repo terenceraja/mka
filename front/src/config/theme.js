@@ -1,4 +1,5 @@
 import { createTheme } from "@mui/material";
+/**@type {import("@mui/material".SxProps)} */
 
 let theme = createTheme({
   palette: {
@@ -17,6 +18,12 @@ let theme = createTheme({
     complementary: {
       main: "#ef8026",
     },
+    card: {
+      main: "#ACB6C6",
+    },
+    darkBlue: {
+      main: "#06171F",
+    },
   },
 });
 
@@ -27,8 +34,16 @@ theme = createTheme(theme, {
     },
     logoSubtitle: {
       fontSize: "18px",
-      margin: 0,
       color: theme.palette.complementary.main,
+    },
+    labelTitle: {
+      fontSize: "14px",
+      color: "white",
+      fontWeight: 800,
+    },
+    navLink: {
+      fontSize: "12px",
+      color: "white",
     },
   },
 });

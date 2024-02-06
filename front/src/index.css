@@ -8,3 +8,119 @@ body,
 .MuiBottomNavigationAction-label {
   color: white;
 }
+
+.css-1fgtnsp-MuiCardContent-root:last-child {
+  padding-bottom: 0px;
+}
+
+.icon {
+  filter: invert(1);
+}
+
+/* TABULATOR
+
+/*Style couleur background derière les headers des colonnes*/
+.tabulator .tabulator-header {
+  background-color: transparent;
+  border: none;
+}
+
+/*Style header pour chaque colonne (Text, background)*/
+.tabulator .tabulator-header .tabulator-col {
+  border-right: none;
+  background-color: transparent; /*couleur case pour titre  de colonne*/
+  font-size: 10px; /*taille text pour titre  de colonne*/
+  color: #06171f; /*couleur text pour titre  de colonne*/
+  font-weight: bold; /*weight text pour titre  de colonne*/
+}
+
+/*Style deplacer la totalité des headers colonne */
+.tabulator .tabulator-header .tabulator-header-contents {
+  position: relative;
+  overflow: hidden;
+  padding-left: 4px; /*marge gauche des case titre de colonne*/
+}
+
+/*Background de tabulator (derière les colonnes et rows)*/
+.tabulator {
+  background-color: transparent;
+  border: none;
+}
+
+/*Background de tabulator (derière rows)*/
+.tabulator .tabulator-tableholder .tabulator-table {
+  background-color: transparent;
+}
+
+/*Style rows et des texts)*/
+.tabulator-row {
+  background-color: white; /*couleur rows (inclu pas les row pair)*/
+  margin-bottom: 8px; /*marge entre chaque row*/
+  padding-left: 4px; /*Deplacement des cell du row*/
+  border-radius: 4px; /*radius de chaque row*/
+  color: #636d79; /* couleur text chaque row*/
+  font-size: 12px; /* taille text chaque row*/
+}
+
+/*Style rows pair* (pour couleur background)*/
+.tabulator-row.tabulator-row-even {
+  background-color: white; /*couleur rows pair*/
+}
+
+/*Style positionnement des text de chaque cell*/
+.tabulator-row .tabulator-cell {
+  border-right: none;
+}
+
+.tabulator .tabulator-footer {
+  border-top: none;
+  background-color: transparent;
+}
+
+.tabulator .tabulator-footer .tabulator-footer-contents {
+  font-size: 12px;
+}
+
+.tabulator-paginator label {
+  display: none;
+}
+
+/* Style Bouttons active*/
+.tabulator .tabulator-footer .tabulator-page.active {
+  color: #ef8126;
+}
+
+.tabulator-row.tabulator-selectable:hover {
+  background-color: #e7e8ea;
+}
+
+.tabulator
+  .tabulator-header
+  .tabulator-col.tabulator-sortable.tabulator-col-sorter-element:hover {
+  background-color: transparent;
+}
+
+strong {
+  font-size: 9px;
+  color: #06171f;
+}
+
+td {
+  font-size: 12px;
+}
+
+.tabulator-row .tabulator-responsive-collapse {
+  box-sizing: border-box;
+  padding: 0px;
+
+  /* border-bottom: 3px solid #06171f; */
+  border-bottom: none;
+}
+
+.tabulator .tabulator-tableholder {
+  position: relative;
+  width: 100%;
+  white-space: nowrap;
+  /* overflow: hidden; */
+  -webkit-overflow-scrolling: touch;
+}
