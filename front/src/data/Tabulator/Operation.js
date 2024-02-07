@@ -5,7 +5,7 @@ export const columnsOpeLG = [
     field: "DateCptaOPE_lsd",
     responsive: 0,
     resizable: false,
-    minWidth: 100,
+    maxWidth: 100,
     sorter: "date",
   },
   {
@@ -13,14 +13,14 @@ export const columnsOpeLG = [
     field: "NomLocalTypOp_lmt",
     responsive: 1,
     resizable: true,
-    minWidth: 200,
+    minWidth: 250,
   },
   {
     title: "ASSET",
     field: "Libelle_lmt",
     responsive: 2,
     resizable: true,
-    minWidth: 200,
+    minWidth: 150,
   },
   {
     title: "ISIN",
@@ -48,7 +48,7 @@ export const columnsOpeLG = [
       thousand: " ",
     },
     resizable: false,
-    minWidth: 120,
+    maxWidth: 60,
   },
   {
     title: "QUANTITE",
@@ -75,7 +75,7 @@ export const columnsOpeLG = [
       thousand: " ",
     },
     resizable: false,
-    minWidth: 120,
+    minWidth: 100,
     headerHozAlign: "right",
     hozAlign: "right",
   },
@@ -134,7 +134,7 @@ export const columnsOpeSM = [
     field: "DateCptaOPE_lsd",
     responsive: 0,
     resizable: false,
-    minWidth: 100,
+    maxWidth: 100,
     sorter: "date",
   },
   {
@@ -142,14 +142,14 @@ export const columnsOpeSM = [
     field: "NomLocalTypOp_lmt",
     responsive: 1,
     resizable: true,
-    minWidth: 200,
+    maxWidth: 200,
   },
   {
     title: "ASSET",
     field: "Libelle_lmt",
     responsive: 2,
     resizable: true,
-    minWidth: 200,
+    minWidth: 100,
   },
 ];
 

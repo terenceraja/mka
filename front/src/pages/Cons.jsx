@@ -8,9 +8,9 @@ import Table from "../components/Table";
 
 import { Box } from "@mui/material";
 
-// TABLE COLUMNS & OPTIONs
+// TABULATOR COLUMNS & OPTIONS
+import { optionsTable } from "../data/Tabulator/Options";
 import {
-  optionsTable,
   columnsLignPtfSM,
   columnsLignPtfSMMD,
   columnsLignPtfMD,

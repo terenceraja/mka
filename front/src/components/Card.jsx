@@ -7,14 +7,14 @@ import Divider from "@mui/material/Divider";
 export default function Card({ title, children }) {
   return (
     <Box sx={styles.cardContainer}>
-      <Box>
-        <Typography variant="labelTitle" component="div">
-          {title}
-        </Typography>
-        <Divider sx={{ borderColor: "complementary.main" }} />
+      <Typography variant="labelTitle" component="div">
+        {title}
+      </Typography>
+      <Divider
+        sx={{ borderColor: "complementary.main", marginBottom: "10px" }}
+      />
 
-        {children}
-      </Box>
+      {children}
     </Box>
   );
 }
@@ -25,7 +25,6 @@ const styles = {
     width: "100%",
     p: 1,
     bgcolor: "card.main",
-
     boxShadow: "rgba(0, 0, 0, 0.1) -4px 9px 25px -6px",
   },
 

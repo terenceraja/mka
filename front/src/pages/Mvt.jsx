@@ -6,8 +6,9 @@ import { useMediaQuery } from "react-responsive";
 
 import { Box } from "@mui/material";
 
+// TABULATOR COLUMNS & OPTIONS
+import { optionsTable } from "../data/Tabulator/Options";
 import {
-  optionsTable,
   columnsMvtSM,
   columnsMvtMD,
   columnsMvtLG,

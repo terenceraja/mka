@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "../components/Card";
+import Chart from "../components/Chart";
 
 // MUI
 import { Box } from "@mui/material";
@@ -42,7 +43,8 @@ import {
 // HTTP REQUEST
 import { fetchPtf, fetchOpe, fetchLign } from "../utils/http";
 
-// TABLE COLUMNS
+// TABULATOR COLUMNS & OPTIONS
+import { optionsTable } from "../data/Tabulator/Options";
 import {
   columnsOpeLG,
   columnsOpeMD,
@@ -53,6 +55,10 @@ import {
   columnsPtfMD,
   columnsPtfLG,
 } from "../data/Tabulator/Portefeuille";
+
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS } from "chart.js/auto";
+import { optionsPie } from "../data/ChartJS/ChartData";
 
 const Ptf = () => {
   const [isFetching, setIsFetching] = useState(false);
@@ -89,6 +95,58 @@ const Ptf = () => {
     }
   }, [isSmartphone, isTablet]); // Update columns whenever the screen size changes
   ///
+
+  //CHARTJS DOUGHNUT LABELS AND DATA
+  const dataSetClasses = {
+    labels: dataClasses.uniqueLangues,
+    datasets: [
+      {
+        data: dataClasses.adjustedSumByLangue,
+        backgroundColor: [
+          "rgba(75, 192, 192, 0.4)",
+          "rgba(65, 105, 225, 0.4)",
+          "rgba(255, 192, 203, 0.4)",
+          "rgba(255, 165, 0, 0.4)",
+          "rgba(255, 99, 71, 0.4)",
+          "rgba(128, 0, 128, 0.4)",
+        ],
+        borderColor: [
+          "rgba(75, 192, 192, 0.8)",
+          "rgba(65, 105, 225, 0.8)",
+          "rgba(255, 192, 203, 0.8)",
+          "rgba(255, 165, 0, 0.8)",
+          "rgba(255, 99, 71, 0.4)",
+          "rgba(128, 0, 128, 0.4)",
+        ],
+        label: "%",
+      },
+    ],
+  };
+
+  const dataSetDevises = {
+    labels: dataDevises.uniqueLangues,
+    datasets: [
+      {
+        data: dataDevises.adjustedSumByLangue,
+        backgroundColor: [
+          "rgba(75, 192, 192, 0.4)",
+          "rgba(65, 105, 225, 0.4)",
+          "rgba(255, 192, 203, 0.4)",
+          "rgba(255, 165, 0, 0.4)",
+          "rgba(255, 99, 71, 0.4)",
+          "rgba(128, 0, 128, 0.4)",
+        ],
+        borderColor: [
+          "rgba(75, 192, 192, 0.8)",
+          "rgba(65, 105, 225, 0.8)",
+          "rgba(255, 192, 203, 0.8)",
+          "rgba(255, 165, 0, 0.8)",
+          "rgba(255, 99, 71, 0.4)",
+          "rgba(128, 0, 128, 0.4)",
+        ],
+      },
+    ],
+  };
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -169,19 +227,35 @@ const Ptf = () => {
   return (
     <Box sx={styles.content}>
       <Card title="PORTEFEUILLES">
-        <Table columns={columnsPtf} data={dataPtf} parentClick={rowClick} />
+        <Table
+          columns={columnsPtf}
+          data={dataPtf}
+          options={optionsTable}
+          parentClick={rowClick}
+        />
         <CardActions>
           <Button
             onClick={() => navigate("/layout/cons")}
-            size="small"
+            size="meduim"
             sx={styles.consBtn}
           >
             Consolidation
           </Button>
         </CardActions>
       </Card>
+
+      <Box component="section" sx={styles.chartsContainer}>
+        <Card title="CLASSES D'ACTIF">
+          <Chart data={dataSetClasses} options={optionsPie} />
+        </Card>
+
+        <Card title="DEVISES">
+          <Chart data={dataSetDevises} options={optionsPie} />
+        </Card>
+      </Box>
+
       <Card title="OPERATIONS">
-        <Table columns={columnsOpe} data={dataOpe} />
+        <Table columns={columnsOpe} data={dataOpe} options={optionsTable} />
       </Card>
 
       <Button
@@ -211,6 +285,14 @@ const styles = {
     fontSize: "10px",
     "&:hover": {
       bgcolor: "complementary.main",
+    },
+  },
+  chartsContainer: {
+    display: "flex",
+    width: "100%",
+    gap: "12px",
+    "@media (max-width: 767px)": {
+      flexDirection: "column", // Change to column layout on small screens
     },
   },
 };

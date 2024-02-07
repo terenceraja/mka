@@ -9,9 +9,9 @@ import { useMediaQuery } from "react-responsive";
 
 import { Box } from "@mui/material";
 
-// TABLE COLUMNS & OPTIONs
+// TABULATOR COLUMNS & OPTIONS
+import { optionsTable } from "../data/Tabulator/Options";
 import {
-  optionsTable,
   columnsLignPtfSM,
   columnsLignPtfSMMD,
   columnsLignPtfMD,
@@ -155,6 +155,7 @@ const Ptf = () => {
 };
 
 /**@type {import("@mui/material".SxProps)} */
+
 const styles = {
   content: {
     display: "flex",

@@ -1,36 +1,14 @@
 //DOUGHNUT CHART OPTIONS
 
 export const optionsPie = {
-  maintainAspectRatio: false, // Don't maintain w/h ratio
+  responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
-      display: true,
-      position: "bottom", // Position the legend at the bottom
-      labels: {
-        padding: 20,
-        font: {
-          size: 12,
-        },
-      },
+      display: false,
     },
-    datalabels: {
-      formatter: (val) => {
-        return `${Math.ceil(val * 100) / 100}` + " %";
-      },
-      anchor: "end", // Adjust the anchor point for the data labels
-      align: "end",
-
-      font: {
-        size: 12,
-      },
-    },
-  },
-  layout: {
-    padding: {
-      top: 10,
-      bottom: 10,
-      left: 10,
-      right: 10,
+    title: {
+      display: false,
     },
   },
 };
