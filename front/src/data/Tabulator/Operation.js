@@ -102,7 +102,7 @@ export const columnsOpeMD = [
     field: "Libelle_lmt",
     responsive: 2,
     resizable: true,
-    minWidth: 200,
+    minWidth: 150,
   },
   {
     title: "ISIN",

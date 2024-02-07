@@ -47,12 +47,12 @@ import {
   columnsOpeLG,
   columnsOpeMD,
   columnsOpeSM,
-} from "../data/TabulatorData/Operation";
+} from "../data/Tabulator/Operation";
 import {
   columnsPtfSM,
   columnsPtfMD,
   columnsPtfLG,
-} from "../data/TabulatorData/Portefeuille";
+} from "../data/Tabulator/Portefeuille";
 
 const Ptf = () => {
   const [isFetching, setIsFetching] = useState(false);
@@ -69,15 +69,15 @@ const Ptf = () => {
   console.log(selectedFile);
 
   // RESPONSIVE TABLE
-  const isMobile = useMediaQuery({
-    query: "(max-width: 425px)", // Define mobile breakpoint
+  const isSmartphone = useMediaQuery({
+    query: "(max-width: 767px)",
   });
   const isTablet = useMediaQuery({
-    query: "(max-width: 768px)", // Define tablet breakpoint
+    query: "(min-width: 768px) and (max-width: 1023px)",
   });
 
   useEffect(() => {
-    if (isMobile) {
+    if (isSmartphone) {
       setColumnsOpe(columnsOpeSM); // Set columns for mobile
       setColumnsPtf(columnsPtfSM); // Set columns for mobile
     } else if (isTablet) {
@@ -87,7 +87,7 @@ const Ptf = () => {
       setColumnsOpe(columnsOpeLG); // Set columns for large screens
       setColumnsPtf(columnsPtfLG); // Set columns for mobile
     }
-  }, [isMobile, isTablet]); // Update columns whenever the screen size changes
+  }, [isSmartphone, isTablet]); // Update columns whenever the screen size changes
   ///
 
   const navigate = useNavigate();
@@ -143,7 +143,8 @@ const Ptf = () => {
   //
 
   // TABLE ROWCLICK
-  const rowClick = (activePtf) => {
+  const rowClick = (row) => {
+    const activePtf = row.getData();
     dispatch(addActivePtfToStore(activePtf));
     navigate("/layout/detPtf");
   };

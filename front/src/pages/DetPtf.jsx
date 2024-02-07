@@ -1,5 +1,5 @@
 import React from "react";
-import CardBox from "../components/Card";
+import Card from "../components/Card";
 import Table from "../components/Table";
 
 import { useState, useEffect } from "react";
@@ -10,10 +10,12 @@ import { useMediaQuery } from "react-responsive";
 import { Box } from "@mui/material";
 
 import {
+  optionsTable,
   columnsLignPtfSM,
+  columnsLignPtfSMMD,
   columnsLignPtfMD,
   columnsLignPtfLG,
-} from "../data/TabulatorData/Ligne";
+} from "../data/Tabulator/Ligne";
 
 // ULTILS FUNCTIONS
 import {
@@ -34,30 +36,39 @@ const Ptf = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [dataLignPtf, setDataLignPtf] = useState([]);
   const [columnsLignPtf, setColumnsLignPtf] = useState([]);
+  const [optionsLignPtf, setOptionsLignPtf] = useState({});
   const [dataBar, setDataBar] = useState({});
   const [error, setError] = useState("");
   console.log(dataBar);
+  console.log("usestate", columnsLignPtf);
 
-  const isMobile = useMediaQuery({
-    query: "(max-width: 425px)",
+  // RESPONSIVE TABLE
+  const isSmartphone = useMediaQuery({
+    query: "(max-width: 479px)",
+  });
+  const isBetween = useMediaQuery({
+    query: "(min-width: 480px) and (max-width: 767px)",
   });
   const isTablet = useMediaQuery({
-    query: "(max-width: 768px)",
+    query: "(min-width: 768px) and (max-width: 1023px)",
   });
 
   useEffect(() => {
-    if (isMobile) {
+    if (isSmartphone) {
       setColumnsLignPtf(columnsLignPtfSM);
+    } else if (isBetween) {
+      setColumnsLignPtf(columnsLignPtfSMMD);
     } else if (isTablet) {
       setColumnsLignPtf(columnsLignPtfMD);
     } else {
       setColumnsLignPtf(columnsLignPtfLG);
     }
-  }, [isMobile, isTablet]); // Update columns whenever the screen size changes
+    setOptionsLignPtf(optionsTable);
+  }, [isSmartphone, isBetween, isTablet]);
 
+  // GET ACTIVE PTF FROM STORE
   const ptfInfos = useSelector((state) => state.keys.value.activePtf);
   console.log("totMV", ptfInfos.MktValAaiDevCLIAuc_lcn);
-
   console.log("ptfInfos", ptfInfos);
   const {
     IdCtraPtf,
@@ -66,8 +77,8 @@ const Ptf = () => {
     MktValAaiDevCLIAuc_lcn,
   } = ptfInfos;
   console.log("id", IdCtraPtf);
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // GET FETCHING EXAMPLE
@@ -119,22 +130,28 @@ const Ptf = () => {
   //
 
   // ROW CLICK TABULATOR
-  const rowClick = (rowData) => {
-    console.log(rowData.getData());
-    const IdAsset = rowData.getData().IdAsset;
-    const activeLign = { IdCtraPtf: IdCtraPtf, IdAsset: IdAsset };
+  const rowClick = (row) => {
+    console.log(row.getData());
+    const IdAsset = row.getData().IdAsset;
+    const Libelle_lmt = row.getData().Libelle_lmt;
+    const activeLign = {
+      IdCtraPtf: IdCtraPtf,
+      IdAsset: IdAsset,
+      Libelle_lmt: Libelle_lmt,
+    };
     dispatch(addActiveLignToStore(activeLign));
-    navigate("/Mvt");
+    navigate("/layout/mvt");
   };
   return (
     <Box sx={styles.content}>
-      <CardBox title={`Market Value: ${MktValAaiDevCLIAuc_lcn}`}>
+      <Card title={`Market Value: ${MktValAaiDevCLIAuc_lcn}`}>
         <Table
           columns={columnsLignPtf}
           data={dataLignPtf}
           parentClick={rowClick}
+          options={optionsLignPtf}
         />
-      </CardBox>
+      </Card>
     </Box>
   );
 };

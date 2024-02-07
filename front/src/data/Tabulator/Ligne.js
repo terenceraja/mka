@@ -1,10 +1,52 @@
-// TABLE LIGNPTF PAGE DETPTF
+// OPTIONS
+export const optionsTable = {
+  movableColumns: true,
+  layout: "fitColumns",
+  responsiveLayout: "collapse",
+  paginationButtonCount: 3,
+  pagination: true,
+  paginationSize: 10,
+  placeholder: "No Data Available",
+};
+
+// export const optionsLignPtfMD = {
+//   movableColumns: true,
+//   layout: "fitColumns",
+//   responsiveLayout: "collapse",
+//   paginationButtonCount: 3,
+//   pagination: true,
+//   paginationSize: 3,
+//   placeholder: "No Data Available",
+// };
+
+// export const optionsLignPtfSMMD = {
+//   movableColumns: true,
+//   layout: "fitColumns",
+//   responsiveLayout: "collapse",
+//   paginationButtonCount: 3,
+//   pagination: true,
+//   paginationSize: 3,
+//   placeholder: "No Data Available",
+// };
+
+// export const optionsLignPtfLG = {
+//   movableColumns: true,
+//   layout: "fitColumns",
+//   responsiveLayout: "collapse",
+//   paginationButtonCount: 3,
+//   pagination: true,
+//   paginationSize: 3,
+//   placeholder: "No Data Available",
+// };
+// ///
+
+// TABLE LIGNPTF SM
 export const columnsLignPtfSM = [
   {
     title: "QUANTITE",
     field: "SoldeCptaDateArrete_lsn",
     responsive: 0,
-    minWidth: 100,
+    maxWidth: 90,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -14,12 +56,35 @@ export const columnsLignPtfSM = [
       precision: 5,
     },
   },
-  { title: "LIBELLE", field: "Libelle_lmt", minWidth: 200, responsive: 0 },
+  {
+    title: "LIBELLE",
+    field: "Libelle_lmt",
+    // maxWidth: 190,
+    resizable: true,
+    responsive: 1,
+  },
+];
+// TABLE LIGNPTF SMMD
+export const columnsLignPtfSMMD = [
+  {
+    title: "QUANTITE",
+    field: "SoldeCptaDateArrete_lsn",
+    responsive: 0,
+    maxWidth: 100,
+    headerHozAlign: "right",
+    hozAlign: "right",
+    formatter: "money",
+    formatterParams: {
+      decimal: ",",
+      thousand: " ",
+      precision: 5,
+    },
+  },
+  { title: "LIBELLE", field: "Libelle_lmt", minWidth: 250, responsive: 0 },
+  { title: "ISIN", field: "CodeIsin_lst", minWidth: 100, responsive: 0 },
 ];
 
-// TABLE MOUVEMENTS PAGE MVT
-
-// TABLE LIGNPTF PAGE DETPTF
+// TABLE LIGNPTF MD
 export const columnsLignPtfMD = [
   {
     title: "QUANTITE",
@@ -36,8 +101,8 @@ export const columnsLignPtfMD = [
     },
   },
   { title: "LIBELLE", field: "Libelle_lmt", minWidth: 200, responsive: 0 },
-  { title: "ISIN", field: "CodeIsin_lst", minWidth: 130, responsive: 0 },
-  { title: "DEV", field: "CurrISOCode_lxt", minWidth: 80, responsive: 5 },
+  { title: "ISIN", field: "CodeIsin_lst", maxWidth: 130, responsive: 0 },
+  { title: "DEV", field: "CurrISOCode_lxt", maxWidth: 100, responsive: 5 },
   {
     title: "MKTCOT",
     field: "MktCOTDevLIGN_lsn",
@@ -66,14 +131,19 @@ export const columnsLignPtfMD = [
   },
 ];
 
-// TABLE LIGNPTF PAGE DETPTF
+// TABLE LIGNPTF LG
 export const columnsLignPtfLG = [
-  { title: "ALLOCATION", field: "LangueNomLocalAlloc_lmt", responsive: 4 },
+  {
+    title: "ALLOCATION",
+    field: "LangueNomLocalAlloc_lmt",
+    maxWidth: 100,
+    responsive: 4,
+  },
   {
     title: "QUANTITE",
     field: "SoldeCptaDateArrete_lsn",
     responsive: 0,
-    minWidth: 100,
+    maxWidth: 100,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -83,14 +153,20 @@ export const columnsLignPtfLG = [
       precision: 5,
     },
   },
-  { title: "LIBELLE", field: "Libelle_lmt", minWidth: 200, responsive: 0 },
+  {
+    title: "LIBELLE",
+    field: "Libelle_lmt",
+    // maxWidth: 50,
+    minWidth: 300,
+    responsive: 0,
+  },
   { title: "ISIN", field: "CodeIsin_lst", minWidth: 130, responsive: 0 },
-  { title: "DEV", field: "CurrISOCode_lxt", minWidth: 80, responsive: 5 },
+  { title: "DEV", field: "CurrISOCode_lxt", maxWidth: 80, responsive: 5 },
   {
     title: "PMA",
     field: "PMA_lsn",
     responsive: 6,
-    minWidth: 100,
+    maxWidth: 100,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -103,7 +179,7 @@ export const columnsLignPtfLG = [
     title: "MKTCOT",
     field: "MktCOTDevLIGN_lsn",
     responsive: 1,
-    minWidth: 100,
+    maxWidth: 100,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -116,7 +192,7 @@ export const columnsLignPtfLG = [
     title: "VALUE",
     field: "Value",
     responsive: 7,
-    minWidth: 100,
+    maxWidth: 100,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -131,7 +207,7 @@ export const columnsLignPtfLG = [
     title: "YTD",
     field: "PCTPlusValKpYtoDDevLIGNDebutAnnee_lcn",
     responsive: 8,
-    minWidth: 100,
+    maxWidth: 100,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -146,7 +222,7 @@ export const columnsLignPtfLG = [
     title: "TAUX",
     field: "TauxBase_lmn",
     responsive: 9,
-    minWidth: 100,
+    maxWidth: 100,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -162,14 +238,14 @@ export const columnsLignPtfLG = [
     title: "MATURITE",
     responsive: 10,
     field: "DateMaturite_lsd",
-    minWidth: 100,
+    maxWidth: 150,
     sorter: "date",
   },
   {
     title: "YIELD",
     field: "MktCotYieldDevLIGNAff_lcn",
     responsive: 11,
-    minWidth: 100,
+    maxWidth: 100,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -184,7 +260,7 @@ export const columnsLignPtfLG = [
     title: "MVIAAIEUR",
     field: "MVAaiJCptaDevPTF_lsn",
     responsive: 2,
-    minWidth: 100,
+    maxWidth: 150,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -197,7 +273,7 @@ export const columnsLignPtfLG = [
     title: "%",
     field: "PCT",
     responsive: 12,
-    minWidth: 100,
+    maxWidth: 100,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -212,7 +288,7 @@ export const columnsLignPtfLG = [
     title: "MVLIGNE",
     field: "MVJCptaDevLIGN_lsn",
     responsive: 13,
-    minWidth: 100,
+    maxWidth: 150,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -225,7 +301,7 @@ export const columnsLignPtfLG = [
     title: "MVEUR",
     field: "MVJCptaDevPTF_lsn",
     responsive: 14,
-    minWidth: 100,
+    maxWidth: 150,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",
@@ -238,7 +314,7 @@ export const columnsLignPtfLG = [
     title: "CCEUR",
     field: "CpnCourusTotDevPTF_lsn",
     responsive: 16,
-    minWidth: 100,
+    maxWidth: 100,
     headerHozAlign: "right",
     hozAlign: "right",
     formatter: "money",

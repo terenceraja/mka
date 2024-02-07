@@ -1,12 +1,9 @@
 import React from "react";
-
-import { optionsTable } from "../data/TabulatorData";
 import { ReactTabulator } from "react-tabulator";
 
-const Table = ({ data, columns, parentClick }) => {
+const Table = ({ data, columns, parentClick, options }) => {
   const rowClickTable = (e, row) => {
-    const activePtf = row.getData();
-    parentClick(activePtf);
+    parentClick(row);
   };
 
   return (
@@ -14,7 +11,7 @@ const Table = ({ data, columns, parentClick }) => {
       key={JSON.stringify(columns)} // FORCING RERENDER
       data={data}
       columns={columns}
-      options={optionsTable}
+      options={options}
       events={{
         rowClick: rowClickTable,
       }}
