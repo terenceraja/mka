@@ -1,5 +1,4 @@
 //DOUGHNUT CHART OPTIONS
-
 export const optionsPie = {
   responsive: true,
   maintainAspectRatio: false,

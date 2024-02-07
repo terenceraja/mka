@@ -2,8 +2,6 @@ import React from "react";
 import { Box } from "@mui/material";
 import { Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
-import { optionsPie } from "../data/ChartJS/ChartData";
-import Chip from "@mui/material/Chip";
 import CircleIcon from "@mui/icons-material/Circle";
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
@@ -34,7 +32,7 @@ const Chart = ({ data, options }) => {
       ));
       setLabels(label);
     }
-  }, [data.labels]); // Update labels whenever data.labels changes
+  }, [data.labels]);
 
   return (
     <Box sx={styles.container}>
@@ -62,7 +60,6 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    bgcolor: "red",
     width: "60%",
   },
   labelContainer: {
@@ -70,7 +67,6 @@ const styles = {
     justifyContent: "space-around",
     flexDirection: "column",
     alignItems: "start",
-    // bgcolor: "blue",
     width: "40%",
     gap: "2px",
   },
