@@ -171,7 +171,11 @@ const Ptf = () => {
       <Card title="PORTEFEUILLES">
         <Table columns={columnsPtf} data={dataPtf} parentClick={rowClick} />
         <CardActions>
-          <Button size="small" sx={styles.consBtn}>
+          <Button
+            onClick={() => navigate("/layout/cons")}
+            size="small"
+            sx={styles.consBtn}
+          >
             Consolidation
           </Button>
         </CardActions>

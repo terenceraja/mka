@@ -9,6 +9,7 @@ import { useMediaQuery } from "react-responsive";
 
 import { Box } from "@mui/material";
 
+// TABLE COLUMNS & OPTIONs
 import {
   optionsTable,
   columnsLignPtfSM,
@@ -36,11 +37,9 @@ const Ptf = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [dataLignPtf, setDataLignPtf] = useState([]);
   const [columnsLignPtf, setColumnsLignPtf] = useState([]);
-  const [optionsLignPtf, setOptionsLignPtf] = useState({});
   const [dataBar, setDataBar] = useState({});
   const [error, setError] = useState("");
   console.log(dataBar);
-  console.log("usestate", columnsLignPtf);
 
   // RESPONSIVE TABLE
   const isSmartphone = useMediaQuery({
@@ -63,7 +62,6 @@ const Ptf = () => {
     } else {
       setColumnsLignPtf(columnsLignPtfLG);
     }
-    setOptionsLignPtf(optionsTable);
   }, [isSmartphone, isBetween, isTablet]);
 
   // GET ACTIVE PTF FROM STORE
@@ -91,12 +89,12 @@ const Ptf = () => {
         console.log(responseLignPtf);
         //CALCULATE +/- VALUE
         const dataWithPCTVal = PCTValCalc(responseLignPtf.data);
-        console.log("new", dataWithPCTVal);
+        console.log("PCTVAL", dataWithPCTVal);
         //
 
         //CALCULATE %
         const dataWithPCT = PCTCalc(dataWithPCTVal, MktValAaiDevCLIAuc_lcn);
-        console.log("new", dataWithPCTVal);
+        console.log("%", dataWithPCTVal);
         //
 
         //DATE FORMAT
@@ -106,7 +104,7 @@ const Ptf = () => {
 
         //YTD * 100 CALC
         const finalData = YTDTimes100(dataDateFormat);
-        console.log("aze", finalData);
+        console.log("YTD, final", finalData);
         //
 
         //GET LABELS
@@ -149,7 +147,7 @@ const Ptf = () => {
           columns={columnsLignPtf}
           data={dataLignPtf}
           parentClick={rowClick}
-          options={optionsLignPtf}
+          options={optionsTable}
         />
       </Card>
     </Box>
