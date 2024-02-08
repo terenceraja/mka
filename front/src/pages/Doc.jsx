@@ -21,9 +21,9 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 const Doc = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [error, setError] = useState("");
-  // console.log(selectedFile);
+  console.log(selectedFiles);
 
   // POST FILE
   const upload = async (fileToPost) => {
@@ -37,15 +37,15 @@ const Doc = () => {
 
   // FILE SELECTION
   const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
+    const newFiles = Array.from(event.target.files);
+    setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
   };
 
   // // Function to handle file upload
   const handleUpload = (e) => {
     e.preventDefault();
-    if (selectedFile) {
-      upload(selectedFile);
+    if (selectedFiles) {
+      upload(selectedFiles);
     } else {
       console.log("No file selected.");
     }
@@ -65,7 +65,7 @@ const Doc = () => {
         startIcon={<CloudUploadIcon />}
       >
         Upload file
-        <VisuallyHiddenInput type="file" onChange={handleFileSelect} />
+        <VisuallyHiddenInput type="file" multiple onChange={handleFileSelect} />
       </Button>
       <Button type="submit" fullWidth variant="contained">
         SUBMIT FILE

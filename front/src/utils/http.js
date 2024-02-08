@@ -90,8 +90,15 @@ export const fetchMvt = async (dataToPost) => {
 
 // UPLOAD FILE
 export const postFile = async (dataToPost) => {
+  console.log("hop", dataToPost.length);
   const formData = new FormData();
-  formData.append("file", dataToPost);
+  for (let i = 0; i < dataToPost.length; i++) {
+    formData.append("files", dataToPost[i]);
+  }
+
+  console.log(formData);
+
+  // formData.append("file", dataToPost);
   const response = await fetch("http://localhost:3000/upload", {
     method: "POST",
     body: formData,
