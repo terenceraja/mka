@@ -143,3 +143,7 @@ td {
 .tabulator .tabulator-footer .tabulator-page {
   border: none;
 }
+
+.tabulator .tabulator-footer .tabulator-page {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}

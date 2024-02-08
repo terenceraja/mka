@@ -87,3 +87,20 @@ export const fetchMvt = async (dataToPost) => {
 
   return resData;
 };
+
+// UPLOAD FILE
+export const postFile = async (dataToPost) => {
+  const formData = new FormData();
+  formData.append("file", dataToPost);
+  const response = await fetch("http://localhost:3000/upload", {
+    method: "POST",
+    body: formData,
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};

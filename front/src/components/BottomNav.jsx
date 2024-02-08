@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import home from "../assets/home.svg";
 import doc from "../assets/doc.svg";
@@ -17,6 +17,12 @@ import { useLocation } from "react-router-dom";
 export default function LabelBottomNavigation() {
   const pathname = useLocation().pathname;
   const [value, setValue] = useState(pathname);
+
+  useEffect(() => {
+    if (pathname !== value) {
+      setValue("");
+    }
+  }, [pathname]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

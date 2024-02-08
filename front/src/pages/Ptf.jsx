@@ -1,24 +1,12 @@
 import React from "react";
 import Card from "../components/Card";
-import Chart from "../components/Chart";
+import ChartPie from "../components/ChartPie";
 
 // MUI
 import { Box } from "@mui/material";
 import Table from "../components/Table";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { styled } from "@mui/material/styles";
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  whiteSpace: "nowrap",
-  width: 1,
-  border: "1px solid red", // Add a red border to make it visible for debugging
-});
 
 // REACT
 import { useState, useEffect } from "react";
@@ -44,7 +32,6 @@ import {
 import { fetchPtf, fetchOpe, fetchLign } from "../utils/http";
 
 // TABULATOR COLUMNS & OPTIONS
-import { optionsTable } from "../data/Tabulator/Options";
 import {
   columnsOpeLG,
   columnsOpeMD,
@@ -56,10 +43,6 @@ import {
   columnsPtfLG,
 } from "../data/Tabulator/Portefeuille";
 
-import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto";
-import { optionsPie } from "../data/ChartJS/ChartData";
-
 const Ptf = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [dataPtf, setdataPtf] = useState([]);
@@ -69,10 +52,9 @@ const Ptf = () => {
   const [dataClasses, setDataClasses] = useState({});
   const [dataDevises, setDataDevises] = useState({});
   const [error, setError] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
-  const IdCtraCli = useSelector((state) => state.keys.value.IdCtraCli);
 
-  console.log(selectedFile);
+  // GET CLI ID FROM STORE
+  const IdCtraCli = useSelector((state) => state.keys.value.IdCtraCli);
 
   // RESPONSIVE TABLE
   const isSmartphone = useMediaQuery({
@@ -118,7 +100,6 @@ const Ptf = () => {
           "rgba(255, 99, 71, 0.4)",
           "rgba(128, 0, 128, 0.4)",
         ],
-        label: "%",
       },
     ],
   };
@@ -207,32 +188,10 @@ const Ptf = () => {
     navigate("/layout/detPtf");
   };
 
-  // FILE SELECTION
-  const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-  };
-
-  // // Function to handle file upload
-  // const handleUpload = () => {
-  //   // Perform upload logic here
-  //   if (selectedFile) {
-  //     console.log("Uploading file:", selectedFile);
-  //     // You can perform the file upload logic here, e.g., send the file to the server
-  //   } else {
-  //     console.log("No file selected.");
-  //   }
-  // };
-
   return (
     <Box sx={styles.content}>
       <Card title="PORTEFEUILLES">
-        <Table
-          columns={columnsPtf}
-          data={dataPtf}
-          options={optionsTable}
-          parentClick={rowClick}
-        />
+        <Table columns={columnsPtf} data={dataPtf} parentClick={rowClick} />
         <CardActions>
           <Button
             onClick={() => navigate("/layout/cons")}
@@ -246,27 +205,17 @@ const Ptf = () => {
 
       <Box component="section" sx={styles.chartsContainer}>
         <Card title="CLASSES D'ACTIF">
-          <Chart data={dataSetClasses} options={optionsPie} />
+          <ChartPie data={dataSetClasses} />
         </Card>
 
         <Card title="DEVISES">
-          <Chart data={dataSetDevises} options={optionsPie} />
+          <ChartPie data={dataSetDevises} />
         </Card>
       </Box>
 
       <Card title="OPERATIONS">
-        <Table columns={columnsOpe} data={dataOpe} options={optionsTable} />
+        <Table columns={columnsOpe} data={dataOpe} />
       </Card>
-
-      <Button
-        component="label"
-        variant="contained"
-        startIcon={<CloudUploadIcon />}
-        // onClick={handleUpload}
-      >
-        Upload file
-        <VisuallyHiddenInput type="file" onChange={handleFileSelect} />
-      </Button>
     </Box>
   );
 };

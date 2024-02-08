@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "../components/Card";
 import Table from "../components/Table";
+import ChartBar from "../components/ChartBar";
 
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,8 +10,9 @@ import { useMediaQuery } from "react-responsive";
 
 import { Box } from "@mui/material";
 
+import { formatSpacingAndDecimalNumbers } from "../utils/functions";
+
 // TABULATOR COLUMNS & OPTIONS
-import { optionsTable } from "../data/Tabulator/Options";
 import {
   columnsLignPtfSM,
   columnsLignPtfSMMD,
@@ -63,6 +65,35 @@ const Ptf = () => {
       setColumnsLignPtf(columnsLignPtfLG);
     }
   }, [isSmartphone, isBetween, isTablet]);
+
+  // BAR CHART DATASETS
+  const dataBarChart = {
+    labels: dataBar.uniqueLangues,
+
+    datasets: [
+      {
+        data: dataBar.adjustedSumByLangue,
+        backgroundColor: [
+          "rgba(75, 192, 192, 0.4)",
+          "rgba(65, 105, 225, 0.4)",
+          "rgba(255, 192, 203, 0.4)",
+          "rgba(255, 165, 0, 0.4)",
+          "rgba(255, 99, 71, 0.4)",
+          "rgba(128, 0, 128, 0.4)",
+        ],
+        borderColor: [
+          "rgba(75, 192, 192, 0.8)",
+          "rgba(65, 105, 225, 0.8)",
+          "rgba(255, 192, 203, 0.8)",
+          "rgba(255, 165, 0, 0.8)",
+          "rgba(255, 99, 71, 0.4)",
+          "rgba(128, 0, 128, 0.4)",
+        ],
+        borderWidth: 1,
+        barThickness: 50,
+      },
+    ],
+  };
 
   // GET ACTIVE PTF FROM STORE
   const ptfInfos = useSelector((state) => state.keys.value.activePtf);
@@ -142,12 +173,20 @@ const Ptf = () => {
   };
   return (
     <Box sx={styles.content}>
-      <Card title={`Market Value: ${MktValAaiDevCLIAuc_lcn}`}>
+      <Card title="CLASSES D'ACTIF">
+        <ChartBar data={dataBarChart} />
+      </Card>
+      <Card
+        title={`MARKET VALUE: ${formatSpacingAndDecimalNumbers(
+          MktValAaiDevCLIAuc_lcn,
+          2
+        )} EUR`}
+        subTitle={`${RaisonSociale_lmt} | ${NumeroPtfDep_lmt} `}
+      >
         <Table
           columns={columnsLignPtf}
           data={dataLignPtf}
           parentClick={rowClick}
-          options={optionsTable}
         />
       </Card>
     </Box>

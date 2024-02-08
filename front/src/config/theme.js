@@ -36,9 +36,15 @@ theme = createTheme(theme, {
       fontSize: "18px",
       color: theme.palette.complementary.main,
     },
-    labelTitle: {
+    title: {
       fontSize: "14px",
-      color: "black",
+      color: theme.palette.primary.main,
+      fontWeight: 800,
+      marginBottom: "5px",
+    },
+    subTitle: {
+      fontSize: "12px",
+      color: theme.palette.highlight.main,
       fontWeight: 800,
       marginBottom: "5px",
     },

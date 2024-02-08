@@ -4,11 +4,14 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import Divider from "@mui/material/Divider";
 
-export default function Card({ title, children }) {
+export default function Card({ title, children, subTitle }) {
   return (
     <Box sx={styles.cardContainer}>
-      <Typography variant="labelTitle" component="div">
+      <Typography variant="title" component="div">
         {title}
+      </Typography>
+      <Typography variant="subTitle" component="div">
+        {subTitle}
       </Typography>
       <Divider
         sx={{ borderColor: "complementary.main", marginBottom: "10px" }}
