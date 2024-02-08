@@ -4,8 +4,11 @@ import { ReactTabulator } from "react-tabulator";
 import { optionsTable } from "../data/Tabulator/Options";
 
 const Table = ({ data, columns, parentClick }) => {
+  // console.log(parentClick);
   const rowClickTable = (e, row) => {
-    parentClick(row);
+    if (parentClick) {
+      parentClick(row);
+    }
   };
 
   return (
