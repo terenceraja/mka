@@ -38,14 +38,16 @@ export const keysSlice = createSlice({
       state.value.TotalMV = action.payload;
     },
     clearStore: (state, action) => {
-      state.value = {
-        ...state.value,
-        IdCtraCli: null,
-        IdCrtaPTF: [],
-        IdLigne: null,
-        activePtf: {},
-        activeLign: {},
-        TotalMV: null,
+      return {
+        ...state,
+        value: {
+          IdCtraCli: null,
+          IdCrtaPTF: [],
+          IdLigne: null,
+          activePtf: {},
+          activeLign: {},
+          TotalMV: null,
+        },
       };
     },
   },

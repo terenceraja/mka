@@ -52,23 +52,18 @@ const Header = () => {
         <Box sx={{ flexGrow: 1 }} />
         <LogoutIcon onClick={() => handleOpenModal()} />
       </Toolbar>
-      <Dialog
-        open={open}
-        onClose={handleCloseModal}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
+      <Dialog open={open} onClose={handleCloseModal}>
         <DialogTitle id="alert-dialog-title">{"CONFIRMATION"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Cette action mettra fin à votre session. Êtes-vous certain(e) de
+            Cette action mettra fin à votre session. Êtes-vous certain de
             vouloir vous déconnecter ?
-            {isLoggingOut && (
-              <Box sx={{ width: "100%" }}>
-                <LinearProgress color="warning" />
-              </Box>
-            )}
           </DialogContentText>
+          {isLoggingOut && (
+            <Box sx={{ width: "100%" }}>
+              <LinearProgress color="warning" />
+            </Box>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseModal}>Anuller</Button>

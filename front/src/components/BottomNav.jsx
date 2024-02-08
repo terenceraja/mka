@@ -39,58 +39,47 @@ export default function LabelBottomNavigation() {
           sx={styles.buttonAction}
           label="Accueil"
           value="/layout/ptf"
-          icon={
-            <NavLink to="/layout/ptf">
-              <img src={home} width={25} className="icon" alt="navLogo" />
-            </NavLink>
-          }
+          icon={<img src={home} width={25} className="icon" alt="home" />}
+          component={NavLink}
+          to="/layout/ptf"
         />
         <BottomNavigationAction
           sx={styles.buttonAction}
           label="Documents"
           value="/layout/doc"
-          icon={
-            <NavLink to="/layout/doc">
-              <img src={doc} width={25} className="icon" alt="navLogo" />
-            </NavLink>
-          }
+          icon={<img src={doc} width={25} className="icon" alt="doc" />}
+          component={NavLink}
+          to="/layout/doc"
         />
         <BottomNavigationAction
           sx={styles.buttonAction}
           label="Questions"
           value="/layout/quest"
-          icon={
-            <NavLink to="/layout/quest">
-              <img src={quest} width={25} className="icon" alt="navLogo" />
-            </NavLink>
-          }
+          icon={<img src={quest} width={25} className="icon" alt="quest" />}
+          component={NavLink}
+          to="/layout/quest"
         />
         <BottomNavigationAction
           sx={styles.buttonAction}
           label="News"
           value="/layout/news"
-          icon={
-            <NavLink to="/layout/news">
-              <img src={news} width={25} className="icon" alt="navLogo" />
-            </NavLink>
-          }
+          icon={<img src={news} width={25} className="icon" alt="news" />}
+          component={NavLink}
+          to="/layout/news"
         />
         <BottomNavigationAction
           sx={styles.buttonAction}
           label="Chat"
           value="/layout/chat"
-          icon={
-            <NavLink to="/layout/chat">
-              <img src={chat} width={25} className="icon" alt="navLogo" />
-            </NavLink>
-          }
+          icon={<img src={chat} width={25} className="icon" alt="chat" />}
+          component={NavLink}
+          to="/layout/chat"
         />
       </BottomNavigation>
     </Paper>
   );
 }
 
-/**@type {import("@mui/material".SxProps)} */
 const styles = {
   navBar: {
     bgcolor: "primary.main",

@@ -29,7 +29,6 @@ const ChartBar = ({ data }) => {
           />
           <Typography
             variant="navLink"
-            component="div"
             color={data.datasets[0].borderColor[key]}
           >
             {element} : {Math.ceil(data.datasets[0].data[key] * 100) / 100}%
