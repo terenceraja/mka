@@ -7,12 +7,8 @@ import Divider from "@mui/material/Divider";
 export default function Card({ title, children, subTitle }) {
   return (
     <Box sx={styles.cardContainer}>
-      <Typography variant="title" component="div">
-        {title}
-      </Typography>
-      <Typography variant="subTitle" component="div">
-        {subTitle}
-      </Typography>
+      <Typography variant="title">{title}</Typography>
+      <Typography variant="subTitle">{subTitle}</Typography>
       <Divider
         sx={{ borderColor: "complementary.main", marginBottom: "10px" }}
       />
