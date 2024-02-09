@@ -49,7 +49,7 @@ const Cons = () => {
   const navigate = useNavigate();
 
   console.log("IdCtraPtfArray", IdCtraPtf);
-  console.log(totalMV);
+  console.log("Total MV", totalMV);
 
   // RESPONSIVE TABLE
   const isSmartphone = useMediaQuery({
@@ -113,22 +113,22 @@ const Cons = () => {
         console.log(responseLignPtf);
         //CALCULATE +/- VALUE
         const dataWithPCTVal = PCTValCalc(responseLignPtf.data);
-        console.log("PCTVAL", dataWithPCTVal);
+        // console.log("PCTVAL", dataWithPCTVal);
         //
 
         //CALCULATE %
         const dataWithPCT = PCTCalc(dataWithPCTVal, totalMV);
-        console.log("%", dataWithPCTVal);
+        // console.log("%", dataWithPCTVal);
         //
 
         //DATE FORMAT
         const dataDateFormat = formatISO(dataWithPCT, "DateMaturite_lsd");
-        console.log("dateformat", dataDateFormat);
+        // console.log("dateformat", dataDateFormat);
         ///
 
         //YTD * 100 CALC
         const finalData = YTDTimes100(dataDateFormat);
-        console.log("YTD, final", finalData);
+        // console.log("YTD, final", finalData);
         //
 
         //GET LABELS
@@ -150,7 +150,6 @@ const Cons = () => {
 
   // ROW CLICK TABULATOR
   const rowClick = (row) => {
-    console.log(row.getData());
     const IdAsset = row.getData().IdAsset;
     const Libelle_lmt = row.getData().Libelle_lmt;
     const activeLign = {

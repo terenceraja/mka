@@ -40,17 +40,16 @@ theme = createTheme(theme, {
       fontSize: "14px",
       color: theme.palette.primary.main,
       fontWeight: 800,
-      marginBottom: "5px",
     },
     subTitle: {
       fontSize: "12px",
       color: theme.palette.highlight.main,
       fontWeight: 800,
-      marginBottom: "5px",
     },
     fileCard: {
       fontSize: "10px",
       color: theme.palette.primary.main,
+      color: "white",
       fontWeight: 800,
     },
     navLink: {

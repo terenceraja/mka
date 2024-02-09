@@ -41,7 +41,6 @@ const Ptf = () => {
   const [columnsLignPtf, setColumnsLignPtf] = useState([]);
   const [dataBar, setDataBar] = useState({});
   const [error, setError] = useState("");
-  console.log(dataBar);
 
   // RESPONSIVE TABLE
   const isSmartphone = useMediaQuery({
@@ -97,7 +96,7 @@ const Ptf = () => {
 
   // GET ACTIVE PTF FROM STORE
   const ptfInfos = useSelector((state) => state.keys.value.activePtf);
-  console.log("totMV", ptfInfos.MktValAaiDevCLIAuc_lcn);
+  console.log("total MV", ptfInfos.MktValAaiDevCLIAuc_lcn);
   console.log("ptfInfos", ptfInfos);
   const {
     IdCtraPtf,
@@ -117,25 +116,25 @@ const Ptf = () => {
 
       try {
         const responseLignPtf = await fetchLign({ IdCtraPtf });
-        console.log(responseLignPtf);
+        // console.log(responseLignPtf);
         //CALCULATE +/- VALUE
         const dataWithPCTVal = PCTValCalc(responseLignPtf.data);
-        console.log("PCTVAL", dataWithPCTVal);
+        // console.log("PCTVAL", dataWithPCTVal);
         //
 
         //CALCULATE %
         const dataWithPCT = PCTCalc(dataWithPCTVal, MktValAaiDevCLIAuc_lcn);
-        console.log("%", dataWithPCTVal);
+        // console.log("%", dataWithPCTVal);
         //
 
         //DATE FORMAT
         const dataDateFormat = formatISO(dataWithPCT, "DateMaturite_lsd");
-        console.log("date format", dataDateFormat);
+        // console.log("date format", dataDateFormat);
         //
 
         //YTD * 100 CALC
         const finalData = YTDTimes100(dataDateFormat);
-        console.log("YTD, final", finalData);
+        // console.log("YTD, final", finalData);
         //
 
         //GET LABELS

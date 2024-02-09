@@ -27,7 +27,6 @@ const Form = () => {
     login: "",
     password: "",
   });
-  console.log(form);
 
   const navigate = useNavigate();
 

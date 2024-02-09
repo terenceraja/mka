@@ -20,7 +20,6 @@ export const keysSlice = createSlice({
       state.value.IdCtraCli = action.payload;
     },
     addIdCtraPtfToStore: (state, action) => {
-      console.log(action.payload);
       state.value.IdCrtaPTF = [...action.payload];
     },
 

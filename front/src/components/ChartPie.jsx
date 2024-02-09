@@ -15,7 +15,6 @@ import { optionsPie } from "../data/ChartJS/ChartData";
 
 const ChartPie = ({ data }) => {
   const [labels, setLabels] = useState([]);
-  console.log("state", labels);
 
   useEffect(() => {
     // PRINT LABELS
