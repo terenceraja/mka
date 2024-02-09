@@ -1,7 +1,5 @@
 import React from "react";
 
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 
 //MODAL LOGOUT
@@ -14,14 +12,12 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Box } from "@mui/material";
 
-// REDUCER
-import { clearStore } from "../reducers/primaryKeys";
-
-const Modal = ({ setModalStateRef }) => {
+const Modal = ({ setModalStateRef, onConfirmation }) => {
   const [modalState, setModalState] = useState({
     open: false,
     message: "",
     confirmation: "",
+    isLoading: false,
   });
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -30,21 +26,25 @@ const Modal = ({ setModalStateRef }) => {
     setModalStateRef.current = setModalState;
   }, [setModalStateRef]);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const handleCloseModal = () => {
     setModalState({ ...modalState, open: false });
   };
 
-  const handleLogout = () => {
+  //   const handleConfimation = () => {
+  //     setIsLoggingOut((prev) => !prev);
+  //     onConfirmation();
+  //     dispatch(clearStore());
+  //     setTimeout(() => {
+  //       setIsLoggingOut((prev) => !prev);
+  //       setModalState({ ...modalState, open: false });
+  //       navigate("/");
+  //     }, 1200);
+  //   };
+
+  const handleConfimation = () => {
     setIsLoggingOut((prev) => !prev);
-    dispatch(clearStore());
-    setTimeout(() => {
-      setIsLoggingOut((prev) => !prev);
-      setModalState({ ...modalState, open: false });
-      navigate("/");
-    }, 1200);
+    onConfirmation();
+    setIsLoggingOut((prev) => !prev);
   };
 
   return (
@@ -62,7 +62,7 @@ const Modal = ({ setModalStateRef }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseModal}>Anuller</Button>
-        <Button color="warning" onClick={handleLogout}>
+        <Button type="submit" color="warning" onClick={handleConfimation}>
           {modalState.confirmation}
         </Button>
       </DialogActions>

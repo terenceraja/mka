@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Card from "../components/Card";
 import { useState } from "react";
 import { useRef } from "react";
+import Modal from "../components/Modal";
 
 // MUI
 import { styled } from "@mui/material/styles";
@@ -30,17 +31,26 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 const Doc = () => {
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [error, setError] = useState("");
+  console.log(selectedFiles);
+
+  // SNACK & MODAL USEREF
   const setSnackStateRef = useRef(null); // Create a ref to store setSnackState function
   // Function to trigger state change in Snack component
   const triggerSnackStateChange = (newState) => {
     if (setSnackStateRef.current) {
-      setSnackStateRef.current(newState); // Update Snack component state using the stored function
+      setSnackStateRef.current(newState);
     }
   };
 
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [error, setError] = useState("");
-  console.log(selectedFiles);
+  const setModalStateRef = useRef(null);
+  const triggerModalStateChange = (newState) => {
+    if (setModalStateRef.current) {
+      setModalStateRef.current(newState);
+    }
+  };
+  //
 
   // POST FILE
   const upload = async (fileToPost) => {
@@ -87,41 +97,53 @@ const Doc = () => {
     return <FileCard key={key} file={file} remove={handleRemove} />;
   });
 
+  const handleModal = () => {
+    triggerModalStateChange({
+      open: true,
+      message: "oui",
+      confirmation: "ENVOYER",
+    });
+  };
+
   return (
-    <Box sx={styles.content} id="content">
+    <>
       <Snack setSnackStateRef={setSnackStateRef} />
-      <Card title="PARTAGE DOCUMENTS">
-        <Box sx={styles.listContainer}>{fileList}</Box>
-        <Box
-          component="form"
-          noValidate
-          autoComplete="off"
-          sx={styles.formContainer}
-          onSubmit={(e) => handleUpload(e)}
-          id="form"
-        >
-          <Stack
-            direction="row"
-            marginY={2}
-            spacing={1}
-            width={"100%"}
-            justifyContent={"flex-end"}
+      <Box sx={styles.content} id="content">
+        <Card title="PARTAGE DOCUMENTS">
+          <Box sx={styles.listContainer}>{fileList}</Box>
+          <Box
+            component="form"
+            sx={styles.formContainer}
+            onSubmit={(e) => handleUpload(e)}
+            id="form"
           >
-            <Fab size="small" component="label" color="primary">
-              <AddIcon />
-              <VisuallyHiddenInput
-                type="file"
-                multiple
-                onChange={handleFileSelect}
-              />
-            </Fab>
-            <Button type="submit" variant="contained">
-              SUBMIT
-            </Button>
-          </Stack>
-        </Box>
-      </Card>
-    </Box>
+            <Modal
+              setModalStateRef={setModalStateRef}
+              onConfirmation={handleUpload}
+            />
+            <Stack
+              direction="row"
+              marginY={2}
+              spacing={1}
+              width={"100%"}
+              justifyContent={"flex-end"}
+            >
+              <Fab size="small" component="label" color="primary">
+                <AddIcon />
+                <VisuallyHiddenInput
+                  type="file"
+                  multiple
+                  onChange={handleFileSelect}
+                />
+              </Fab>
+              <Button onClick={handleModal} variant="contained">
+                SUBMIT
+              </Button>
+            </Stack>
+          </Box>
+        </Card>
+      </Box>
+    </>
   );
 };
 
@@ -141,7 +163,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "5px",
-    height: "500px",
+    height: "400px",
     borderRadius: "4px",
     border: "1px dashed",
     borderColor: "highlight.main",
