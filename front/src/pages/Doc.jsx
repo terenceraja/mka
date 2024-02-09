@@ -38,14 +38,14 @@ const Doc = () => {
   // SNACK & MODAL USEREF
   const setSnackStateRef = useRef(null); // Create a ref to store setSnackState function
   // Function to trigger state change in Snack component
-  const triggerSnackStateChange = (newState) => {
+  const triggerSnack = (newState) => {
     if (setSnackStateRef.current) {
       setSnackStateRef.current(newState);
     }
   };
 
   const setModalStateRef = useRef(null);
-  const triggerModalStateChange = (newState) => {
+  const triggerModal = (newState) => {
     if (setModalStateRef.current) {
       setModalStateRef.current(newState);
     }
@@ -66,23 +66,15 @@ const Doc = () => {
   // FILE SELECTION
   const handleFileSelect = (event) => {
     const newFiles = Array.from(event.target.files);
-    console.log("pipi", newFiles);
+    console.log(newFiles);
     setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
     event.target.value = ""; // Reset the input field
   };
 
   // SUBMIT CLICK
-  const handleUpload = (e) => {
-    e.preventDefault();
-    if (selectedFiles.length > 0) {
-      upload(selectedFiles);
-    } else {
-      triggerSnackStateChange({
-        open: true,
-        message: "veuillez sélectionner un fichier",
-        severity: "info",
-      });
-    }
+  const handleUpload = () => {
+    // upload(selectedFiles);
+    console.log("file upload");
   };
 
   // REMOVE FILE
@@ -98,11 +90,19 @@ const Doc = () => {
   });
 
   const handleModal = () => {
-    triggerModalStateChange({
-      open: true,
-      message: "oui",
-      confirmation: "ENVOYER",
-    });
+    if (selectedFiles.length > 0) {
+      triggerModal({
+        open: true,
+        message: "êtes-vous sûre d'envoyer ces fichiers?",
+        confirmation: "ENVOYER",
+      });
+    } else {
+      triggerSnack({
+        open: true,
+        message: "veuillez sélectionner un fichier",
+        severity: "info",
+      });
+    }
   };
 
   return (
@@ -114,7 +114,7 @@ const Doc = () => {
           <Box
             component="form"
             sx={styles.formContainer}
-            onSubmit={(e) => handleUpload(e)}
+            // onSubmit={(e) => handleUpload(e)}
             id="form"
           >
             <Modal

@@ -10,12 +10,7 @@ import { useDispatch } from "react-redux";
 import { clearStore } from "../reducers/primaryKeys";
 
 const Header = () => {
-  const setModalStateRef = useRef({
-    open: false,
-    message: "",
-    confirmation: "",
-    isLoading: false,
-  }); // Create a ref to store setSnackState function
+  const setModalStateRef = useRef(null); // Create a ref to store setSnackState function
   // Function to trigger state change in Snack component
   const triggerModalStateChange = (newState) => {
     if (setModalStateRef.current) {
@@ -23,11 +18,14 @@ const Header = () => {
     }
   };
 
+  console.log(setModalStateRef.current);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleOpenModal = () => {
     triggerModalStateChange({
+      ...setModalStateRef.current,
       open: true,
       message: `Cette action mettra fin à votre session. Êtes-vous certain de vouloir 
       vous déconnecter?`,
@@ -36,20 +34,8 @@ const Header = () => {
   };
 
   const handleConfirmation = () => {
-    triggerModalStateChange({
-      ...setModalStateRef,
-      open: true,
-      message: "",
-      confirmation: "",
-      isLoading: true,
-    });
     dispatch(clearStore());
     setTimeout(() => {
-      triggerModalStateChange({
-        ...setModalStateRef,
-        open: false,
-        isLoading: true,
-      });
       navigate("/");
     }, 1200);
   };

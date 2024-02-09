@@ -19,7 +19,6 @@ const Modal = ({ setModalStateRef, onConfirmation }) => {
     confirmation: "",
     isLoading: false,
   });
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     // Store setSnackState function in the ref
@@ -30,21 +29,9 @@ const Modal = ({ setModalStateRef, onConfirmation }) => {
     setModalState({ ...modalState, open: false });
   };
 
-  //   const handleConfimation = () => {
-  //     setIsLoggingOut((prev) => !prev);
-  //     onConfirmation();
-  //     dispatch(clearStore());
-  //     setTimeout(() => {
-  //       setIsLoggingOut((prev) => !prev);
-  //       setModalState({ ...modalState, open: false });
-  //       navigate("/");
-  //     }, 1200);
-  //   };
-
   const handleConfimation = () => {
-    setIsLoggingOut((prev) => !prev);
+    setModalState({ ...modalState, isLoading: true });
     onConfirmation();
-    setIsLoggingOut((prev) => !prev);
   };
 
   return (
@@ -54,7 +41,7 @@ const Modal = ({ setModalStateRef, onConfirmation }) => {
         <DialogContentText id="alert-dialog-description">
           {modalState.message}
         </DialogContentText>
-        {isLoggingOut && (
+        {modalState.isLoading && (
           <Box sx={{ width: "100%" }}>
             <LinearProgress color="warning" />
           </Box>
