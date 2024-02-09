@@ -2,11 +2,7 @@ import React from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
-import Slide from "@mui/material/Slide";
 import { useEffect } from "react";
-
-// HTTP
-import { postFile } from "../utils/http";
 
 const Snack = ({ setSnackStateRef }) => {
   const [snackState, setSnackState] = useState({

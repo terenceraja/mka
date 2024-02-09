@@ -6,7 +6,6 @@ import { useState } from "react";
 import Stack from "@mui/material/Stack";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import CropSquareIcon from "@mui/icons-material/CropSquare";
 import Crop75Icon from "@mui/icons-material/Crop75";
 
 // CHARTJS
