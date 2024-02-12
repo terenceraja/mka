@@ -30,9 +30,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       TimeStampCreation: {
         type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
       },
       TimeStampModification: {
         type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: "0000-00-00 00:00:00",
       },
     },
     {
