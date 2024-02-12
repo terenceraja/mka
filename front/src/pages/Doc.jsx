@@ -73,7 +73,7 @@ const Doc = () => {
 
   // SUBMIT CLICK
   const handleUpload = () => {
-    // upload(selectedFiles);
+    upload(selectedFiles);
     console.log("file upload");
   };
 
@@ -95,6 +95,7 @@ const Doc = () => {
         open: true,
         message: "êtes-vous sûre d'envoyer ces fichiers?",
         confirmation: "ENVOYER",
+        isLoading: false,
       });
     } else {
       triggerSnack({

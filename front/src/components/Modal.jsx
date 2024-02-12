@@ -19,6 +19,8 @@ const Modal = ({ setModalStateRef, onConfirmation }) => {
     isLoading: false,
   });
 
+  console.log(modalState);
+
   useEffect(() => {
     // Store setSnackState function in the ref
     setModalStateRef.current = setModalState;
@@ -28,9 +30,20 @@ const Modal = ({ setModalStateRef, onConfirmation }) => {
     setModalState({ ...modalState, open: false });
   };
 
-  const handleConfimation = () => {
-    setModalState({ ...modalState, isLoading: true });
-    onConfirmation();
+  const handleConfirmation = async () => {
+    setModalState((prevState) => ({ ...prevState, isLoading: true }));
+    try {
+      await onConfirmation();
+    } catch (error) {
+      console.error("Confirmation error:", error);
+    }
+    setTimeout(() => {
+      setModalState((prevState) => ({
+        ...prevState,
+        isLoading: false,
+        open: false,
+      }));
+    }, 1200);
   };
 
   return (
@@ -48,7 +61,7 @@ const Modal = ({ setModalStateRef, onConfirmation }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCloseModal}>Anuller</Button>
-        <Button type="submit" color="warning" onClick={handleConfimation}>
+        <Button type="submit" color="warning" onClick={handleConfirmation}>
           {modalState.confirmation}
         </Button>
       </DialogActions>
