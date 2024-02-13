@@ -35,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      UploadedDate: {
+      TimeStampUpload: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,
