@@ -1,0 +1,4 @@
+[0mGET /upload [33m404 [0m2.193 ms - 145[0m
+[0mGET / [36m304 [0m1.027 ms - -[0m
+[0mGET /stylesheets/style.css [36m304 [0m0.468 ms - -[0m
+[0mGET /hey [32m200 [0m1.247 ms - 30[0m

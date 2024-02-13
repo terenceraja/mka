@@ -1,0 +1,30 @@
+(node:2656) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+HostNotFoundError [SequelizeHostNotFoundError]: getaddrinfo ENOTFOUND mykeeapp
+    at ConnectionManager.connect (C:\Users\Terence Raja\Desktop\mykeeapp3\back\node_modules\sequelize\lib\dialects\mysql\connection-manager.js:96:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async ConnectionManager._connect (C:\Users\Terence Raja\Desktop\mykeeapp3\back\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:222:24)
+    at async C:\Users\Terence Raja\Desktop\mykeeapp3\back\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:174:32
+    at async ConnectionManager.getConnection (C:\Users\Terence Raja\Desktop\mykeeapp3\back\node_modules\sequelize\lib\dialects\abstract\connection-manager.js:197:7)
+    at async C:\Users\Terence Raja\Desktop\mykeeapp3\back\node_modules\sequelize\lib\sequelize.js:305:26
+    at async MySQLQueryInterface.select (C:\Users\Terence Raja\Desktop\mykeeapp3\back\node_modules\sequelize\lib\dialects\abstract\query-interface.js:407:12)
+    at async zctracli.findAll (C:\Users\Terence Raja\Desktop\mykeeapp3\back\node_modules\sequelize\lib\model.js:1140:21)
+    at async zctracli.findOne (C:\Users\Terence Raja\Desktop\mykeeapp3\back\node_modules\sequelize\lib\model.js:1240:12)
+    at async C:\Users\Terence Raja\Desktop\mykeeapp3\back\routes\index.js:11:18 {
+  parent: Error: getaddrinfo ENOTFOUND mykeeapp
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'mykeeapp',
+    fatal: true
+  },
+  original: Error: getaddrinfo ENOTFOUND mykeeapp
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26) {
+    errno: -3008,
+    code: 'ENOTFOUND',
+    syscall: 'getaddrinfo',
+    hostname: 'mykeeapp',
+    fatal: true
+  }
+}

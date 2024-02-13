@@ -5,6 +5,7 @@ var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 var docRouter = require("./routes/doc");
+var iisRouter = require("./routes/iisTest");
 
 var app = express();
 
@@ -19,5 +20,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/doc", docRouter);
+app.use("/iis", iisRouter);
 
+///////// IIS CONFIG ///////////
+app.listen(process.env.PORT);
 module.exports = app;
