@@ -115,9 +115,4 @@ router.post("/zmvt", async function (req, res, next) {
   }
 });
 
-//TESTING IIS NODE
-router.get("/test", function (req, res) {
-  res.send("Express is working on IISNode!");
-});
-
 module.exports = router;
