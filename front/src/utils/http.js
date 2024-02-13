@@ -96,9 +96,27 @@ export const postFile = async (dataToPost) => {
     formData.append("files", dataToPost[i]);
   }
 
-  const response = await fetch("http://localhost:3000/upload", {
+  const response = await fetch("http://localhost:3000/doc/upload", {
     method: "POST",
     body: formData,
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};
+
+// zfile GET ONDEMAND POSTS
+export const fetchOnDemandDocs = async (dataToPost) => {
+  const response = await fetch("http://localhost:3000/doc/onDemand", {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 
   const resData = await response.json();

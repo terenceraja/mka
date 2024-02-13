@@ -138,31 +138,10 @@ export function YTDTimes100(array) {
   return array;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////           AG GRID FORMATING              ///////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-//FORMAT MARKET VALUE COLOUMN PAGE PTF
-export const formatMarketValue = (value) => {
-  const floatValue = parseFloat(value);
-  if (!isNaN(floatValue)) {
-    const roundedValue = floatValue.toFixed(2);
-
-    // Replace comma with space for thousands separator and replace dot with comma for decimal separator
-    const formattedValue = roundedValue
-      .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-      .replace(".", ",");
-    return formattedValue;
-  } else {
-    return value;
-  }
-};
+export function formatISODate(inputDate) {
+  const parsedDate = DateTime.fromISO(inputDate);
+  return parsedDate.toFormat("dd/MM/yyyy");
+}
 
 // FORMAT QUANTITE COLUMN PAGE DETPTF
 export const formatSpacingAndDecimalNumbers = (value, decimalPlaces = 2) => {

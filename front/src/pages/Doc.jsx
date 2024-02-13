@@ -1,22 +1,30 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import Card from "../components/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useRef } from "react";
 import Modal from "../components/Modal";
 
 // MUI
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import FileCard from "../components/FileCard";
-import Slide from "@mui/material/Slide";
+import FileCard2 from "../components/FileCard2";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import Stack from "@mui/material/Stack";
 
 // HTTP
-import { postFile } from "../utils/http";
+import { postFile, fetchOnDemandDocs } from "../utils/http";
 import Snack from "../components/Snack";
+
+//UTILS
+import { formatISODate } from "../utils/functions";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -31,9 +39,14 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 const Doc = () => {
+  const [tabValue, setTabValue] = useState("1");
+  const [onDemandDocs, setOnDemandDocs] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [error, setError] = useState("");
   console.log(selectedFiles);
+
+  // GET CLI ID FROM STORE
+  const IdCtraCli = useSelector((state) => state.keys.value.IdCtraCli);
 
   // SNACK & MODAL USEREF
   const setSnackStateRef = useRef(null); // Create a ref to store setSnackState function
@@ -50,6 +63,35 @@ const Doc = () => {
       setModalStateRef.current(newState);
     }
   };
+  //
+
+  // FETCH ONDEMAND DOC
+  useEffect(() => {
+    const fetchDocsFromServer = async () => {
+      try {
+        //PORTFOLIOS
+        const responseDocs = await fetchOnDemandDocs({ IdCtraCli });
+        const docs = responseDocs.data;
+        const doclist = docs.map((obj, key) => {
+          return (
+            <FileCard2
+              key={key}
+              date={formatISODate(obj.TimeStampCreation)}
+              title={obj.Title}
+              desc={obj.Description}
+            />
+          );
+        });
+        setOnDemandDocs(doclist);
+
+        console.log("onDemand", responseDocs.data);
+      } catch (error) {
+        setError({ message: error.message || "custom error message" });
+      }
+    };
+
+    fetchDocsFromServer(); // Call the renamed local function
+  }, []);
   //
 
   // POST FILE
@@ -106,43 +148,66 @@ const Doc = () => {
     }
   };
 
+  const handleChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
+
   return (
     <>
       <Snack setSnackStateRef={setSnackStateRef} />
       <Box sx={styles.content} id="content">
-        <Card title="PARTAGE DOCUMENTS">
-          <Box sx={styles.listContainer}>{fileList}</Box>
-          <Box
-            component="form"
-            sx={styles.formContainer}
-            // onSubmit={(e) => handleUpload(e)}
-            id="form"
-          >
-            <Modal
-              setModalStateRef={setModalStateRef}
-              onConfirmation={handleUpload}
-            />
-            <Stack
-              direction="row"
-              marginY={2}
-              spacing={1}
-              width={"100%"}
-              justifyContent={"flex-end"}
-            >
-              <Fab size="small" component="label" color="primary">
-                <AddIcon />
-                <VisuallyHiddenInput
-                  type="file"
-                  multiple
-                  onChange={handleFileSelect}
-                />
-              </Fab>
-              <Button onClick={handleModal} variant="contained">
-                SUBMIT
-              </Button>
-            </Stack>
+        <TabContext value={tabValue}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <TabList onChange={handleChange} aria-label="lab API tabs example">
+              <Tab label="Upload" value="1" />
+              <Tab label="Uploaded" value="2" />
+            </TabList>
           </Box>
-        </Card>
+          <TabPanel sx={styles.tabContent} value="1">
+            <Card title="DOCUMENTS A ENVOYER">
+              <Box sx={styles.listContainer3}>
+                {onDemandDocs.length > 0
+                  ? onDemandDocs
+                  : "Pas de documents à envoyer"}
+              </Box>
+            </Card>
+
+            <Card title="ENVOIE DOCUMENTS">
+              <Box sx={styles.listContainer1}>{fileList}</Box>
+              <Box component="form" sx={styles.formContainer} id="form">
+                <Modal
+                  setModalStateRef={setModalStateRef}
+                  onConfirmation={handleUpload}
+                />
+                <Stack
+                  direction="row"
+                  marginY={2}
+                  spacing={1}
+                  width={"100%"}
+                  justifyContent={"flex-end"}
+                >
+                  <Fab size="small" component="label" color="primary">
+                    <AddIcon />
+                    <VisuallyHiddenInput
+                      type="file"
+                      multiple
+                      onChange={handleFileSelect}
+                    />
+                  </Fab>
+                  <Button onClick={handleModal} variant="">
+                    SUBMIT
+                  </Button>
+                </Stack>
+              </Box>
+            </Card>
+          </TabPanel>
+
+          <TabPanel sx={{ padding: "0px" }} value="2">
+            <Card title="DOCUMENTS ENVOYES">
+              <Box sx={styles.listContainer2}>{fileList}</Box>
+            </Card>
+          </TabPanel>
+        </TabContext>
       </Box>
     </>
   );
@@ -155,21 +220,46 @@ const styles = {
     flexDirection: "column",
     gap: "10px",
   },
+  tabContent: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    p: 0,
+  },
 
   formContainer: {
     display: "flex",
   },
 
-  listContainer: {
+  listContainer1: {
+    marginTop: "10px",
     display: "flex",
     flexDirection: "column",
     gap: "5px",
-    height: "400px",
+    height: "200px",
     borderRadius: "4px",
     border: "1px dashed",
     borderColor: "highlight.main",
     p: 2,
     overflowY: "auto",
+  },
+  listContainer2: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "5px",
+    height: "400px",
+    borderRadius: "4px",
+    borderColor: "highlight.main",
+    p: 2,
+    overflowY: "auto",
+  },
+  listContainer3: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "5px",
+    height: "auto",
+
+    p: 1,
   },
 };
 

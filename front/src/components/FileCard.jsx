@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
 const FileCard = ({ file, remove }) => {
+  console.log(file);
   const handleRemove = () => {
     // console.log(file.name);
     remove(file.name);

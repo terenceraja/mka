@@ -48,8 +48,12 @@ theme = createTheme(theme, {
     },
     fileCard: {
       fontSize: "10px",
-      color: theme.palette.primary.main,
       color: "white",
+      fontWeight: 800,
+    },
+    fileCard2: {
+      fontSize: "10px",
+      color: theme.palette.darkBlue.main,
       fontWeight: 800,
     },
     navLink: {
