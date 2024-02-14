@@ -235,7 +235,7 @@ const styles = {
     marginTop: "10px",
     display: "flex",
     flexDirection: "column",
-    gap: "5px",
+    gap: "10px",
     height: "200px",
     borderRadius: "4px",
     border: "1px dashed",
@@ -256,7 +256,7 @@ const styles = {
   listContainer3: {
     display: "flex",
     flexDirection: "column",
-    gap: "5px",
+    gap: "10px",
     height: "auto",
 
     p: 1,

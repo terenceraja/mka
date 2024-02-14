@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import home from "../assets/home.svg";
-import doc from "../assets/doc.svg";
-import quest from "../assets/quest.svg";
-import news from "../assets/news.svg";
-import chat from "../assets/chat.svg";
+
+import HomeIcon from "./icons/HomeIcon";
+import DocIcon from "./icons/DocIcon";
+import QuestIcon from "./icons/QuestIcon";
+import NewsIcon from "./icons/NewsIcon";
+import ChatIcon from "./icons/ChatIcon";
 
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -39,7 +40,7 @@ export default function LabelBottomNavigation() {
           sx={styles.buttonAction}
           label="Accueil"
           value="/layout/ptf"
-          icon={<img src={home} width={25} className="icon" alt="home" />}
+          icon={<HomeIcon fill="white" />}
           component={NavLink}
           to="/layout/ptf"
         />
@@ -47,7 +48,7 @@ export default function LabelBottomNavigation() {
           sx={styles.buttonAction}
           label="Documents"
           value="/layout/doc"
-          icon={<img src={doc} width={25} className="icon" alt="doc" />}
+          icon={<DocIcon fill="white" />}
           component={NavLink}
           to="/layout/doc"
         />
@@ -55,7 +56,7 @@ export default function LabelBottomNavigation() {
           sx={styles.buttonAction}
           label="Questions"
           value="/layout/quest"
-          icon={<img src={quest} width={25} className="icon" alt="quest" />}
+          icon={<QuestIcon fill="white" />}
           component={NavLink}
           to="/layout/quest"
         />
@@ -63,7 +64,7 @@ export default function LabelBottomNavigation() {
           sx={styles.buttonAction}
           label="News"
           value="/layout/news"
-          icon={<img src={news} width={25} className="icon" alt="news" />}
+          icon={<NewsIcon fill="white" />}
           component={NavLink}
           to="/layout/news"
         />
@@ -71,7 +72,7 @@ export default function LabelBottomNavigation() {
           sx={styles.buttonAction}
           label="Chat"
           value="/layout/chat"
-          icon={<img src={chat} width={25} className="icon" alt="chat" />}
+          icon={<ChatIcon fill="white" />}
           component={NavLink}
           to="/layout/chat"
         />

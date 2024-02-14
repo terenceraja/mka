@@ -52,7 +52,7 @@ theme = createTheme(theme, {
       fontWeight: 800,
     },
     fileCard2: {
-      fontSize: "10px",
+      fontSize: "12px",
       color: theme.palette.darkBlue.main,
       fontWeight: 800,
     },
