@@ -3,9 +3,12 @@ import { useState } from "react";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Stack from "@mui/material/Stack";
+
+import InfoIcon from "./icons/InfoIcon";
+import WarningIcon from "./icons/WarningIcon";
 
 const FileCard2 = ({ date, title, desc }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -26,7 +29,9 @@ const FileCard2 = ({ date, title, desc }) => {
       <Box sx={styles.fileCard}>
         <Typography variant="fileCard2">{date}</Typography>
 
-        <Typography variant="fileCard2">{title}</Typography>
+        <Typography width={50} variant="fileCard2">
+          {title}
+        </Typography>
 
         <Stack
           direction="row"
@@ -35,11 +40,7 @@ const FileCard2 = ({ date, title, desc }) => {
           spacing={0.5}
         >
           <Typography variant="fileCard2">Description</Typography>
-          <HelpOutlineIcon
-            aria-describedby={id}
-            onClick={handleClick}
-            color="info"
-          />
+          <InfoIcon fill="#008080" />
         </Stack>
 
         <Stack
@@ -49,7 +50,7 @@ const FileCard2 = ({ date, title, desc }) => {
           spacing={0.5}
         >
           <Typography variant="fileCard2">En demande</Typography>
-          <ErrorOutlineIcon sx={{ color: "#FFCC00" }} />
+          <WarningIcon fill="#FFC107" />
         </Stack>
       </Box>
 

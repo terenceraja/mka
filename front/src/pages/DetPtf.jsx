@@ -35,7 +35,7 @@ import { addActiveLignToStore } from "../reducers/primaryKeys";
 // HTTP REQUEST
 import { fetchLign } from "../utils/http";
 
-const Ptf = () => {
+const DetPtf = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [dataLignPtf, setDataLignPtf] = useState([]);
   const [columnsLignPtf, setColumnsLignPtf] = useState([]);
@@ -202,4 +202,4 @@ const styles = {
   },
 };
 
-export default Ptf;
+export default DetPtf;

@@ -3,6 +3,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 import { useEffect } from "react";
+import InfoIcon from "./icons/InfoIcon";
 
 const Snack = ({ setSnackStateRef }) => {
   const [snackState, setSnackState] = useState({
@@ -30,7 +31,11 @@ const Snack = ({ setSnackStateRef }) => {
       autoHideDuration={4000}
       onClose={handleClose}
     >
-      <Alert severity={snackState.severity} onClose={handleClose}>
+      <Alert
+        icon={<InfoIcon fill="#008080" />}
+        severity={snackState.severity}
+        onClose={handleClose}
+      >
         {snackState.message}
       </Alert>
     </Snackbar>

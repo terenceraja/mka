@@ -25,6 +25,7 @@ const styles = {
     borderRadius: 1,
     bgcolor: "card.main",
     gap: "5px",
+    marginTop: "20px",
   },
 };
 

@@ -59,7 +59,10 @@ const Header = () => {
 /**@type {import("@mui/material".SxProps)} */
 const styles = {
   appBar: {
+    display: "flex",
+    justifyContent: "center",
     bgcolor: "primary.main",
+    height: "56px",
   },
 };
 

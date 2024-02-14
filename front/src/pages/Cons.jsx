@@ -161,10 +161,11 @@ const Cons = () => {
     navigate("/layout/mvt");
   };
   return (
-    <Box className={styles.content}>
+    <Box sx={styles.content}>
       <Card title="CLASSES D'ACTIF">
         <ChartBar data={dataBarChart} />
       </Card>
+
       <Card title="CONSOLIDATION">
         <Table
           columns={columnsLignPtf}
