@@ -15,9 +15,7 @@ let theme = createTheme({
     background: {
       main: "#f2f4f3",
     },
-    complementary: {
-      main: "#ef8026",
-    },
+    orange: "#ef8026",
     card: {
       main: "#FFFF",
     },
@@ -34,7 +32,7 @@ theme = createTheme(theme, {
     },
     logoSubtitle: {
       fontSize: "18px",
-      color: theme.palette.complementary.main,
+      color: theme.palette.orange.main,
     },
     title: {
       fontSize: "14px",

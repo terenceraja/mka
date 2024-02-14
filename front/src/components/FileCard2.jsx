@@ -9,10 +9,11 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 
 import Stack from "@mui/material/Stack";
-
+import DeleteIcon from "./icons/DeleteIcon";
 import DownloadIcon from "./icons/DownloadIcon";
 import InfoIcon from "./icons/InfoIcon";
 import WarningIcon from "./icons/WarningIcon";
+import { useTheme } from "@mui/material/styles";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -26,8 +27,11 @@ const VisuallyHiddenInput = styled("input")({
   width: 0,
 });
 
-const FileCard2 = ({ date, title, desc }) => {
+const FileCard2 = ({ date, title, desc, file, remove }) => {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -39,9 +43,11 @@ const FileCard2 = ({ date, title, desc }) => {
 
   // FILE SELECTION
   const handleFileSelect = (event) => {
-    const newFiles = Array.from(event.target.files);
-    console.log(newFiles);
-    setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    const newFile = event.target.files[0];
+    if (newFile) {
+      console.log(newFile);
+      setSelectedFile(newFile);
+    }
     event.target.value = ""; // Reset the input field
   };
 
@@ -93,9 +99,8 @@ const FileCard2 = ({ date, title, desc }) => {
             direction="row"
             justifyContent="center"
             alignItems="center"
-            spacing={2}
+            spacing={1}
           >
-            <Typography variant="fileCard2">Aucun fichier choisi...</Typography>
             <Button
               sx={{
                 minWidth: "20px",
@@ -105,7 +110,9 @@ const FileCard2 = ({ date, title, desc }) => {
               }}
               component="label"
               role={undefined}
-              startIcon={<DownloadIcon component="label" fill={"red"} />}
+              startIcon={
+                <DownloadIcon component="label" fill={theme.palette.orange} />
+              }
             >
               <VisuallyHiddenInput
                 type="file"
@@ -113,9 +120,29 @@ const FileCard2 = ({ date, title, desc }) => {
                 onChange={handleFileSelect}
               />
             </Button>
+            {selectedFile ? (
+              <>
+                <Typography
+                  sx={{ textDecoration: "underline" }}
+                  variant="fileCard2"
+                >
+                  {selectedFile.name}
+                </Typography>
+                <DeleteIcon fill="red" />
+              </>
+            ) : (
+              <Typography variant="fileCard2">
+                Aucun fichier choisi...
+              </Typography>
+            )}
           </Stack>
 
-          <Typography variant="fileCard2">ENVOYER</Typography>
+          <Button
+            disabled={selectedFile ? false : true}
+            sx={{ color: selectedFile ? theme.palette.orange : "" }}
+          >
+            Soummettre
+          </Button>
         </Stack>
       </Box>
 
@@ -147,7 +174,7 @@ const styles = {
     gap: "10px",
     p: 1,
     px: 2,
-    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+    boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
   },
   icon: {
     color: "complementary.main",

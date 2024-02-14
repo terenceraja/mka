@@ -3,15 +3,17 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import Divider from "@mui/material/Divider";
+import { useTheme } from "@mui/material/styles";
 
 export default function Card({ title, children, subTitle }) {
+  const theme = useTheme();
   return (
     <Box sx={styles.cardContainer} id="card">
       <Stack direction="column">
         <Typography variant="title">{title}</Typography>
         <Typography variant="subTitle">{subTitle}</Typography>
       </Stack>
-      <Divider sx={{ borderColor: "complementary.main", marginY: "5px" }} />
+      <Divider sx={{ borderColor: theme.palette.orange, marginY: "5px" }} />
 
       {children}
     </Box>

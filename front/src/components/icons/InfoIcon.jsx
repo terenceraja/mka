@@ -6,6 +6,7 @@ const InfoIcon = ({ fill, onClick }) => {
   };
   return (
     <svg
+      cursor={"pointer"}
       onClick={(event) => handleClick(event)}
       xmlns="http://www.w3.org/2000/svg"
       width="20"

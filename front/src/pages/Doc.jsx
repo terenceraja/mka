@@ -256,7 +256,7 @@ const styles = {
   listContainer3: {
     display: "flex",
     flexDirection: "column",
-    gap: "10px",
+    gap: "15px",
     height: "auto",
 
     p: 1,

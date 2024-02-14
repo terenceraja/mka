@@ -233,7 +233,7 @@ const styles = {
     color: "white",
     fontSize: "10px",
     "&:hover": {
-      bgcolor: "complementary.main",
+      bgcolor: "orange.main",
     },
   },
   chartsContainer: {
