@@ -52,6 +52,11 @@ const Doc = () => {
     );
 
     console.log("filter", filteredArray);
+    triggerSnack({
+      open: true,
+      message: "Votre fichier à été envoyé",
+      severity: "success",
+    });
     setOnDemandDocs(filteredArray);
   };
 

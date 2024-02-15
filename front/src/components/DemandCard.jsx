@@ -1,5 +1,6 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
+
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
@@ -38,6 +39,15 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   console.log("selected file", selectedFile);
 
+  // SNACK & MODAL USEREF
+  const setSnackStateRef = useRef(null); // Create a ref to store setSnackState function
+  // Function to trigger state change in Snack component
+  const triggerSnack = (newState) => {
+    if (setSnackStateRef.current) {
+      setSnackStateRef.current(newState);
+    }
+  };
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -71,6 +81,11 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
       console.log(response);
       setSelectedFile(null);
       setIsSent((prev) => !prev);
+      triggerSnack({
+        open: true,
+        message: "Fichier envoyé ! ",
+        severity: "succes",
+      });
       setTimeout(function () {
         remove(IdFile);
         setIsSent((prev) => !prev);

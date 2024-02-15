@@ -125,7 +125,7 @@ const styles = {
     bgcolor: "background.main",
     borderRadius: "4px",
     boxSizing: "border-box",
-    gap: "10px",
+    gap: "8px",
     p: 1,
     px: 2,
     boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
