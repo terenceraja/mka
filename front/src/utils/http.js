@@ -89,12 +89,13 @@ export const fetchMvt = async (dataToPost) => {
 };
 
 // UPLOAD FILE
-export const postFile = async (dataToPost) => {
-  console.log("hop", dataToPost.length);
+export const postFile = async (fileToPost, FileId) => {
+  console.log("file upload", fileToPost);
   const formData = new FormData();
-  for (let i = 0; i < dataToPost.length; i++) {
-    formData.append("files", dataToPost[i]);
-  }
+  formData.append("file", fileToPost);
+  formData.append("FileId", FileId); // Append the document ID to the FormData
+
+  console.log("formdata", formData.values);
 
   const response = await fetch("http://localhost:3000/doc/upload", {
     method: "POST",
@@ -112,6 +113,24 @@ export const postFile = async (dataToPost) => {
 // zfile GET ONDEMAND POSTS
 export const fetchOnDemandDocs = async (dataToPost) => {
   const response = await fetch("http://localhost:3000/doc/onDemand", {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};
+
+// zfile GET ONDEMAND POSTS
+export const fetchSentDocs = async (dataToPost) => {
+  const response = await fetch("http://localhost:3000/doc/sent", {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {

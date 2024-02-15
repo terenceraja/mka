@@ -140,7 +140,7 @@ export function YTDTimes100(array) {
 
 export function formatISODate(inputDate) {
   const parsedDate = DateTime.fromISO(inputDate);
-  return parsedDate.toFormat("dd/MM/yyyy");
+  return parsedDate.toFormat("dd/MM/yy");
 }
 
 // FORMAT QUANTITE COLUMN PAGE DETPTF

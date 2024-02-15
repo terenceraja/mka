@@ -1,49 +1,34 @@
 import React from "react";
-import Button from "@mui/material/Button";
 import Card from "../components/Card";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
-import Modal from "../components/Modal";
 
 // MUI
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
-import FileCard from "../components/FileCard";
-import FileCard2 from "../components/FileCard2";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
-import Stack from "@mui/material/Stack";
+
+import SentCard from "../components/SentCard";
+import DemandCard from "../components/DemandCard";
 
 // HTTP
-import { postFile, fetchOnDemandDocs } from "../utils/http";
+import { fetchOnDemandDocs, fetchSentDocs } from "../utils/http";
 import Snack from "../components/Snack";
 
 //UTILS
 import { formatISODate } from "../utils/functions";
 
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
-
 const Doc = () => {
   const [tabValue, setTabValue] = useState("1");
   const [onDemandDocs, setOnDemandDocs] = useState([]);
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [sentDocs, setSentDocs] = useState([]);
   const [error, setError] = useState("");
-  console.log(selectedFiles);
+  console.log("sentlist", sentDocs);
+
+  console.log("demandlist", onDemandDocs);
 
   // GET CLI ID FROM STORE
   const IdCtraCli = useSelector((state) => state.keys.value.IdCtraCli);
@@ -56,33 +41,28 @@ const Doc = () => {
       setSnackStateRef.current(newState);
     }
   };
-
-  const setModalStateRef = useRef(null);
-  const triggerModal = (newState) => {
-    if (setModalStateRef.current) {
-      setModalStateRef.current(newState);
-    }
-  };
   //
+
+  // REMOVE FILE
+  const handleRemove = (SentFile) => {
+    console.log("id", SentFile);
+    console.log("array", onDemandDocs);
+    const filteredArray = onDemandDocs.filter(
+      (file) => file.IdFile !== SentFile
+    );
+
+    console.log("filter", filteredArray);
+    setOnDemandDocs(filteredArray);
+  };
 
   // FETCH ONDEMAND DOC
   useEffect(() => {
-    const fetchDocsFromServer = async () => {
+    const fetchDocsDemand = async () => {
       try {
         //PORTFOLIOS
         const responseDocs = await fetchOnDemandDocs({ IdCtraCli });
         const docs = responseDocs.data;
-        const doclist = docs.map((obj, key) => {
-          return (
-            <FileCard2
-              key={key}
-              date={formatISODate(obj.TimeStampCreation)}
-              title={obj.Title}
-              desc={obj.Description}
-            />
-          );
-        });
-        setOnDemandDocs(doclist);
+        setOnDemandDocs(docs);
 
         console.log("onDemand", responseDocs.data);
       } catch (error) {
@@ -90,64 +70,58 @@ const Doc = () => {
       }
     };
 
-    fetchDocsFromServer(); // Call the renamed local function
+    fetchDocsDemand(); // Call the renamed local function
   }, []);
   //
 
-  // POST FILE
-  const upload = async (fileToPost) => {
-    try {
-      const response = await postFile(fileToPost);
-      console.log(response);
-      setSelectedFiles([]);
-    } catch (error) {
-      setError({ message: error.message || "custom error message" });
-    }
-  };
+  // FETCH SENT DOC
+  useEffect(() => {
+    const fetchDocsSent = async () => {
+      try {
+        //PORTFOLIOS
+        const responseDocs = await fetchSentDocs({ IdCtraCli });
+        const docs = responseDocs.data;
+        setSentDocs(docs);
 
-  // FILE SELECTION
-  const handleFileSelect = (event) => {
-    const newFiles = Array.from(event.target.files);
-    console.log(newFiles);
-    setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
-    event.target.value = ""; // Reset the input field
-  };
+        console.log("Sent", responseDocs.data);
+      } catch (error) {
+        setError({ message: error.message || "custom error message" });
+      }
+    };
 
-  // SUBMIT CLICK
-  const handleUpload = () => {
-    upload(selectedFiles);
-    console.log("file upload");
-  };
+    fetchDocsSent(); // Call the renamed local function
+  }, [onDemandDocs]);
+  //
 
-  // REMOVE FILE
-  const handleRemove = (clikedFile) => {
-    const filteredArray = selectedFiles.filter(
-      (file) => file.name !== clikedFile
+  // OnDemand DOC LIST RENDER
+  const onDemandlist = onDemandDocs.map((obj, key) => {
+    return (
+      <DemandCard
+        key={key}
+        date={formatISODate(obj.TimeStampCreation)}
+        title={obj.Title}
+        desc={obj.Description}
+        file={obj}
+        remove={handleRemove}
+      />
     );
-    setSelectedFiles([...filteredArray]);
-  };
-  // PRINT FILE LIST
-  const fileList = selectedFiles.map((file, key) => {
-    return <FileCard key={key} file={file} remove={handleRemove} />;
   });
 
-  const handleModal = () => {
-    if (selectedFiles.length > 0) {
-      triggerModal({
-        open: true,
-        message: "êtes-vous sûre d'envoyer ces fichiers?",
-        confirmation: "ENVOYER",
-        isLoading: false,
-      });
-    } else {
-      triggerSnack({
-        open: true,
-        message: "veuillez sélectionner un fichier",
-        severity: "info",
-      });
-    }
-  };
+  // Sent DOC LIST RENDER
+  const sentList = sentDocs.map((obj, key) => {
+    return (
+      <SentCard
+        key={key}
+        demandDate={formatISODate(obj.TimeStampCreation)}
+        sentDate={formatISODate(obj.TimeStampUpload)}
+        title={obj.Title}
+        desc={obj.Description}
+        file={obj}
+      />
+    );
+  });
 
+  // TAB SELECTION
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
   };
@@ -167,44 +141,17 @@ const Doc = () => {
             <Card title="DOCUMENTS A ENVOYER">
               <Box sx={styles.listContainer3}>
                 {onDemandDocs.length > 0
-                  ? onDemandDocs
+                  ? onDemandlist
                   : "Pas de documents à envoyer"}
-              </Box>
-            </Card>
-
-            <Card title="ENVOIE DOCUMENTS">
-              <Box sx={styles.listContainer1}>{fileList}</Box>
-              <Box component="form" sx={styles.formContainer} id="form">
-                <Modal
-                  setModalStateRef={setModalStateRef}
-                  onConfirmation={handleUpload}
-                />
-                <Stack
-                  direction="row"
-                  marginY={2}
-                  spacing={1}
-                  width={"100%"}
-                  justifyContent={"flex-end"}
-                >
-                  <Fab size="small" component="label" color="primary">
-                    <AddIcon />
-                    <VisuallyHiddenInput
-                      type="file"
-                      multiple
-                      onChange={handleFileSelect}
-                    />
-                  </Fab>
-                  <Button onClick={handleModal} variant="">
-                    SUBMIT
-                  </Button>
-                </Stack>
               </Box>
             </Card>
           </TabPanel>
 
           <TabPanel sx={{ padding: "0px" }} value="2">
             <Card title="DOCUMENTS ENVOYES">
-              <Box sx={styles.listContainer2}>{fileList}</Box>
+              <Box sx={styles.listContainer3}>
+                {sentDocs.length > 0 ? sentList : "Aucun documents envoyés"}
+              </Box>
             </Card>
           </TabPanel>
         </TabContext>
@@ -231,18 +178,6 @@ const styles = {
     display: "flex",
   },
 
-  listContainer1: {
-    marginTop: "10px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-    height: "200px",
-    borderRadius: "4px",
-    border: "1px dashed",
-    borderColor: "highlight.main",
-    p: 2,
-    overflowY: "auto",
-  },
   listContainer2: {
     display: "flex",
     flexDirection: "column",
@@ -257,7 +192,8 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "15px",
-    height: "auto",
+    maxHeight: "100%",
+    overflowY: "auto",
 
     p: 1,
   },

@@ -1,7 +1,6 @@
 import React from "react";
 
 const DownloadIcon = ({ fill }) => {
-  console.log(fill);
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

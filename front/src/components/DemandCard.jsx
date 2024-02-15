@@ -27,11 +27,16 @@ const VisuallyHiddenInput = styled("input")({
   width: 0,
 });
 
-const FileCard2 = ({ date, title, desc, file, remove }) => {
-  const theme = useTheme();
-  const [anchorEl, setAnchorEl] = useState(null);
+// HTTP
+import { postFile } from "../utils/http";
 
+const DemandCard = ({ date, title, desc, file, remove }) => {
+  const theme = useTheme();
+  const [isSent, setIsSent] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [error, setError] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  console.log("selected file", selectedFile);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -45,14 +50,40 @@ const FileCard2 = ({ date, title, desc, file, remove }) => {
   const handleFileSelect = (event) => {
     const newFile = event.target.files[0];
     if (newFile) {
-      console.log(newFile);
       setSelectedFile(newFile);
     }
     event.target.value = ""; // Reset the input field
   };
 
+  // REMOVE FILE
+  const handleRemove = () => {
+    setSelectedFile(null);
+  };
+
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  // POST FILE
+  const upload = async (fileToPost) => {
+    const IdFile = file.IdFile;
+    try {
+      const response = await postFile(fileToPost, IdFile);
+      console.log(response);
+      setSelectedFile(null);
+      setIsSent((prev) => !prev);
+      setTimeout(function () {
+        remove(IdFile);
+        setIsSent((prev) => !prev);
+      }, 3000); // Executes after 1000 milliseconds (1 second)
+    } catch (error) {
+      setError({ message: error.message || "custom error message" });
+    }
+  };
+
+  // SUBMIT CLICK
+  const handleUpload = () => {
+    upload(selectedFile);
+  };
 
   return (
     <>
@@ -64,27 +95,62 @@ const FileCard2 = ({ date, title, desc, file, remove }) => {
           alignItems="center"
           id="TOPSECTION"
         >
-          <Typography variant="fileCard2">{date}</Typography>
-          <Typography width={50} variant="fileCard2">
-            {title}
-          </Typography>
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            spacing={0.5}
-          >
-            <Typography variant="fileCard2">Description</Typography>
+          <Stack>
+            <Typography variant="fileCard2">Demandé:</Typography>
+            <Typography height={"20px"} variant="fileCard2">
+              {date}
+            </Typography>
+          </Stack>
+
+          <Stack>
+            <Typography minWidth={50} variant="fileCard2">
+              Document:
+            </Typography>
+            <Typography
+              height={"20px"}
+              borderRadius={"2px"}
+              textAlign={"center"}
+              minWidth={50}
+              variant="fileCard2"
+            >
+              {title}
+            </Typography>
+          </Stack>
+
+          <Stack alignItems={"center"}>
+            <Typography minWidth={50} variant="fileCard2">
+              Descrpition:
+            </Typography>
             <InfoIcon fill="#008080" onClick={handleClick} />
           </Stack>
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            spacing={0.5}
-          >
-            <Typography variant="fileCard2">En demande</Typography>
-            <WarningIcon fill="#FFC107" />
+
+          <Stack alignItems={"center"}>
+            <Typography variant="fileCard2">Status:</Typography>
+
+            <Stack alignItems={"center"}>
+              <Stack alignItems={"center"} direction={"row"}>
+                {isSent ? (
+                  <Typography
+                    bgcolor={"#90EE90"}
+                    height={"20px"}
+                    variant="fileCard2"
+                    px={1}
+                  >
+                    Envoyé
+                  </Typography>
+                ) : (
+                  <Typography
+                    bgcolor={"#FFD700"}
+                    height={"20px"}
+                    variant="fileCard2"
+                    borderRadius={"2px"}
+                    px={1}
+                  >
+                    En demande
+                  </Typography>
+                )}
+              </Stack>
+            </Stack>
           </Stack>
         </Stack>
         <Divider />
@@ -123,12 +189,13 @@ const FileCard2 = ({ date, title, desc, file, remove }) => {
             {selectedFile ? (
               <>
                 <Typography
+                  width={100}
                   sx={{ textDecoration: "underline" }}
                   variant="fileCard2"
                 >
                   {selectedFile.name}
                 </Typography>
-                <DeleteIcon fill="red" />
+                <DeleteIcon fill="red" onClick={handleRemove} />
               </>
             ) : (
               <Typography variant="fileCard2">
@@ -140,6 +207,7 @@ const FileCard2 = ({ date, title, desc, file, remove }) => {
           <Button
             disabled={selectedFile ? false : true}
             sx={{ color: selectedFile ? theme.palette.orange : "" }}
+            onClick={() => handleUpload()}
           >
             Soummettre
           </Button>
@@ -186,4 +254,4 @@ const styles = {
   },
 };
 
-export default FileCard2;
+export default DemandCard;
