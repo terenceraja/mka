@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 
-var app = require("../app");
+const { Server } = require("socket.io");
+var { app, http } = require("../app"); // Import the app and http server from app.js
 var debug = require("debug")("back:server");
 var http = require("http");
 
@@ -21,6 +22,19 @@ app.set("port", port);
  */
 
 var server = http.createServer(app);
+// var io = socketIo(server); // Attach Socket.IO to the HTTP server
+
+var io = new Server(server, {
+  cors: {
+    origin: ["http://localhost:5173", "http://127.0.0.1:5500"],
+    methods: ["GET", "POST"],
+  },
+}); // Attach Socket.IO to the HTTP server
+
+// Socket.IO event handling
+io.on("connection", (socket) => {
+  console.log(`A user connected ${socket.id}`);
+});
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -84,4 +98,5 @@ function onListening() {
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
+  console.log("Server is listening on port " + addr.port); // Add this line to log the port
 }

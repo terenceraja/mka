@@ -60,7 +60,7 @@ const Modal = ({ setModalStateRef, onConfirmation }) => {
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleCloseModal}>Anuller</Button>
+        <Button onClick={handleCloseModal}>Annuler</Button>
         <Button type="submit" color="warning" onClick={handleConfirmation}>
           {modalState.confirmation}
         </Button>

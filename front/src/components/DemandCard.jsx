@@ -81,11 +81,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
       console.log(response);
       setSelectedFile(null);
       setIsSent((prev) => !prev);
-      triggerSnack({
-        open: true,
-        message: "Fichier envoyé ! ",
-        severity: "succes",
-      });
+
       setTimeout(function () {
         remove(IdFile);
         setIsSent((prev) => !prev);

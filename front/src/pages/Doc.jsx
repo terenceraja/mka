@@ -61,20 +61,19 @@ const Doc = () => {
   };
 
   // FETCH ONDEMAND DOC
+  const fetchDocsDemand = async () => {
+    try {
+      //PORTFOLIOS
+      const responseDocs = await fetchOnDemandDocs({ IdCtraCli });
+      const docs = responseDocs.data;
+      setOnDemandDocs(docs);
+
+      console.log("onDemand", responseDocs.data);
+    } catch (error) {
+      setError({ message: error.message || "custom error message" });
+    }
+  };
   useEffect(() => {
-    const fetchDocsDemand = async () => {
-      try {
-        //PORTFOLIOS
-        const responseDocs = await fetchOnDemandDocs({ IdCtraCli });
-        const docs = responseDocs.data;
-        setOnDemandDocs(docs);
-
-        console.log("onDemand", responseDocs.data);
-      } catch (error) {
-        setError({ message: error.message || "custom error message" });
-      }
-    };
-
     fetchDocsDemand(); // Call the renamed local function
   }, []);
   //
@@ -128,6 +127,9 @@ const Doc = () => {
 
   // TAB SELECTION
   const handleChange = (event, newValue) => {
+    if (newValue === "1") {
+      fetchDocsDemand();
+    }
     setTabValue(newValue);
   };
 
@@ -170,7 +172,6 @@ const styles = {
   content: {
     display: "flex",
     flexDirection: "column",
-    gap: "10px",
   },
   tabContent: {
     display: "flex",

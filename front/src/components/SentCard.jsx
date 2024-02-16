@@ -68,7 +68,7 @@ const SentCard = ({ sentDate, demandDate, title, desc, file, remove }) => {
 
           <Stack alignItems={"center"}>
             <Typography minWidth={50} variant="fileCard2">
-              Descrpition:
+              Description:
             </Typography>
             <InfoIcon fill="#008080" onClick={handleClick} />
           </Stack>
