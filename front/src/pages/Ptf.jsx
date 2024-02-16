@@ -42,7 +42,6 @@ import {
   columnsPtfMD,
   columnsPtfLG,
 } from "../data/Tabulator/Portefeuille";
-
 const Ptf = () => {
   const [isFetching, setIsFetching] = useState(false);
   const [dataPtf, setdataPtf] = useState([]);

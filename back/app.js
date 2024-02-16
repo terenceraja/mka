@@ -24,7 +24,7 @@ app.use("/", indexRouter);
 app.use("/doc", docRouter);
 app.use("/iis", iisRouter);
 
-///////// IIS CONFIG ///////////
-app.listen(process.env.PORT);
+// ///////// IIS CONFIG ///////////
+// app.listen(process.env.PORT);
 
 module.exports = { app, http }; // Export both the app and the http server
