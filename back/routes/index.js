@@ -1,6 +1,15 @@
 var express = require("express");
 var router = express.Router();
 
+//JWT
+const verifyJwt = require("../middleware/jwt");
+const jwt = require("jsonwebtoken");
+
+const createToken = (IdCtraCli) => {
+  const jwtkey = process.env.JWT_SECRET_KEY;
+  return jwt.sign({ IdCtraCli }, jwtkey, { expiresIn: 300 });
+};
+
 const { zctracli, zctraptf, zope, zlignptf, zmvt } = require("../models"); // Import your Sequelize model
 
 // ROUTE CLICK LOGIN GET ID USER
@@ -22,9 +31,12 @@ router.post("/zctracli", async function (req, res, next) {
         data: user,
       });
     } else {
+      const token = createToken(user.IdCtraCli);
+
       res.json({
         message: "User found !",
         IdCtraCli: user.IdCtraCli,
+        token,
       });
     }
   } catch (error) {
@@ -34,7 +46,8 @@ router.post("/zctracli", async function (req, res, next) {
 });
 
 // ROUTE ON PAGE PTF : POST USER ID AND GET PTFS
-router.post("/zctraptf", async function (req, res, next) {
+router.post("/zctraptf", verifyJwt, async function (req, res, next) {
+  console.log("YOOOOOOOOOOOO", req.IdCtraCli);
   try {
     const { IdCtraCli } = req.body;
 
@@ -50,7 +63,12 @@ router.post("/zctraptf", async function (req, res, next) {
       0
     );
 
-    res.json({ message: "Portfolios found !", data: ptfs, totMV: totMV }); // Send the result as JSON
+    res.json({
+      auth: true,
+      message: "Portfolios found !",
+      data: ptfs,
+      totMV: totMV,
+    }); // Send the result as JSON
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

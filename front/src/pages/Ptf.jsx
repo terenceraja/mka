@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "../components/Card";
 import ChartPie from "../components/ChartPie";
+import Modal from "../components/Modal";
 
 // MUI
 import { Box } from "@mui/material";
@@ -9,7 +10,7 @@ import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 
 // REACT
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -26,6 +27,7 @@ import {
   addIdCtraPtfToStore,
   addActivePtfToStore,
   addTotalMVToStore,
+  clearStore,
 } from "../reducers/primaryKeys";
 
 // HTTP REQUEST
@@ -51,6 +53,32 @@ const Ptf = () => {
   const [dataClasses, setDataClasses] = useState({});
   const [dataDevises, setDataDevises] = useState({});
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  //MODAL
+  const setModalStateRef = useRef(null); // Create a ref to store setSnackState function
+  // Function to trigger state change in Snack component
+  const triggerModalStateChange = (newState) => {
+    if (setModalStateRef.current) {
+      setModalStateRef.current(newState); // Update Snack component state using the stored function
+    }
+  };
+  const handleOpenModal = () => {
+    triggerModalStateChange({
+      ...setModalStateRef.current,
+      open: true,
+      message: `Session expiré ou token introuvable, vous allez être redirigé à la page de connexion`,
+      confirmation: "SE RECONNECTER",
+    });
+  };
+  const handleConfirmation = () => {
+    dispatch(clearStore());
+    setTimeout(() => {
+      navigate("/");
+    }, 1200);
+  };
 
   // GET CLI ID FROM STORE
   const IdCtraCli = useSelector((state) => state.keys.value.IdCtraCli);
@@ -128,9 +156,6 @@ const Ptf = () => {
     ],
   };
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   // GET FETCHING EXAMPLE
   useEffect(() => {
     const fetchDataFromServer = async () => {
@@ -139,10 +164,17 @@ const Ptf = () => {
       try {
         //PORTFOLIOS
         const responsePtf = await fetchPtf({ IdCtraCli });
+        console.log(responsePtf);
+
+        // AUTHENTIFICATION
+        if (!responsePtf.auth) {
+          dispatch(clearStore());
+          handleOpenModal();
+        }
+
         const IdCtraPtf = responsePtf.data.map((obj) => {
           return obj.IdCtraPtf;
         });
-        console.log(responsePtf);
         dispatch(addIdCtraPtfToStore(IdCtraPtf));
         dispatch(addTotalMVToStore(responsePtf.totMV));
         setdataPtf(responsePtf.data);
@@ -189,6 +221,10 @@ const Ptf = () => {
 
   return (
     <Box sx={styles.content}>
+      <Modal
+        setModalStateRef={setModalStateRef}
+        onConfirmation={handleConfirmation}
+      />
       <Card title="PORTEFEUILLES">
         <Table columns={columnsPtf} data={dataPtf} parentClick={rowClick} />
         <CardActions>

@@ -61,6 +61,7 @@ const Form = () => {
     if (response.IdCtraCli) {
       console.log(response);
       dispatch(addIdCtraCliToStore(response.IdCtraCli));
+      localStorage.setItem("token", response.token);
       setTimeout(() => {
         navigate("layout/ptf");
       }, 1500);
