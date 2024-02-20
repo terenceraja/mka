@@ -1,5 +1,7 @@
 import React from "react";
 import { useState, useRef } from "react";
+import Modal from "../components/Modal";
+import { useNavigate } from "react-router-dom";
 
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -13,7 +15,6 @@ import Stack from "@mui/material/Stack";
 import DeleteIcon from "./icons/DeleteIcon";
 import DownloadIcon from "./icons/DownloadIcon";
 import InfoIcon from "./icons/InfoIcon";
-import WarningIcon from "./icons/WarningIcon";
 import { useTheme } from "@mui/material/styles";
 
 const VisuallyHiddenInput = styled("input")({
@@ -39,13 +40,39 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   console.log("selected file", selectedFile);
 
-  // SNACK & MODAL USEREF
+  const navigate = useNavigate();
+
+  // SNACK
   const setSnackStateRef = useRef(null); // Create a ref to store setSnackState function
   // Function to trigger state change in Snack component
   const triggerSnack = (newState) => {
     if (setSnackStateRef.current) {
       setSnackStateRef.current(newState);
     }
+  };
+
+  //MODAL
+  const setModalStateRef = useRef(null); // Create a ref to store setSnackState function
+  // Function to trigger state change in Snack component
+  const triggerModalStateChange = (newState) => {
+    if (setModalStateRef.current) {
+      setModalStateRef.current(newState); // Update Snack component state using the stored function
+    }
+  };
+  const handleOpenModal = () => {
+    triggerModalStateChange({
+      ...setModalStateRef.current,
+      open: true,
+      message: `Session expiré ou token indisponible, vous allez être redirigé à la page de connexion`,
+      confirmation: "SE RECONNECTER",
+      auth: false,
+    });
+  };
+  const handleConfirmation = () => {
+    localStorage.clear();
+    setTimeout(() => {
+      navigate("/");
+    }, 1200);
   };
 
   const handleClick = (event) => {
@@ -78,7 +105,15 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
     const IdFile = file.IdFile;
     try {
       const response = await postFile(fileToPost, IdFile);
-      console.log(response);
+
+      // AUTHENTIFICATION
+      console.log("response", response);
+      if (!response.auth) {
+        console.log("no authaze");
+        handleOpenModal();
+        return;
+      }
+
       setSelectedFile(null);
       setIsSent((prev) => !prev);
 
@@ -98,6 +133,10 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
 
   return (
     <>
+      <Modal
+        setModalStateRef={setModalStateRef}
+        onConfirmation={handleConfirmation}
+      />
       <Box sx={styles.fileCard}>
         <Stack
           direction="row"

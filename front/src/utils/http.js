@@ -119,6 +119,9 @@ export const postFile = async (fileToPost, FileId) => {
   const response = await fetch("http://localhost:3000/doc/upload", {
     method: "POST",
     body: formData,
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+    },
   });
 
   const resData = await response.json();
@@ -129,12 +132,13 @@ export const postFile = async (fileToPost, FileId) => {
   return resData;
 };
 
-// zfile GET ONDEMAND POSTS
+// zfile GET ONDEMAND DOCS
 export const fetchOnDemandDocs = async (dataToPost) => {
   const response = await fetch("http://localhost:3000/doc/onDemand", {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
+      "x-access-token": localStorage.getItem("token"),
       "Content-Type": "application/json",
     },
   });
@@ -147,12 +151,13 @@ export const fetchOnDemandDocs = async (dataToPost) => {
   return resData;
 };
 
-// zfile GET ONDEMAND POSTS
+// zfile GET SENT DOCS
 export const fetchSentDocs = async (dataToPost) => {
   const response = await fetch("http://localhost:3000/doc/sent", {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
+      "x-access-token": localStorage.getItem("token"),
       "Content-Type": "application/json",
     },
   });

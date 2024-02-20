@@ -3,12 +3,7 @@ var router = express.Router();
 
 //JWT
 const verifyJwt = require("../middleware/jwt");
-const jwt = require("jsonwebtoken");
-
-const createToken = (IdCtraCli) => {
-  const jwtkey = process.env.JWT_SECRET_KEY;
-  return jwt.sign({ IdCtraCli }, jwtkey, { expiresIn: "3d" });
-};
+const createToken = require("../utils/createToken");
 
 const { zctracli, zctraptf, zope, zlignptf, zmvt } = require("../models"); // Import your Sequelize model
 

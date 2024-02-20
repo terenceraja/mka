@@ -2,6 +2,9 @@ var express = require("express");
 var router = express.Router();
 var path = require("path");
 const fs = require("fs");
+//JWT
+const verifyJwt = require("../middleware/jwt");
+
 const { Sequelize } = require("sequelize");
 
 const { zfile } = require("../models"); // Import your Sequelize model
@@ -20,39 +23,45 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // UPLOAD FILE
-router.post("/upload", upload.single("file"), async function (req, res, next) {
-  try {
-    console.log(req.file);
-    const FileId = req.body.FileId;
-    console.log(FileId);
-    const { filename, path } = req.file;
+router.post(
+  "/upload",
+  verifyJwt,
+  upload.single("file"),
+  async function (req, res, next) {
+    try {
+      console.log(req.file);
+      const FileId = req.body.FileId;
+      console.log(FileId);
+      const { filename, path } = req.file;
 
-    // Update the record in the database
-    const updateResult = await zfile.update(
-      {
-        FileName: filename,
-        FilePath: path,
-        TimeStampUpload: Sequelize.literal("CURRENT_TIMESTAMP"),
-        TimeStampModification: Sequelize.literal("CURRENT_TIMESTAMP"),
-        Status: "pending",
-      },
-      { where: { IdFile: FileId } }
-    );
+      // Update the record in the database
+      const updateResult = await zfile.update(
+        {
+          FileName: filename,
+          FilePath: path,
+          TimeStampUpload: Sequelize.literal("CURRENT_TIMESTAMP"),
+          TimeStampModification: Sequelize.literal("CURRENT_TIMESTAMP"),
+          Status: "pending",
+        },
+        { where: { IdFile: FileId } }
+      );
 
-    console.log("RESPONSE", updateResult);
+      console.log("RESPONSE", updateResult);
 
-    res.json({
-      message: "File stored in backend !",
-      data: updateResult,
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+      res.json({
+        auth: true,
+        message: "File stored in backend !",
+        data: updateResult,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
   }
-});
+);
 
 // ROUTE ON PAGE DOC : GET DEMAND DOCS VIA IdCLI IdMANAGER
-router.post("/onDemand", async function (req, res, next) {
+router.post("/onDemand", verifyJwt, async function (req, res, next) {
   try {
     const { IdCtraCli } = req.body;
     console.log(req.body);
@@ -65,7 +74,7 @@ router.post("/onDemand", async function (req, res, next) {
       // order: [["CptaDateOPE_lsd", "DESC"]], // ASC for ascending, DESC for descending
     });
 
-    res.json({ message: "Doc demands found !", data: docDemand }); // Send the result as JSON
+    res.json({ auth: true, message: "Doc demands found !", data: docDemand }); // Send the result as JSON
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -73,7 +82,7 @@ router.post("/onDemand", async function (req, res, next) {
 });
 
 // ROUTE ON PAGE DOC : GET ALL SENT DOCS VIA IdCLI
-router.post("/sent", async function (req, res, next) {
+router.post("/sent", verifyJwt, async function (req, res, next) {
   try {
     const { IdCtraCli } = req.body;
     console.log(req.body);
@@ -88,7 +97,7 @@ router.post("/sent", async function (req, res, next) {
       // order: [["CptaDateOPE_lsd", "DESC"]], // ASC for ascending, DESC for descending
     });
 
-    res.json({ message: "Doc demands found !", data: docDemand }); // Send the result as JSON
+    res.json({ auth: true, message: "Doc demands found !", data: docDemand }); // Send the result as JSON
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

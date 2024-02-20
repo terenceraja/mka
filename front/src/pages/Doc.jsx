@@ -1,8 +1,10 @@
 import React from "react";
 import Card from "../components/Card";
+import Modal from "../components/Modal";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 // MUI
 import Tab from "@mui/material/Tab";
@@ -30,10 +32,12 @@ const Doc = () => {
 
   console.log("demandlist", onDemandDocs);
 
+  const navigate = useNavigate();
+
   // GET CLI ID FROM STORE
   const IdCtraCli = useSelector((state) => state.keys.value.IdCtraCli);
 
-  // SNACK & MODAL USEREF
+  // SNACK
   const setSnackStateRef = useRef(null); // Create a ref to store setSnackState function
   // Function to trigger state change in Snack component
   const triggerSnack = (newState) => {
@@ -42,6 +46,30 @@ const Doc = () => {
     }
   };
   //
+
+  //MODAL
+  const setModalStateRef = useRef(null); // Create a ref to store setSnackState function
+  // Function to trigger state change in Snack component
+  const triggerModalStateChange = (newState) => {
+    if (setModalStateRef.current) {
+      setModalStateRef.current(newState); // Update Snack component state using the stored function
+    }
+  };
+  const handleOpenModal = () => {
+    triggerModalStateChange({
+      ...setModalStateRef.current,
+      open: true,
+      message: `Session expiré ou token indisponible, vous allez être redirigé à la page de connexion`,
+      confirmation: "SE RECONNECTER",
+      auth: false,
+    });
+  };
+  const handleConfirmation = () => {
+    localStorage.clear();
+    setTimeout(() => {
+      navigate("/");
+    }, 1200);
+  };
 
   // REMOVE FILE
   const handleRemove = (SentFile) => {
@@ -65,6 +93,15 @@ const Doc = () => {
     try {
       //PORTFOLIOS
       const responseDocs = await fetchOnDemandDocs({ IdCtraCli });
+
+      // AUTHENTIFICATION
+      console.log("response", responseDocs);
+      if (!responseDocs.auth) {
+        console.log("no authaze");
+        handleOpenModal();
+        return;
+      }
+
       const docs = responseDocs.data;
       setOnDemandDocs(docs);
 
@@ -84,6 +121,15 @@ const Doc = () => {
       try {
         //PORTFOLIOS
         const responseDocs = await fetchSentDocs({ IdCtraCli });
+
+        // AUTHENTIFICATION
+        console.log("response", responseDocs);
+        if (!responseDocs.auth) {
+          console.log("no auth");
+          handleOpenModal();
+          return;
+        }
+
         const docs = responseDocs.data;
         setSentDocs(docs);
 
@@ -98,6 +144,7 @@ const Doc = () => {
   //
 
   // OnDemand DOC LIST RENDER
+
   const onDemandlist = onDemandDocs.map((obj, key) => {
     return (
       <DemandCard
@@ -136,6 +183,10 @@ const Doc = () => {
   return (
     <>
       <Snack setSnackStateRef={setSnackStateRef} />
+      <Modal
+        setModalStateRef={setModalStateRef}
+        onConfirmation={handleConfirmation}
+      />
       <Box sx={styles.content} id="content">
         <TabContext value={tabValue}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
