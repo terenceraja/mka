@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useRef } from "react";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
+import Snack from "../components/Snack";
 
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -28,6 +29,9 @@ const VisuallyHiddenInput = styled("input")({
   whiteSpace: "nowrap",
   width: 0,
 });
+
+//UTILS
+import { fileChecker } from "../utils/fileChecker";
 
 // HTTP
 import { postFile } from "../utils/http";
@@ -85,9 +89,24 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
 
   // FILE SELECTION
   const handleFileSelect = (event) => {
-    const newFile = event.target.files[0];
-    if (newFile) {
-      setSelectedFile(newFile);
+    const checkResponse = fileChecker(event);
+    const { state, message, file } = checkResponse;
+    if (state) {
+      setSelectedFile(file);
+    } else if (!state && message === "type") {
+      triggerSnack({
+        open: true,
+        message:
+          "Veuillez sélectionner un fichier au format PDF, PNG ou JPEG uniquement",
+        severity: "error",
+      });
+    } else if (!state && message === "size") {
+      triggerSnack({
+        open: true,
+        message:
+          "Veuillez sélectionner un fichier d'une taille maximale de 5 Mo.",
+        severity: "error",
+      });
     }
     event.target.value = ""; // Reset the input field
   };
@@ -133,6 +152,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
 
   return (
     <>
+      <Snack setSnackStateRef={setSnackStateRef} />
       <Modal
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
@@ -204,6 +224,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
           </Stack>
         </Stack>
         <Divider />
+
         <Stack
           direction="row"
           spacing={2}

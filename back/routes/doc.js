@@ -20,7 +20,29 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+// Define a file filter function to accept only PDF files
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "application/pdf" ||
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/png"
+  ) {
+    cb(null, true); // Accept the file
+  } else {
+    cb(new Error("Only PDF, JPEG, and PNG files are allowed"), false); // Reject the file
+  }
+};
+
+// Set the file size limit to 5MB
+const limits = {
+  fileSize: 5 * 1024 * 1024, // 5MB in bytes
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: limits,
+});
 
 // UPLOAD FILE
 router.post(

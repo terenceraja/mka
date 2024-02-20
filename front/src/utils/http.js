@@ -71,40 +71,50 @@ export const fetchOpe = async (dataToPost) => {
 
 // zlignptf TO FIND ALL LIGNS WITH PTF ID
 export const fetchLign = async (dataToPost) => {
-  const response = await fetch("http://localhost:3000/zlignptf", {
-    method: "POST",
-    body: JSON.stringify(dataToPost),
-    headers: {
-      "x-access-token": localStorage.getItem("token"),
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const response = await fetch("http://localhost:3000/zlignptf", {
+      method: "POST",
+      body: JSON.stringify(dataToPost),
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    });
 
-  const resData = await response.json();
-  if (!response.ok) {
+    const resData = await response.json();
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+
+    return resData;
+  } catch (error) {
+    console.error("Error:", error); // Log any errors that occur during the request
     throw new Error("Something went wrong");
   }
-
-  return resData;
 };
 
 // zmvt TO FIND ALL MVT WITH ASSET ID
 export const fetchMvt = async (dataToPost) => {
-  const response = await fetch("http://localhost:3000/zmvt", {
-    method: "POST",
-    body: JSON.stringify(dataToPost),
-    headers: {
-      "x-access-token": localStorage.getItem("token"),
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const response = await fetch("http://localhost:3000/zmvt", {
+      method: "POST",
+      body: JSON.stringify(dataToPost),
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    });
 
-  const resData = await response.json();
-  if (!response.ok) {
+    const resData = await response.json();
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+
+    return resData;
+  } catch (error) {
+    console.error("Error:", error); // Log any errors that occur during the request
     throw new Error("Something went wrong");
   }
-
-  return resData;
 };
 
 // UPLOAD FILE
@@ -115,57 +125,71 @@ export const postFile = async (fileToPost, FileId) => {
   formData.append("FileId", FileId); // Append the document ID to the FormData
 
   console.log("formdata", formData.values);
+  try {
+    const response = await fetch("http://localhost:3000/doc/upload", {
+      method: "POST",
+      body: formData,
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
 
-  const response = await fetch("http://localhost:3000/doc/upload", {
-    method: "POST",
-    body: formData,
-    headers: {
-      "x-access-token": localStorage.getItem("token"),
-    },
-  });
+    const resData = await response.json();
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
 
-  const resData = await response.json();
-  if (!response.ok) {
+    return resData;
+  } catch (error) {
+    console.error("Error:", error); // Log any errors that occur during the request
     throw new Error("Something went wrong");
   }
-
-  return resData;
 };
 
 // zfile GET ONDEMAND DOCS
 export const fetchOnDemandDocs = async (dataToPost) => {
-  const response = await fetch("http://localhost:3000/doc/onDemand", {
-    method: "POST",
-    body: JSON.stringify(dataToPost),
-    headers: {
-      "x-access-token": localStorage.getItem("token"),
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const response = await fetch("http://localhost:3000/doc/onDemand", {
+      method: "POST",
+      body: JSON.stringify(dataToPost),
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    });
 
-  const resData = await response.json();
-  if (!response.ok) {
+    const resData = await response.json();
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+
+    return resData;
+  } catch (error) {
+    console.error("Error:", error); // Log any errors that occur during the request
     throw new Error("Something went wrong");
   }
-
-  return resData;
 };
 
 // zfile GET SENT DOCS
 export const fetchSentDocs = async (dataToPost) => {
-  const response = await fetch("http://localhost:3000/doc/sent", {
-    method: "POST",
-    body: JSON.stringify(dataToPost),
-    headers: {
-      "x-access-token": localStorage.getItem("token"),
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const response = await fetch("http://localhost:3000/doc/sent", {
+      method: "POST",
+      body: JSON.stringify(dataToPost),
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    });
 
-  const resData = await response.json();
-  if (!response.ok) {
+    const resData = await response.json();
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+
+    return resData;
+  } catch (error) {
+    console.error("Error:", error); // Log any errors that occur during the request
     throw new Error("Something went wrong");
   }
-
-  return resData;
 };

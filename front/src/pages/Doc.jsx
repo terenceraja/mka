@@ -196,8 +196,11 @@ const Doc = () => {
             </TabList>
           </Box>
           <TabPanel sx={styles.tabContent} value="1">
-            <Card title="DOCUMENTS A ENVOYER">
-              <Box sx={styles.listContainer3}>
+            <Card
+              title="DOCUMENTS A ENVOYER"
+              subTitle="Fichier : pdf, png, jpeg | Taile max : 5MB"
+            >
+              <Box sx={styles.docsContainer}>
                 {onDemandDocs.length > 0
                   ? onDemandlist
                   : "Pas de documents à envoyer"}
@@ -207,7 +210,7 @@ const Doc = () => {
 
           <TabPanel sx={{ padding: "0px" }} value="2">
             <Card title="DOCUMENTS ENVOYES">
-              <Box sx={styles.listContainer3}>
+              <Box sx={styles.docsContainer}>
                 {sentDocs.length > 0 ? sentList : "Aucun documents envoyés"}
               </Box>
             </Card>
@@ -235,23 +238,12 @@ const styles = {
     display: "flex",
   },
 
-  listContainer2: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "5px",
-    height: "400px",
-    borderRadius: "4px",
-    borderColor: "highlight.main",
-    p: 2,
-    overflowY: "auto",
-  },
-  listContainer3: {
+  docsContainer: {
     display: "flex",
     flexDirection: "column",
     gap: "15px",
-    maxHeight: "100%",
+    maxHeight: "550px",
     overflowY: "auto",
-
     p: 1,
   },
 };
