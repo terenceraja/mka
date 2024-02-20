@@ -198,7 +198,7 @@ const Doc = () => {
           <TabPanel sx={styles.tabContent} value="1">
             <Card
               title="DOCUMENTS A ENVOYER"
-              subTitle="Fichier : pdf, png, jpeg | Taile max : 5MB"
+              subTitle="Fichier : pdf, png, jpeg | Taille max : 5MB"
             >
               <Box sx={styles.docsContainer}>
                 {onDemandDocs.length > 0
@@ -242,7 +242,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "15px",
-    maxHeight: "550px",
+    maxHeight: "450px",
     overflowY: "auto",
     p: 1,
   },

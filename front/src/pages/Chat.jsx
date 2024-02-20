@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
+const socket = io.connect("http://localhost:3000"); // Create the socket connection outside the component
 const ChatComponent = () => {
   const [messages, setMessages] = useState("the message");
   const [messageInput, setMessageInput] = useState("");
-
-  const socket = io.connect("http://localhost:3000"); // Create the socket connection outside the component
 
   useEffect(() => {
     // Event listener for incoming messages
