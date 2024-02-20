@@ -43,22 +43,30 @@ export const fetchPtf = async (dataToPost) => {
   }
 };
 
-// zctraptf TO FIND ALL OPE WITH USER ID
+// zope TO FIND ALL OPE WITH USER ID
 export const fetchOpe = async (dataToPost) => {
-  const response = await fetch("http://localhost:3000/zope", {
-    method: "POST",
-    body: JSON.stringify(dataToPost),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const response = await fetch("http://localhost:3000/zope", {
+      method: "POST",
+      body: JSON.stringify(dataToPost),
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    });
 
-  const resData = await response.json();
-  if (!response.ok) {
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Error:", errorData); // Log the error response data
+      throw new Error("Something went wrong");
+    }
+    const resData = await response.json();
+
+    return resData;
+  } catch (error) {
+    console.error("Error:", error); // Log any errors that occur during the request
     throw new Error("Something went wrong");
   }
-
-  return resData;
 };
 
 // zlignptf TO FIND ALL LIGNS WITH PTF ID
@@ -67,6 +75,7 @@ export const fetchLign = async (dataToPost) => {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
+      "x-access-token": localStorage.getItem("token"),
       "Content-Type": "application/json",
     },
   });
@@ -85,6 +94,7 @@ export const fetchMvt = async (dataToPost) => {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
+      "x-access-token": localStorage.getItem("token"),
       "Content-Type": "application/json",
     },
   });

@@ -1,8 +1,10 @@
 import React from "react";
 import Card from "../components/Card";
 import Table from "../components/Table";
-import { useState, useEffect } from "react";
+import Modal from "../components/Modal";
+import { useState, useEffect, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useNavigate } from "react-router-dom";
 
 import { Box } from "@mui/material";
 
@@ -29,6 +31,32 @@ const Mvt = () => {
   const [columnsMvt, setColumnsMvt] = useState([]);
   const [optionsMvt, setOptionsMvt] = useState({});
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+
+  //MODAL
+  const setModalStateRef = useRef(null); // Create a ref to store setSnackState function
+  // Function to trigger state change in Snack component
+  const triggerModalStateChange = (newState) => {
+    if (setModalStateRef.current) {
+      setModalStateRef.current(newState); // Update Snack component state using the stored function
+    }
+  };
+  const handleOpenModal = () => {
+    triggerModalStateChange({
+      ...setModalStateRef.current,
+      open: true,
+      message: `Session expiré ou token indisponible, vous allez être redirigé à la page de connexion`,
+      confirmation: "SE RECONNECTER",
+      auth: false,
+    });
+  };
+  const handleConfirmation = () => {
+    localStorage.clear();
+    setTimeout(() => {
+      navigate("/");
+    }, 1200);
+  };
 
   // STORE
   const lignInfos = useSelector((state) => state.keys.value.activeLign);
@@ -60,7 +88,13 @@ const Mvt = () => {
 
       try {
         const responseMvt = await fetchMvt(lignInfos);
+
+        // AUTHENTIFICATION
         console.log("response", responseMvt);
+        if (!responseMvt.auth) {
+          console.log("no auth");
+          handleOpenModal();
+        }
 
         const updateData = formatISO(
           responseMvt.data,
@@ -81,6 +115,10 @@ const Mvt = () => {
   //
   return (
     <Box sx={styles.content}>
+      <Modal
+        setModalStateRef={setModalStateRef}
+        onConfirmation={handleConfirmation}
+      />
       <Card title={lignInfos.Libelle_lmt}>
         <Table columns={columnsMvt} data={dataMvt} options={optionsMvt} />
       </Card>

@@ -2,8 +2,9 @@ import React from "react";
 import Card from "../components/Card";
 import Table from "../components/Table";
 import ChartBar from "../components/ChartBar";
+import Modal from "../components/Modal";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -41,6 +42,33 @@ const DetPtf = () => {
   const [columnsLignPtf, setColumnsLignPtf] = useState([]);
   const [dataBar, setDataBar] = useState({});
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  //MODAL
+  const setModalStateRef = useRef(null); // Create a ref to store setSnackState function
+  // Function to trigger state change in Snack component
+  const triggerModalStateChange = (newState) => {
+    if (setModalStateRef.current) {
+      setModalStateRef.current(newState); // Update Snack component state using the stored function
+    }
+  };
+  const handleOpenModal = () => {
+    triggerModalStateChange({
+      ...setModalStateRef.current,
+      open: true,
+      message: `Session expiré ou token indisponible, vous allez être redirigé à la page de connexion`,
+      confirmation: "SE RECONNECTER",
+      auth: false,
+    });
+  };
+  const handleConfirmation = () => {
+    localStorage.clear();
+    setTimeout(() => {
+      navigate("/");
+    }, 1200);
+  };
 
   // RESPONSIVE TABLE
   const isSmartphone = useMediaQuery({
@@ -106,9 +134,6 @@ const DetPtf = () => {
   } = ptfInfos;
   console.log("id", IdCtraPtf);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   // GET FETCHING EXAMPLE
   useEffect(() => {
     const fetchDataFromServer = async () => {
@@ -116,7 +141,14 @@ const DetPtf = () => {
 
       try {
         const responseLignPtf = await fetchLign({ IdCtraPtf });
-        // console.log(responseLignPtf);
+
+        // AUTHENTIFICATION
+        console.log("response", responseLignPtf);
+        if (!responseLignPtf.auth) {
+          console.log("no auth");
+          handleOpenModal();
+        }
+
         //CALCULATE +/- VALUE
         const dataWithPCTVal = PCTValCalc(responseLignPtf.data);
         // console.log("PCTVAL", dataWithPCTVal);
@@ -172,6 +204,10 @@ const DetPtf = () => {
   };
   return (
     <Box sx={styles.content}>
+      <Modal
+        setModalStateRef={setModalStateRef}
+        onConfirmation={handleConfirmation}
+      />
       <Card title="CLASSES D'ACTIF">
         <ChartBar data={dataBarChart} />
       </Card>

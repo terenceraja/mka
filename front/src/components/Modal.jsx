@@ -17,9 +17,10 @@ const Modal = ({ setModalStateRef, onConfirmation }) => {
     message: "",
     confirmation: "",
     isLoading: false,
+    auth: true,
   });
 
-  console.log(modalState);
+  // console.log(modalState);
 
   useEffect(() => {
     // Store setSnackState function in the ref
@@ -42,12 +43,13 @@ const Modal = ({ setModalStateRef, onConfirmation }) => {
         ...prevState,
         isLoading: false,
         open: false,
+        auth: true,
       }));
     }, 1200);
   };
 
   return (
-    <Dialog open={modalState.open} onClose={handleCloseModal}>
+    <Dialog open={modalState.open}>
       <DialogTitle id="alert-dialog-title">{"CONFIRMATION"}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
@@ -60,7 +62,7 @@ const Modal = ({ setModalStateRef, onConfirmation }) => {
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleCloseModal}>Annuler</Button>
+        {modalState.auth && <Button onClick={handleCloseModal}>Annuler</Button>}
         <Button type="submit" color="warning" onClick={handleConfirmation}>
           {modalState.confirmation}
         </Button>

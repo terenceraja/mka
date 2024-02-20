@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 
 const createToken = (IdCtraCli) => {
   const jwtkey = process.env.JWT_SECRET_KEY;
-  return jwt.sign({ IdCtraCli }, jwtkey, { expiresIn: 300 });
+  return jwt.sign({ IdCtraCli }, jwtkey, { expiresIn: "3d" });
 };
 
 const { zctracli, zctraptf, zope, zlignptf, zmvt } = require("../models"); // Import your Sequelize model
@@ -31,6 +31,7 @@ router.post("/zctracli", async function (req, res, next) {
         data: user,
       });
     } else {
+      //CREATE TOKEN WITH HIDDEN USERID KEY
       const token = createToken(user.IdCtraCli);
 
       res.json({
@@ -47,9 +48,10 @@ router.post("/zctracli", async function (req, res, next) {
 
 // ROUTE ON PAGE PTF : POST USER ID AND GET PTFS
 router.post("/zctraptf", verifyJwt, async function (req, res, next) {
-  console.log("YOOOOOOOOOOOO", req.IdCtraCli);
   try {
-    const { IdCtraCli } = req.body;
+    // FROM TOKEN
+    const IdCtraCli = req.IdCtraCli;
+    // const { IdCtraCli } = req.body;
 
     const ptfs = await zctraptf.findAll({
       where: {
@@ -76,7 +78,7 @@ router.post("/zctraptf", verifyJwt, async function (req, res, next) {
 });
 
 // ROUTE ON PAGE PTF : POST PTFs ID AND GET ALL OPE
-router.post("/zope", async function (req, res, next) {
+router.post("/zope", verifyJwt, async function (req, res, next) {
   try {
     const { IdCtraPtf } = req.body;
 
@@ -86,7 +88,7 @@ router.post("/zope", async function (req, res, next) {
       },
     });
 
-    res.json({ message: "Operations found !", data: ope }); // Send the result as JSON
+    res.json({ auth: true, message: "Operations found !", data: ope }); // Send the result as JSON
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -94,7 +96,7 @@ router.post("/zope", async function (req, res, next) {
 });
 
 // ROUTE ON PAGE DETPTF : POST PTF ID AND GET ALL LIGN
-router.post("/zlignptf", async function (req, res, next) {
+router.post("/zlignptf", verifyJwt, async function (req, res, next) {
   try {
     console.log(req.body);
     const { IdCtraPtf } = req.body;
@@ -105,7 +107,7 @@ router.post("/zlignptf", async function (req, res, next) {
       },
       order: [["LangueNomLocalAlloc_lmt", "ASC"]], // ASC for ascending, DESC for descending
     });
-    res.json({ message: "Ligns found !", data: ligns }); // Send the result as JSON
+    res.json({ auth: true, message: "Ligns found !", data: ligns }); // Send the result as JSON
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -113,7 +115,7 @@ router.post("/zlignptf", async function (req, res, next) {
 });
 
 // ROUTE ON PAGE DETPTF : POST PTF ID AND GET ALL LIGN
-router.post("/zmvt", async function (req, res, next) {
+router.post("/zmvt", verifyJwt, async function (req, res, next) {
   try {
     const { IdCtraPtf, IdAsset } = req.body;
     console.log(req.body);
@@ -126,7 +128,7 @@ router.post("/zmvt", async function (req, res, next) {
       order: [["CptaDateOPE_lsd", "DESC"]], // ASC for ascending, DESC for descending
     });
 
-    res.json({ message: "Mvt found !", data: mvt }); // Send the result as JSON
+    res.json({ auth: true, message: "Mvt found !", data: mvt }); // Send the result as JSON
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

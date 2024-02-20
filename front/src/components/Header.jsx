@@ -8,9 +8,6 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-// REDUCER
-import { clearStore } from "../reducers/primaryKeys";
-
 const Header = () => {
   const setModalStateRef = useRef(null); // Create a ref to store setSnackState function
   // Function to trigger state change in Snack component
@@ -31,12 +28,13 @@ const Header = () => {
       open: true,
       message: `Cette action mettra fin à votre session. Êtes-vous certain de vouloir 
       vous déconnecter?`,
+      auth: true,
       confirmation: "SE DECONNECTER",
     });
   };
 
   const handleConfirmation = () => {
-    dispatch(clearStore());
+    localStorage.clear();
     setTimeout(() => {
       navigate("/");
     }, 1200);

@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
-import { useState, useEffect } from "react";
+import Modal from "../components/Modal";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useMediaQuery } from "react-responsive";
 import Table from "../components/Table";
@@ -40,13 +41,37 @@ const Cons = () => {
   const [dataBar, setDataBar] = useState({});
   const [error, setError] = useState("");
 
+  // NAVIGATE
+  const navigate = useNavigate();
+
+  //MODAL
+  const setModalStateRef = useRef(null); // Create a ref to store setSnackState function
+  // Function to trigger state change in Snack component
+  const triggerModalStateChange = (newState) => {
+    if (setModalStateRef.current) {
+      setModalStateRef.current(newState); // Update Snack component state using the stored function
+    }
+  };
+  const handleOpenModal = () => {
+    triggerModalStateChange({
+      ...setModalStateRef.current,
+      open: true,
+      message: `Session expiré ou token indisponible, vous allez être redirigé à la page de connexion`,
+      confirmation: "SE RECONNECTER",
+      auth: false,
+    });
+  };
+  const handleConfirmation = () => {
+    localStorage.clear();
+    setTimeout(() => {
+      navigate("/");
+    }, 1200);
+  };
+
   //STORE
   const dispatch = useDispatch();
   const IdCtraPtf = useSelector((state) => state.keys.value.IdCrtaPTF);
   const totalMV = useSelector((state) => state.keys.value.TotalMV);
-
-  // NAVIGATE
-  const navigate = useNavigate();
 
   console.log("IdCtraPtfArray", IdCtraPtf);
   console.log("Total MV", totalMV);
@@ -110,7 +135,14 @@ const Cons = () => {
 
       try {
         const responseLignPtf = await fetchLign({ IdCtraPtf });
-        console.log(responseLignPtf);
+
+        // AUTHENTIFICATION
+        console.log("response", responseLignPtf);
+        if (!responseLignPtf.auth) {
+          console.log("no auth");
+          handleOpenModal();
+        }
+
         //CALCULATE +/- VALUE
         const dataWithPCTVal = PCTValCalc(responseLignPtf.data);
         // console.log("PCTVAL", dataWithPCTVal);
@@ -162,6 +194,10 @@ const Cons = () => {
   };
   return (
     <Box sx={styles.content}>
+      <Modal
+        setModalStateRef={setModalStateRef}
+        onConfirmation={handleConfirmation}
+      />
       <Card title="CLASSES D'ACTIF">
         <ChartBar data={dataBarChart} />
       </Card>

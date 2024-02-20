@@ -27,7 +27,6 @@ import {
   addIdCtraPtfToStore,
   addActivePtfToStore,
   addTotalMVToStore,
-  clearStore,
 } from "../reducers/primaryKeys";
 
 // HTTP REQUEST
@@ -69,12 +68,13 @@ const Ptf = () => {
     triggerModalStateChange({
       ...setModalStateRef.current,
       open: true,
-      message: `Session expiré ou token introuvable, vous allez être redirigé à la page de connexion`,
+      message: `Session expiré ou token indisponible, vous allez être redirigé à la page de connexion`,
       confirmation: "SE RECONNECTER",
+      auth: false,
     });
   };
   const handleConfirmation = () => {
-    dispatch(clearStore());
+    localStorage.clear();
     setTimeout(() => {
       navigate("/");
     }, 1200);
@@ -163,12 +163,13 @@ const Ptf = () => {
 
       try {
         //PORTFOLIOS
-        const responsePtf = await fetchPtf({ IdCtraCli });
-        console.log(responsePtf);
+        // const responsePtf = await fetchPtf({ IdCtraCli });
+        //--no need to send userID thanks to token
+        const responsePtf = await fetchPtf();
 
         // AUTHENTIFICATION
+        console.log(responsePtf);
         if (!responsePtf.auth) {
-          dispatch(clearStore());
           handleOpenModal();
         }
 
@@ -183,12 +184,22 @@ const Ptf = () => {
 
         //OPERATIONS
         const responseOpe = await fetchOpe({ IdCtraPtf });
+        // AUTHENTIFICATION
         console.log(responseOpe);
+        if (!responseOpe.auth) {
+          handleOpenModal();
+        }
+
         const updateDataOpe = formatISO(responseOpe.data, "DateCptaOPE_lsd");
         setdataOpe(updateDataOpe);
 
         //LIGNES CLASSES FOR DOUGHNUT
         const responseLignPtf = await fetchLign({ IdCtraPtf });
+        // AUTHENTIFICATION
+        console.log(responseLignPtf);
+        if (!responseLignPtf.auth) {
+          handleOpenModal();
+        }
         const labelsAndDataClasses = getUniqueLanguesWithSum(
           responseLignPtf.data,
           responsePtf.totMV
