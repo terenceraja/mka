@@ -10,11 +10,14 @@ import { jwtDecode } from "jwt-decode";
 
 const Layout = () => {
   const [user, setUser] = useState(null);
-  const [newMessage, setNewMessages] = useState("the message");
-  const [messageInput, setMessageInput] = useState("");
+  const [messageToSend, setMessageToSend] = useState("");
+  const [sendTimeStamp, setSendTimeStamp] = useState(null);
+  const [recievedMessage, setRecievedMessage] = useState("the message");
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [socket, setSocket] = useState(null);
-  console.log("onlineUsers", onlineUsers);
+  // console.log("onlineUsers", onlineUsers);
+  console.log("hey", messageToSend);
+  console.log("recieved message", recievedMessage);
 
   // GET IdCtraCli FROM TOKEN
   useEffect(() => {
@@ -48,24 +51,37 @@ const Layout = () => {
   // SEND MESSAGING
   useEffect(() => {
     if (socket === null) return;
-    socket.emit("sendMessage", { ...newMessage, recipientId });
-  }, [newMessage]);
+    socket.emit("sendMessage", {
+      messageToSend,
+      recipientUser: 1364, //////SET DYNAMIC
+      sendTimeStamp,
+    });
+  }, [messageToSend, sendTimeStamp]);
 
-  // RECIEVE MESSAGING
+  // // RECIEVE MESSAGING
   useEffect(() => {
     if (socket === null) return;
     socket.on("getMessage", (res) => {
-      setMessages((prev) => [...prev, res]);
+      setRecievedMessage(res.messageToSend);
     });
 
     return () => socket.off("getMessage");
-  }, [socket, currentChat]);
+  }, [socket]);
 
   return (
     <>
       <Header />
       <Box component={"main"} sx={styles.mainContent}>
-        <Outlet />
+        <Outlet
+          context={[
+            messageToSend,
+            setMessageToSend,
+            sendTimeStamp,
+            setSendTimeStamp,
+            recievedMessage,
+            setRecievedMessage,
+          ]}
+        />
         <Footer />
       </Box>
       <BottomNavigation />

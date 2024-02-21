@@ -37,11 +37,15 @@ io.on("connection", (socket) => {
   console.log(`socket connection ${socket.id}`);
 
   socket.on("sendMessage", (message) => {
-    const user = onlineUsers.find((user) => user.id === message.recipientId);
+    console.log("server recieving sent message", message);
+    const user = onlineUsers.find(
+      (user) => user.userId === message.recipientUser
+    );
+    console.log("hoho", user);
     if (user) {
-      io.to(user.socketId).emit("getMessage", message);
+      console.log("sending");
+      io.to(user.socketId).emit("getMessage", message.messageToSend);
     }
-    socket.broadcast.emit("receive_message", data);
   });
 
   socket.on("disconnect", () => {

@@ -1,17 +1,32 @@
 import React, { useState, useEffect } from "react";
-// import io from "socket.io-client";
-// const socket = io.connect("http://localhost:3000"); // Create the socket connection outside the component
-const ChatComponent = () => {
-  const [messageInput, setMessageInput] = useState("");
+import { useOutletContext } from "react-router-dom";
 
+const ChatComponent = () => {
+  const [
+    messageToSend,
+    setMessageToSend,
+    sendTimeStamp,
+    setSendTimeStamp,
+    recievedMessage,
+    setRecievedMessage,
+  ] = useOutletContext();
+
+  const [inputMessage, setInputMessage] = useState("");
+  console.log(inputMessage);
+
+  const handleSendMessage = () => {
+    setMessageToSend(inputMessage);
+    setSendTimeStamp(Date.now());
+  };
   return (
     <div>
       <input
         type="text"
-        value={messageInput}
-        onChange={(e) => setMessageInput(e.target.value)}
+        value={inputMessage}
+        onChange={(e) => setInputMessage(e.target.value)}
       />
-      <button>Send</button>
+      <button onClick={() => handleSendMessage()}>Send</button>
+      <span>{recievedMessage}</span>
     </div>
   );
 };
