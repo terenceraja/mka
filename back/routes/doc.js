@@ -35,7 +35,7 @@ const fileFilter = (req, file, cb) => {
 
 // Set the file size limit to 5MB
 const limits = {
-  fileSize: 5 * 1024 * 1024, // 5MB in bytes
+  fileSize: 10 * 1024 * 1024, // 10MB in bytes
 };
 
 const upload = multer({
@@ -119,7 +119,7 @@ router.post("/sent", verifyJwt, async function (req, res, next) {
       // order: [["CptaDateOPE_lsd", "DESC"]], // ASC for ascending, DESC for descending
     });
 
-    res.json({ auth: true, message: "Doc demands found !", data: docDemand }); // Send the result as JSON
+    res.json({ auth: true, message: "Doc sent found !", data: docDemand }); // Send the result as JSON
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

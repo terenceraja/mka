@@ -28,9 +28,8 @@ const Doc = () => {
   const [onDemandDocs, setOnDemandDocs] = useState([]);
   const [sentDocs, setSentDocs] = useState([]);
   const [error, setError] = useState("");
-  console.log("sentlist", sentDocs);
-
-  console.log("demandlist", onDemandDocs);
+  // console.log("sentlist", sentDocs);
+  // console.log("demandlist", onDemandDocs);
 
   const navigate = useNavigate();
 
@@ -97,15 +96,12 @@ const Doc = () => {
       // AUTHENTIFICATION
       console.log("response", responseDocs);
       if (!responseDocs.auth) {
-        console.log("no authaze");
         handleOpenModal();
         return;
       }
 
       const docs = responseDocs.data;
       setOnDemandDocs(docs);
-
-      console.log("onDemand", responseDocs.data);
     } catch (error) {
       setError({ message: error.message || "custom error message" });
     }
@@ -125,15 +121,12 @@ const Doc = () => {
         // AUTHENTIFICATION
         console.log("response", responseDocs);
         if (!responseDocs.auth) {
-          console.log("no auth");
           handleOpenModal();
           return;
         }
 
         const docs = responseDocs.data;
         setSentDocs(docs);
-
-        console.log("Sent", responseDocs.data);
       } catch (error) {
         setError({ message: error.message || "custom error message" });
       }
@@ -198,7 +191,7 @@ const Doc = () => {
           <TabPanel sx={styles.tabContent} value="1">
             <Card
               title="DOCUMENTS A ENVOYER"
-              subTitle="Fichier : pdf, png, jpeg | Taille max : 5MB"
+              subTitle="Fichier : pdf, png, jpeg | Taille max : 10MB"
             >
               <Box sx={styles.docsContainer}>
                 {onDemandDocs.length > 0

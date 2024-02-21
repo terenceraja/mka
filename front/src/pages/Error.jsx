@@ -1,17 +1,33 @@
 import React from "react";
 import { Box } from "@mui/material";
-
+import Button from "@mui/material/Button";
 import logo from "../assets/myKeeApp.png";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 
 const Error = () => {
+  const navigate = useNavigate();
+
+  const handleButton = () => {
+    localStorage.clear();
+    navigate("/");
+  };
   return (
     <Box component={"main"} sx={styles.mainContent}>
       <Box sx={styles.log_card}>
-        <Box component={"section"} sx={styles.logo_section}>
-          <img src={logo} width={"90%"} alt="logo" id="logo" />
-          <Typography variant="logoSubtitle">Welcome to myKeeApp</Typography>
-        </Box>
+        <img src={logo} width={"90%"} alt="logo" id="logo" />
+        <Typography variant="logoSubtitle">
+          Votre session a expiré ou vos identifiants sont incorrects. Veuillez
+          vous reconnecter.
+        </Typography>
+        <Button
+          sx={styles.loginBtn}
+          onClick={() => handleButton()}
+          fullWidth
+          variant="contained"
+        >
+          RETOUR PAGE CONNEXION
+        </Button>
       </Box>
     </Box>
   );
@@ -29,7 +45,7 @@ const styles = {
   log_card: {
     display: "flex",
     flexDirection: "column",
-
+    justifyContent: "center",
     alignItems: "center",
     bgcolor: "white",
     width: "100%",
@@ -46,6 +62,11 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     gap: 1,
+  },
+  loginBtn: {
+    marginTop: "20px",
+    bgcolor: "complementary.main",
+    height: "45px",
   },
 };
 

@@ -42,7 +42,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [error, setError] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  console.log("selected file", selectedFile);
+  // console.log("selected file", selectedFile);
 
   const navigate = useNavigate();
 
@@ -128,7 +128,6 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
       // AUTHENTIFICATION
       console.log("response", response);
       if (!response.auth) {
-        console.log("no authaze");
         handleOpenModal();
         return;
       }

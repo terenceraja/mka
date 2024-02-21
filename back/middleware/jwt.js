@@ -9,12 +9,15 @@ const verifyJwt = (req, res, next) => {
 
     jwt.verify(token, jwtkey, (err, decoded) => {
       if (err) {
-        res.json({ auth: false, message: "Authenfication failed !" });
-      } else {
-        // DEFINES A REQ.VARIABLE = AVAILABLE VARIABLE INSIDE TOKEN FROM CREATION
-        req.IdCtraCli = decoded.IdCtraCli;
-        next();
+        res.json({
+          auth: false,
+          error: err,
+        });
       }
+
+      // DEFINES A REQ.VARIABLE = AVAILABLE VARIABLE INSIDE TOKEN FROM CREATION
+      req.IdCtraCli = decoded.IdCtraCli;
+      next();
     });
   }
 };

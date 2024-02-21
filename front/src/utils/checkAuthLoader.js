@@ -7,7 +7,8 @@ export const checkAuthLoader = async () => {
   const response = await auth();
   console.log(response);
   if (!response.auth) {
-    return redirect("/");
+    localStorage.clear();
+    return redirect("/error");
   }
   return null;
 };

@@ -4,7 +4,63 @@ import Header from "../components/Header";
 import BottomNavigation from "../components/BottomNav";
 import { Box } from "@mui/material";
 import Footer from "../components/Footer";
+import io from "socket.io-client";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+
 const Layout = () => {
+  const [user, setUser] = useState(null);
+  const [newMessage, setNewMessages] = useState("the message");
+  const [messageInput, setMessageInput] = useState("");
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const [socket, setSocket] = useState(null);
+  console.log("onlineUsers", onlineUsers);
+
+  // GET IdCtraCli FROM TOKEN
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const decodedId = jwtDecode(token);
+    const IdCtraCli = decodedId.IdCtraCli;
+    setUser(IdCtraCli);
+    console.log(IdCtraCli);
+  }, []);
+
+  // ON CONNECTION
+  useEffect(() => {
+    const newSocket = io.connect("http://localhost:3000"); // Create the socket connection outside the component
+    setSocket(newSocket);
+    return () => newSocket.disconnect();
+  }, [user]);
+
+  // ADDONLINE USERS IN ARRAY
+  useEffect(() => {
+    if (socket === null) return;
+    socket.emit("addNewUser", user);
+    socket.on("getOnlineUsers", (res) => {
+      setOnlineUsers(res);
+    });
+
+    return () => {
+      socket.off("getOnlineUsers");
+    };
+  }, [socket]);
+
+  // SEND MESSAGING
+  useEffect(() => {
+    if (socket === null) return;
+    socket.emit("sendMessage", { ...newMessage, recipientId });
+  }, [newMessage]);
+
+  // RECIEVE MESSAGING
+  useEffect(() => {
+    if (socket === null) return;
+    socket.on("getMessage", (res) => {
+      setMessages((prev) => [...prev, res]);
+    });
+
+    return () => socket.off("getMessage");
+  }, [socket, currentChat]);
+
   return (
     <>
       <Header />
