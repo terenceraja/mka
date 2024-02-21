@@ -193,3 +193,27 @@ export const fetchSentDocs = async (dataToPost) => {
     throw new Error("Something went wrong");
   }
 };
+
+// AUTHENTICATE
+export const auth = async () => {
+  try {
+    const response = await fetch("http://localhost:3000/auth", {
+      method: "GET",
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Error:", errorData); // Log the error response data
+      throw new Error("Something went wrong");
+    }
+
+    const resData = await response.json();
+    return resData;
+  } catch (error) {
+    console.error("Error:", error); // Log any errors that occur during the request
+    throw new Error("Something went wrong");
+  }
+};

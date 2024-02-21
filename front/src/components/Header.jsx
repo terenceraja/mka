@@ -17,7 +17,7 @@ const Header = () => {
     }
   };
 
-  console.log(setModalStateRef.current);
+  // console.log(setModalStateRef.current);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -130,4 +130,8 @@ router.post("/zmvt", verifyJwt, async function (req, res, next) {
   }
 });
 
+router.get("/auth", verifyJwt, function (req, res) {
+  res.json({ auth: true, message: "token success !" });
+});
+
 module.exports = router;

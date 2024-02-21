@@ -11,7 +11,7 @@ const verifyJwt = (req, res, next) => {
       if (err) {
         res.json({ auth: false, message: "Authenfication failed !" });
       } else {
-        // DEFINES A REQ.VARIABLE = HIDDEN VARIABLE INSIDE TOKEN
+        // DEFINES A REQ.VARIABLE = AVAILABLE VARIABLE INSIDE TOKEN FROM CREATION
         req.IdCtraCli = decoded.IdCtraCli;
         next();
       }
