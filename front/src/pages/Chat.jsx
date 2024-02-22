@@ -119,7 +119,8 @@ const styles = {
   chatContainer: {
     display: "flex",
     flexDirection: "column",
-    height: "100%",
+    maxHeight: "450px",
+    overflowY: "auto",
     bgcolor: "white",
     p: 1,
   },
