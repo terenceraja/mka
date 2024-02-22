@@ -15,6 +15,7 @@ const Layout = () => {
   const [recievedMessage, setRecievedMessage] = useState("the message");
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [socket, setSocket] = useState(null);
+  const [messageData, setMessageData] = useState([]);
   // console.log("onlineUsers", onlineUsers);
   console.log("hey", messageToSend);
   console.log("recieved message", recievedMessage);
@@ -53,7 +54,7 @@ const Layout = () => {
     if (socket === null) return;
     socket.emit("sendMessage", {
       messageToSend,
-      recipientUser: 1364, //////SET DYNAMIC
+      recipientUser: 1364, ////// MAKE DYNAMIC
       sendTimeStamp,
     });
   }, [messageToSend, sendTimeStamp]);
@@ -62,6 +63,7 @@ const Layout = () => {
   useEffect(() => {
     if (socket === null) return;
     socket.on("getMessage", (res) => {
+      console.log("recieving", res);
       setRecievedMessage(res.messageToSend);
     });
 
@@ -80,6 +82,8 @@ const Layout = () => {
             setSendTimeStamp,
             recievedMessage,
             setRecievedMessage,
+            messageData,
+            setMessageData,
           ]}
         />
         <Footer />

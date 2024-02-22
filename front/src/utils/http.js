@@ -217,3 +217,41 @@ export const auth = async () => {
     throw new Error("Something went wrong");
   }
 };
+
+// zmessage TO SAVE MESSAGE
+export const sendMessage = async (dataToPost) => {
+  const response = await fetch("http://localhost:3000/message/send", {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};
+
+// zmessage TO GET MESSAGE BY IDCHAT
+export const getChat = async (dataToPost) => {
+  const response = await fetch("http://localhost:3000/message/get", {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};

@@ -43,8 +43,9 @@ io.on("connection", (socket) => {
     );
     console.log("hoho", user);
     if (user) {
-      console.log("sending");
-      io.to(user.socketId).emit("getMessage", message.messageToSend);
+      console.log("sending", message);
+
+      io.to(user.socketId).emit("getMessage", message);
     }
   });
 

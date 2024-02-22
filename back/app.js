@@ -8,6 +8,7 @@ require("dotenv").config();
 var indexRouter = require("./routes/index");
 var docRouter = require("./routes/doc");
 var iisRouter = require("./routes/iisTest");
+var messageRouter = require("./routes/message");
 
 var app = express();
 
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/doc", docRouter);
+app.use("/message", messageRouter);
 app.use("/iis", iisRouter);
 
 // ///////// IIS CONFIG ///////////

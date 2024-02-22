@@ -138,9 +138,54 @@ export function YTDTimes100(array) {
   return array;
 }
 
+// FORMAT MYSQL DATE
 export function formatISODate(inputDate) {
   const parsedDate = DateTime.fromISO(inputDate);
   return parsedDate.toFormat("dd/MM/yy");
+}
+
+// FORMAT DATE().NOW
+export function formatDate(timestamp) {
+  // Create a new Date object using the timestamp
+  let date = new Date(timestamp);
+
+  // Extract date components
+  let day = date.getDate();
+  let month = date.getMonth() + 1; // Adding 1 because months are zero-indexed
+  let year = date.getFullYear() % 100; // Get last two digits of the year
+
+  // Ensure leading zeros if needed
+  day = (day < 10 ? "0" : "") + day;
+  month = (month < 10 ? "0" : "") + month;
+  year = (year < 10 ? "0" : "") + year;
+
+  // Formatted date string
+  let formattedDate = `${day}/${month}/${year}`;
+
+  return formattedDate;
+}
+
+// FORMAT DATE().NOW
+export function formatTime(timestamp) {
+  // Create a new Date object using the timestamp
+  let date = new Date(timestamp);
+
+  // Extract date components
+
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let seconds = date.getSeconds(); // Add seconds component
+
+  // Ensure leading zeros if needed
+
+  hours = (hours < 10 ? "0" : "") + hours;
+  minutes = (minutes < 10 ? "0" : "") + minutes;
+  seconds = (seconds < 10 ? "0" : "") + seconds; // Ensure leading zeros for seconds
+
+  // Formatted date string
+  let formattedTime = `${hours}:${minutes}:${seconds}`;
+
+  return formattedTime;
 }
 
 // FORMAT QUANTITE COLUMN PAGE DETPTF

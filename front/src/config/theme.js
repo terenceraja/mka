@@ -15,7 +15,9 @@ let theme = createTheme({
     background: {
       main: "#f2f4f3",
     },
-    orange: "#ef8026",
+    orange: {
+      main: "#ef8026",
+    },
     card: {
       main: "#FFFF",
     },
@@ -42,6 +44,16 @@ theme = createTheme(theme, {
     subTitle: {
       fontSize: "12px",
       color: theme.palette.highlight.main,
+      fontWeight: 800,
+    },
+    messageLabel: {
+      fontSize: "12px",
+      color: theme.palette.highlight.main,
+      fontWeight: 800,
+    },
+    message: {
+      fontSize: "14px",
+      color: theme.palette.darkBlue.main,
       fontWeight: 800,
     },
     fileCard: {
