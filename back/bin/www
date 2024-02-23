@@ -36,16 +36,14 @@ let onlineUsers = [];
 io.on("connection", (socket) => {
   console.log(`socket connection ${socket.id}`);
 
-  socket.on("sendMessage", (message) => {
-    console.log("server recieving sent message", message);
-    const user = onlineUsers.find(
-      (user) => user.userId === message.recipientUser
-    );
+  socket.on("sendMessage", (data) => {
+    console.log("server recieving sent message", data);
+    const user = onlineUsers.find((user) => user.userId === data.recipientUser);
     console.log("hoho", user);
     if (user) {
-      console.log("sending", message);
+      console.log("sending", data.messageToSend);
 
-      io.to(user.socketId).emit("getMessage", message);
+      io.to(user.socketId).emit("getMessage", data.messageToSend);
     }
   });
 

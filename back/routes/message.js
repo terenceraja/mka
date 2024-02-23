@@ -39,7 +39,7 @@ router.post("/get", verifyJwt, async function (req, res, next) {
       where: {
         IdChat: IdChat,
       },
-      order: [["TimeStampCreation", "DESC"]], // ASC for ascending, DESC for descending
+      order: [["TimeStampCreation", "ASC"]], // ASC for ascending, DESC for descending
     });
 
     res.json({ auth: true, message: "Chat found !", data: chat }); // Send the result as JSON

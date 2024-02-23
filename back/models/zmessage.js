@@ -26,12 +26,12 @@ module.exports = (sequelize, DataTypes) => {
       TimeStampCreation: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: DataTypes.NOW, // Use Sequelize's NOW function
       },
       TimeStampModification: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+        defaultValue: DataTypes.NOW, // Use Sequelize's NOW function
       },
     },
     {

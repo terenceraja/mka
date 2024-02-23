@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
 import { Stack } from "@mui/material";
 import { Box } from "@mui/material";
@@ -13,7 +13,7 @@ import { sendMessage, getChat } from "../utils/http";
 
 const ChatComponent = () => {
   const theme = useTheme();
-  console.log(theme.palette.orange.main);
+  console.log("color", theme.palette.orange);
   const [
     messageToSend,
     setMessageToSend,
@@ -23,12 +23,18 @@ const ChatComponent = () => {
     setRecievedMessage,
     messageData,
     setMessageData,
+    user,
   ] = useOutletContext();
   console.log("messageData", messageData);
+  console.log(user);
   const [error, setError] = useState("");
-
   const [inputMessage, setInputMessage] = useState("");
-  console.log(inputMessage);
+
+  const messagesEndRef = useRef(null); // Reference to the chat container
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView();
+  }, [messageData]);
 
   // FETCH ALL MESSAGES FROM IDCHAT
   useEffect(() => {
@@ -43,6 +49,9 @@ const ChatComponent = () => {
           return;
         }
         setMessageData(responseChat.data);
+
+        // Scroll to the bottom of the chat container
+        // scrollToBottom();
       } catch (error) {
         setError({ message: error.message || "custom error message" });
       }
@@ -60,6 +69,7 @@ const ChatComponent = () => {
         IdSender={obj.IdSender}
         Message={obj.Message}
         sendTimeStamp={obj.TimeStampCreation}
+        user={user}
       />
     );
   });
@@ -69,20 +79,23 @@ const ChatComponent = () => {
 
     const response = await sendMessage({
       IdChat: 1,
-      IdSender: 1364,
+      IdSender: user === 1364 ? user : 13, ////// MAKE DYNAMIC,
       Message: inputMessage,
     });
     console.log("response", response);
-
+    console.log("response timestamp", response.data.TimeStampCreation);
     if (response.auth) {
-      setMessageToSend(inputMessage);
-      setSendTimeStamp(Date.now());
+      setMessageData((prev) => [...prev, response.data]);
+      setMessageToSend(response.data);
+      setInputMessage("");
     }
   };
+
   return (
     <Box sx={styles.content} id="content">
       <Box sx={styles.chatContainer} id="chatContainer">
         {messageList}
+        <div ref={messagesEndRef} />
       </Box>
       <Box
         component="form"
@@ -96,6 +109,7 @@ const ChatComponent = () => {
             label="Message..."
             variant="standard"
             fullWidth
+            value={inputMessage}
           />
 
           <IconButton type="submit" sx={{ paddingBottom: "0px" }}>
@@ -113,16 +127,17 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "10px",
-
     height: "100%",
   },
   chatContainer: {
     display: "flex",
     flexDirection: "column",
+    minHeight: "500px",
     maxHeight: "450px",
     overflowY: "auto",
     bgcolor: "white",
     p: 1,
+    gap: "25px",
   },
 };
 

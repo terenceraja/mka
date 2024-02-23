@@ -19,6 +19,7 @@ const Layout = () => {
   // console.log("onlineUsers", onlineUsers);
   console.log("hey", messageToSend);
   console.log("recieved message", recievedMessage);
+  console.log(user);
 
   // GET IdCtraCli FROM TOKEN
   useEffect(() => {
@@ -52,10 +53,11 @@ const Layout = () => {
   // SEND MESSAGING
   useEffect(() => {
     if (socket === null) return;
+    let a = user === 1364 ? 13 : 1364;
+    console.log("USER TO SEND TO", a);
     socket.emit("sendMessage", {
       messageToSend,
-      recipientUser: 1364, ////// MAKE DYNAMIC
-      sendTimeStamp,
+      recipientUser: user === 1364 ? 13 : 1364, ////// MAKE DYNAMIC
     });
   }, [messageToSend, sendTimeStamp]);
 
@@ -64,7 +66,7 @@ const Layout = () => {
     if (socket === null) return;
     socket.on("getMessage", (res) => {
       console.log("recieving", res);
-      setRecievedMessage(res.messageToSend);
+      setMessageData((prev) => [...prev, res]);
     });
 
     return () => socket.off("getMessage");
@@ -84,6 +86,7 @@ const Layout = () => {
             setRecievedMessage,
             messageData,
             setMessageData,
+            user,
           ]}
         />
         <Footer />
