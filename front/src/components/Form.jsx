@@ -93,6 +93,7 @@ const Form = () => {
         fullWidth
       />
       <TextField
+        type="password"
         name="password"
         onChange={(e) => handleOnChange(e)}
         id="Password"
