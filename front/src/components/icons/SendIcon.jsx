@@ -4,27 +4,19 @@ const SendIcon = ({ fill }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 30 30"
-      height="25"
-      width="25"
-      id="Mail-Send-Email-Message--Streamline-Sharp.svg"
+      fill={fill}
+      viewBox="-0.5 -0.5 15 15"
+      height="20"
+      width="20"
+      id="Thick-Arrow-Up--Streamline-Sharp.svg"
     >
-      <desc>
-        Mail Send Email Message Streamline Icon: https://streamlinehq.com
-      </desc>
-      <g id="Mail-Send-Email-Message--Streamline-Sharp.svg">
+      <desc>Thick Arrow Up Streamline Icon: https://streamlinehq.com</desc>
+      <g id="Thick-Arrow-Up--Streamline-Sharp.svg">
         <path
-          id="Polygon 7"
+          id="Vector 2249"
           stroke={fill}
-          strokeWidth="2"
-          d="M27.95 2.0500125 2.7499374999999997 10.8935625 12.4999375 17.5l6.5973125 9.75L27.95 2.0500125Z"
-        ></path>
-        <path
-          id="Vector 3045"
-          stroke={fill}
-          strokeWidth="2"
-          d="m12.5 17.5 6.25 -6.25"
+          d="m7 0.8750175 4.666666666666667 4.666666666666667L11.666666666666668 5.833333333333334l-2.916666666666667 0 0 7.583333333333334 -3.5 0 0 -7.583333333333334 -2.916666666666667 0 0 -0.2916491666666667 4.666666666666667 -4.666666666666667Z"
+          strokeWidth="1"
         ></path>
       </g>
     </svg>

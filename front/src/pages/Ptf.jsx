@@ -231,7 +231,7 @@ const Ptf = () => {
   };
 
   return (
-    <Box sx={styles.content}>
+    <Box sx={styles.content} id="content">
       <Modal
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
@@ -271,7 +271,6 @@ const styles = {
   content: {
     display: "flex",
     flexDirection: "column",
-    gap: "10px",
   },
 
   consBtn: {
@@ -285,7 +284,7 @@ const styles = {
   chartsContainer: {
     display: "flex",
     width: "100%",
-    gap: "12px",
+    // gap: "12px",
     "@media (max-width: 767px)": {
       flexDirection: "column", // Change to column layout on small screens
     },

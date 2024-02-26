@@ -89,7 +89,7 @@ const Layout = () => {
             user,
           ]}
         />
-        <Footer />
+        {/* <Footer /> */}
       </Box>
       <BottomNavigation />
     </>
@@ -105,8 +105,8 @@ const styles = {
     flexDirection: "column",
     justifyContent: "space-between",
     bgcolor: "background.main",
-    height: "calc(100% - 112px)", // MINUS NAV & HEADER
-    padding: "10px 0px 0px 0px",
+    height: "calc(100vh - 112px)", // MINUS NAV & HEADER
+    // padding: "10px 0px 0px 0px",
     overflow: "auto",
   },
 };

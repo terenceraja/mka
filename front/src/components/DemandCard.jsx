@@ -279,7 +279,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
             sx={{ color: selectedFile ? theme.palette.orange : "" }}
             onClick={() => handleUpload()}
           >
-            Soummettre
+            Soumettre
           </Button>
         </Stack>
       </Box>

@@ -9,13 +9,13 @@ export default function Card({ title, children, subTitle }) {
   const theme = useTheme();
   return (
     <Box sx={styles.cardContainer} id="card">
-      <Stack direction="column">
+      <Stack direction="column" marginY={1}>
         <Typography variant="title">{title}</Typography>
         <Typography variant="subTitle">{subTitle}</Typography>
       </Stack>
-      <Divider sx={{ borderColor: theme.palette.orange, marginY: "5px" }} />
 
       {children}
+      <Divider sx={{ borderColor: theme.palette.orange, marginY: 2 }} />
     </Box>
   );
 }
@@ -23,11 +23,14 @@ export default function Card({ title, children, subTitle }) {
 /**@type {import("@mui/material".SxProps)} */
 const styles = {
   cardContainer: {
+    display: "flex",
+    flexDirection: "column",
     width: "100%",
-    height: "auto",
-    p: 1,
+    // height: "auto",
+    px: 2,
     bgcolor: "card.main",
     boxShadow: "rgba(0, 0, 0, 0.1) -4px 9px 25px -6px",
+    flexGrow: 1,
   },
 
   labelTitle: {

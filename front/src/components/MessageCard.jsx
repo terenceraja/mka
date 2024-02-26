@@ -24,12 +24,12 @@ const MessageCard = ({ IdSender, Message, sendTimeStamp, user }) => {
         }}
         direction={"column"}
       >
-        <Stack
-          direction={"row"}
-          justifyContent={"start"}
-          spacing={2}
-          marginBottom={1}
-        >
+        <Typography variant="messageLabel">{IdSender}</Typography>
+
+        <Typography sx={{ overflowWrap: "break-word", marginY: "5px" }}>
+          {Message}
+        </Typography>
+        <Stack direction={"row"} justifyContent={"start"} spacing={2}>
           <Typography variant="messageLabel" marginLeft={"5px"}>
             {sendTimeStamp && formatDate(sendTimeStamp)}
           </Typography>
@@ -41,8 +41,6 @@ const MessageCard = ({ IdSender, Message, sendTimeStamp, user }) => {
             {sendTimeStamp && formatTime(sendTimeStamp)}
           </Typography>
         </Stack>
-
-        <Typography sx={{ overflowWrap: "break-word" }}>{Message}</Typography>
       </Stack>
     </Stack>
   );

@@ -17,8 +17,7 @@ const Error = () => {
       <Box sx={styles.log_card}>
         <img src={logo} width={"90%"} alt="logo" id="logo" />
         <Typography variant="logoSubtitle">
-          Votre session a expiré ou vos identifiants sont incorrects. Veuillez
-          vous reconnecter.
+          Votre session a expiré. Veuillez vous reconnecter.
         </Typography>
         <Button
           sx={styles.loginBtn}

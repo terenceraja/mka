@@ -13,7 +13,7 @@ import { sendMessage, getChat } from "../utils/http";
 
 const ChatComponent = () => {
   const theme = useTheme();
-  console.log("color", theme.palette.orange);
+  console.log("color", theme.palette.orange.main);
   const [
     messageToSend,
     setMessageToSend,
@@ -49,15 +49,12 @@ const ChatComponent = () => {
           return;
         }
         setMessageData(responseChat.data);
-
-        // Scroll to the bottom of the chat container
-        // scrollToBottom();
       } catch (error) {
         setError({ message: error.message || "custom error message" });
       }
     };
 
-    fetchChat(); // Call the renamed local function
+    fetchChat();
   }, []);
   //
 
@@ -77,17 +74,19 @@ const ChatComponent = () => {
   const handleSendMessage = async (e) => {
     e.preventDefault();
 
-    const response = await sendMessage({
-      IdChat: 1,
-      IdSender: user === 1364 ? user : 13, ////// MAKE DYNAMIC,
-      Message: inputMessage,
-    });
-    console.log("response", response);
-    console.log("response timestamp", response.data.TimeStampCreation);
-    if (response.auth) {
-      setMessageData((prev) => [...prev, response.data]);
-      setMessageToSend(response.data);
-      setInputMessage("");
+    if (inputMessage) {
+      const response = await sendMessage({
+        IdChat: 1,
+        IdSender: user === 1364 ? user : 13, ////// MAKE DYNAMIC,
+        Message: inputMessage,
+      });
+      console.log("response", response);
+      console.log("response timestamp", response.data.TimeStampCreation);
+      if (response.auth) {
+        setMessageData((prev) => [...prev, response.data]);
+        setMessageToSend(response.data);
+        setInputMessage("");
+      }
     }
   };
 
@@ -102,18 +101,46 @@ const ChatComponent = () => {
         autoComplete="off"
         onSubmit={(e) => handleSendMessage(e)}
         id="form"
+        height={"100%"}
+        py={2}
+        bgcolor={theme.palette.primary.main}
       >
-        <Stack direction={"row"} spacing={1}>
+        <Stack
+          marginX={1}
+          direction={"row"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          bgcolor={"white"}
+          borderRadius={2}
+          spacing={1}
+          paddingX={2}
+          height={"100%"}
+        >
           <TextField
             onChange={(e) => setInputMessage(e.target.value)}
-            label="Message..."
-            variant="standard"
-            fullWidth
+            placeholder="Message...
+          "
             value={inputMessage}
+            size="small"
+            InputProps={{
+              sx: {
+                bgcolor: "white",
+                "& fieldset": { border: "none" },
+              },
+            }}
+            fullWidth
           />
 
-          <IconButton type="submit" sx={{ paddingBottom: "0px" }}>
-            <SendIcon fill={"#ef8026"} />
+          <IconButton
+            type="submit"
+            sx={{
+              borderRadius: 2,
+              height: "30px",
+              width: "30px",
+              bgcolor: theme.palette.orange.main,
+            }}
+          >
+            <SendIcon fill={"white"} />
           </IconButton>
         </Stack>
       </Box>
@@ -126,13 +153,13 @@ const styles = {
   content: {
     display: "flex",
     flexDirection: "column",
-    gap: "10px",
-    height: "100%",
+
+    minHeight: "calc(100vh - 112px)",
   },
   chatContainer: {
     display: "flex",
     flexDirection: "column",
-    minHeight: "500px",
+    minHeight: "90%",
     maxHeight: "450px",
     overflowY: "auto",
     bgcolor: "white",

@@ -174,16 +174,16 @@ export function formatTime(timestamp) {
 
   let hours = date.getHours();
   let minutes = date.getMinutes();
-  let seconds = date.getSeconds(); // Add seconds component
+  // let seconds = date.getSeconds(); // Add seconds component
 
   // Ensure leading zeros if needed
 
   hours = (hours < 10 ? "0" : "") + hours;
   minutes = (minutes < 10 ? "0" : "") + minutes;
-  seconds = (seconds < 10 ? "0" : "") + seconds; // Ensure leading zeros for seconds
+  // seconds = (seconds < 10 ? "0" : "") + seconds; // Ensure leading zeros for seconds
 
   // Formatted date string
-  let formattedTime = `${hours}:${minutes}:${seconds}`;
+  let formattedTime = `${hours}:${minutes}`;
 
   return formattedTime;
 }

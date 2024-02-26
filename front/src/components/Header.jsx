@@ -1,14 +1,18 @@
 import React from "react";
-import { AppBar, Toolbar, Box } from "@mui/material";
-
+import { AppBar, Toolbar, Box, Stack } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import LogoutIcon from "./icons/LogoutIcon";
+import ReturnIcon from "./icons/ReturnIcon";
+
+import { useTheme } from "@mui/material/styles";
 
 import Modal from "./Modal";
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = () => {
+  const theme = useTheme();
+
   const setModalStateRef = useRef(null); // Create a ref to store setSnackState function
   // Function to trigger state change in Snack component
   const triggerModalStateChange = (newState) => {
@@ -18,8 +22,9 @@ const Header = () => {
   };
 
   // console.log(setModalStateRef.current);
-
-  const dispatch = useDispatch();
+  const location = useLocation();
+  const path = location.pathname;
+  console.log(path);
   const navigate = useNavigate();
 
   const handleOpenModal = () => {
@@ -40,10 +45,46 @@ const Header = () => {
     }, 1200);
   };
 
+  const handleReturn = () => {
+    navigate(-1);
+  };
+
+  // RETURN BUTTON LOGIC
+  const showReturn = () => {
+    if (
+      path !== "/layout/ptf" &&
+      path !== "/layout/doc" &&
+      path !== "/layout/quest" &&
+      path !== "/layout/news" &&
+      path !== "/layout/chat"
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  console.log("return", showReturn());
+
   return (
     <AppBar position="sticky" sx={styles.appBar}>
       <Toolbar>
-        <Box component="img" width={30} src="/src/assets/kslogo.png" />
+        <Stack direction={"row"} alignItems={"center"} spacing={3}>
+          <Box
+            onClick={() => navigate("/layout/ptf")}
+            component="img"
+            width={30}
+            src="/src/assets/kslogo.png"
+          />
+          {showReturn() ? (
+            <ReturnIcon
+              onClick={handleReturn}
+              fill={theme.palette.orange.main}
+            />
+          ) : (
+            <></>
+          )}
+        </Stack>
+
         <Box sx={{ flexGrow: 1 }} />
         <LogoutIcon fill="white" onClick={handleOpenModal} />
       </Toolbar>

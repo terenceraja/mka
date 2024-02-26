@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 const Footer = () => {
   return (
-    <Box sx={styles.footer}>
+    <Box sx={styles.footer} id="footer">
       <Typography variant="labelTitle">CONTACT</Typography>
       <Typography variant="navLink">tel: 00.00.00.00.00</Typography>
       <Typography variant="navLink">e-mail: user@gmail.com</Typography>
@@ -25,7 +25,7 @@ const styles = {
     borderRadius: 1,
     bgcolor: "card.main",
     gap: "5px",
-    marginTop: "20px",
+    // marginTop: "20px",
   },
 };
 

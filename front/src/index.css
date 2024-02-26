@@ -17,6 +17,10 @@ body,
   filter: invert(1);
 }
 
+input {
+  border: "none";
+}
+
 /* CHARTJS */
 /* CHART CANVAS RESPONSIVE SIZE*/
 canvas {
