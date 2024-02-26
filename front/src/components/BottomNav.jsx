@@ -11,6 +11,7 @@ import ChatIcon from "./icons/ChatIcon";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Paper from "@mui/material/Paper";
+import Badge from "@mui/material/Badge";
 
 import { NavLink } from "react-router-dom";
 
@@ -58,11 +59,13 @@ export default function LabelBottomNavigation() {
           label="Documents"
           value="/layout/doc"
           icon={
-            <DocIcon
-              fill={
-                value === "/layout/doc" ? theme.palette.orange.main : "white"
-              }
-            />
+            <Badge badgeContent={4} color="secondary">
+              <DocIcon
+                fill={
+                  value === "/layout/doc" ? theme.palette.orange.main : "white"
+                }
+              />
+            </Badge>
           }
           component={NavLink}
           to="/layout/doc"

@@ -103,7 +103,7 @@ const ChatComponent = () => {
         id="form"
         height={"100%"}
         py={2}
-        bgcolor={theme.palette.primary.main}
+        bgcolor={theme.palette.background.main}
       >
         <Stack
           marginX={1}
@@ -115,6 +115,7 @@ const ChatComponent = () => {
           spacing={1}
           paddingX={2}
           height={"100%"}
+          boxShadow={"rgba(0, 0, 0, 0.15) 0px 2px 8px"}
         >
           <TextField
             onChange={(e) => setInputMessage(e.target.value)}
@@ -137,7 +138,7 @@ const ChatComponent = () => {
               borderRadius: 2,
               height: "30px",
               width: "30px",
-              bgcolor: theme.palette.orange.main,
+              bgcolor: theme.palette.primary.main,
             }}
           >
             <SendIcon fill={"white"} />
@@ -160,11 +161,12 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     minHeight: "90%",
-    maxHeight: "450px",
+    maxHeight: "430px",
     overflowY: "auto",
     bgcolor: "white",
     p: 1,
     gap: "25px",
+    boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
   },
 };
 

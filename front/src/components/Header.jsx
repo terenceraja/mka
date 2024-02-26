@@ -76,10 +76,7 @@ const Header = () => {
             src="/src/assets/kslogo.png"
           />
           {showReturn() ? (
-            <ReturnIcon
-              onClick={handleReturn}
-              fill={theme.palette.orange.main}
-            />
+            <ReturnIcon onClick={handleReturn} fill="white" />
           ) : (
             <></>
           )}
