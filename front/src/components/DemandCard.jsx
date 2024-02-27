@@ -188,7 +188,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
 
           <Stack alignItems={"center"}>
             <Typography minWidth={50} variant="fileCard2">
-              Descrpition:
+              Description:
             </Typography>
             <InfoIcon fill="#008080" onClick={handleClick} />
           </Stack>
@@ -247,7 +247,10 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
               component="label"
               role={undefined}
               startIcon={
-                <DownloadIcon component="label" fill={theme.palette.orange} />
+                <DownloadIcon
+                  component="label"
+                  fill={theme.palette.orange.main}
+                />
               }
             >
               <VisuallyHiddenInput
@@ -276,7 +279,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
 
           <Button
             disabled={selectedFile ? false : true}
-            sx={{ color: selectedFile ? theme.palette.orange : "" }}
+            sx={{ color: selectedFile ? theme.palette.orange.main : "" }}
             onClick={() => handleUpload()}
           >
             Soumettre
@@ -306,7 +309,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    bgcolor: "background.main",
+    bgcolor: "white",
     borderRadius: "4px",
     boxSizing: "border-box",
     gap: "10px",

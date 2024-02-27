@@ -6,10 +6,12 @@ import Mvt from "../pages/Mvt";
 import Log from "../pages/Log";
 import Doc from "../pages/Doc";
 import Quest from "../pages/Quest";
-import News from "../pages/News";
+import News from "../pages/NewsPosts.jsx";
 import Chat from "../pages/Chat";
 import Layout from "../pages/Layout";
 import Error from "../pages/Error.jsx";
+import PdfView from "../pages/PdfView.jsx";
+import NewsLayout from "../pages/NewsLayout.jsx";
 
 // ROUTE DEFINITION
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -28,7 +30,14 @@ function AppRoutes() {
         { path: "ptf", element: <Ptf /> },
         { path: "doc", element: <Doc /> },
         { path: "quest", element: <Quest /> },
-        { path: "news", element: <News /> },
+        {
+          path: "news",
+          element: <NewsLayout />,
+          children: [
+            { path: "posts", element: <News /> },
+            { path: ":viewpdf", element: <PdfView /> },
+          ],
+        },
         { path: "chat", element: <Chat /> },
         { path: "detPtf", element: <DetPtf /> },
         { path: "cons", element: <Cons /> },

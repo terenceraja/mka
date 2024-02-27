@@ -119,7 +119,7 @@ const Mvt = () => {
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
       />
-      <Card title={lignInfos.Libelle_lmt}>
+      <Card title="MOUVEMENTS" subTitle={lignInfos.Libelle_lmt}>
         <Table columns={columnsMvt} data={dataMvt} options={optionsMvt} />
       </Card>
     </Box>

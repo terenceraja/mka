@@ -9,7 +9,7 @@ export default function Card({ title, children, subTitle }) {
   const theme = useTheme();
   return (
     <Box sx={styles.cardContainer} id="card">
-      <Stack direction="column" marginY={1}>
+      <Stack direction="column" marginTop={1} marginBottom={2}>
         <Typography variant="title">{title}</Typography>
         <Typography variant="subTitle">{subTitle}</Typography>
       </Stack>

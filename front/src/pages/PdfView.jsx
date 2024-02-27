@@ -6,8 +6,10 @@ import { useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
-const PdfCard = () => {
+const PdfView = ({ articles }) => {
+  console.log("I RENDRED");
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -31,8 +33,26 @@ const PdfCard = () => {
         file={pdfFile}
         onLoadError={console.error}
         onLoadSuccess={onDocumentSuccess}
+        loading={
+          <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
+            <CircularProgress />
+          </Box>
+        }
       >
-        <Page pageNumber={pageNumber} height={100} scale={6}></Page>
+        <Page
+          pageNumber={pageNumber}
+          height={100}
+          scale={6}
+          loading={
+            <Box
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <CircularProgress />
+            </Box>
+          }
+        />
       </Document>
       {numPages ? (
         <Pagination onChange={onPageChange} count={numPages} shape="rounded" />
@@ -50,7 +70,9 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     gap: "10px",
+    width: "100%",
+    height: "100%",
   },
 };
 
-export default PdfCard;
+export default PdfView;
