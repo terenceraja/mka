@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
 import Form from "../components/Form";
-import logo from "../assets/myKeeApp.png";
+import logo from "../assets/img/myKeeApp.png";
 import Typography from "@mui/material/Typography";
 
 const Log = () => {

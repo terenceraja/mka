@@ -9,6 +9,8 @@ import Table from "../components/Table";
 import ChartBar from "../components/ChartBar";
 
 import { Box } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
 
 // TABULATOR COLUMNS & OPTIONS
 import { optionsTable } from "../data/Tabulator/Options";
@@ -40,6 +42,8 @@ const Cons = () => {
   const [columnsLignPtf, setColumnsLignPtf] = useState([]);
   const [dataBar, setDataBar] = useState({});
   const [error, setError] = useState("");
+
+  const theme = useTheme();
 
   // NAVIGATE
   const navigate = useNavigate();
@@ -209,6 +213,17 @@ const Cons = () => {
           parentClick={rowClick}
         />
       </Card>
+      <Card title="CONTACT :">
+        <Box
+          sx={styles.footer}
+          id="footer"
+          bgcolor={theme.palette.primary.main}
+        >
+          <Typography variant="navLink">tel: 00.00.00.00.00</Typography>
+          <Typography variant="navLink">e-mail: user@gmail.com</Typography>
+          <Typography variant="navLink">Powered by KeeSystem</Typography>
+        </Box>
+      </Card>
     </Box>
   );
 };
@@ -218,7 +233,17 @@ const styles = {
   content: {
     display: "flex",
     flexDirection: "column",
-    gap: "10px",
+  },
+  footer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100px",
+    p: 2,
+    borderRadius: 1,
+    gap: "5px",
   },
 };
 

@@ -8,6 +8,8 @@ import { Box } from "@mui/material";
 import Table from "../components/Table";
 import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
+import { useTheme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 
 // REACT
 import { useState, useEffect, useRef } from "react";
@@ -53,6 +55,7 @@ const Ptf = () => {
   const [dataDevises, setDataDevises] = useState({});
   const [error, setError] = useState("");
 
+  const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -262,6 +265,17 @@ const Ptf = () => {
       <Card title="OPERATIONS">
         <Table columns={columnsOpe} data={dataOpe} />
       </Card>
+      <Card title="CONTACT :">
+        <Box
+          sx={styles.footer}
+          id="footer"
+          bgcolor={theme.palette.primary.main}
+        >
+          <Typography variant="navLink">tel: 00.00.00.00.00</Typography>
+          <Typography variant="navLink">e-mail: user@gmail.com</Typography>
+          <Typography variant="navLink">Powered by KeeSystem</Typography>
+        </Box>
+      </Card>
     </Box>
   );
 };
@@ -284,10 +298,22 @@ const styles = {
   chartsContainer: {
     display: "flex",
     width: "100%",
-    // gap: "12px",
     "@media (max-width: 767px)": {
       flexDirection: "column", // Change to column layout on small screens
     },
+  },
+
+  footer: {
+    display: "flex",
+
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100px",
+    p: 2,
+    borderRadius: 1,
+    gap: "5px",
   },
 };
 

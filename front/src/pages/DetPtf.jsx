@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
 import { Box } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { useTheme } from "@mui/material/styles";
 
 import { formatSpacingAndDecimalNumbers } from "../utils/functions";
 
@@ -43,6 +45,7 @@ const DetPtf = () => {
   const [dataBar, setDataBar] = useState({});
   const [error, setError] = useState("");
 
+  const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -224,6 +227,18 @@ const DetPtf = () => {
           parentClick={rowClick}
         />
       </Card>
+
+      <Card title="CONTACT :">
+        <Box
+          sx={styles.footer}
+          id="footer"
+          bgcolor={theme.palette.primary.main}
+        >
+          <Typography variant="navLink">tel: 00.00.00.00.00</Typography>
+          <Typography variant="navLink">e-mail: user@gmail.com</Typography>
+          <Typography variant="navLink">Powered by KeeSystem</Typography>
+        </Box>
+      </Card>
     </Box>
   );
 };
@@ -234,7 +249,18 @@ const styles = {
   content: {
     display: "flex",
     flexDirection: "column",
-    gap: "10px",
+  },
+
+  footer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100px",
+    p: 2,
+    borderRadius: 1,
+    gap: "5px",
   },
 };
 

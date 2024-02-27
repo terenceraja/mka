@@ -25,6 +25,7 @@ const ChartPie = ({ data }) => {
             fontSize="medium"
             style={{ color: data.datasets[0].borderColor[key] }}
           />
+
           <Typography
             variant="navLink"
             color={data.datasets[0].borderColor[key]}

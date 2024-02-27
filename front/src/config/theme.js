@@ -66,8 +66,8 @@ theme = createTheme(theme, {
     },
     navLink: {
       fontSize: "12px",
-      color: "#06171F",
-      fontWeight: 800,
+      color: "white",
+      fontWeight: 500,
     },
   },
 });

@@ -15,7 +15,13 @@ export default function Card({ title, children, subTitle }) {
       </Stack>
 
       {children}
-      <Divider sx={{ borderColor: theme.palette.orange, marginY: 2 }} />
+      <Divider
+        sx={{
+          borderColor: theme.palette.orange,
+          marginTop: 2,
+          marginBottom: 1,
+        }}
+      />
     </Box>
   );
 }
@@ -26,7 +32,6 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    // height: "auto",
     px: 2,
     bgcolor: "card.main",
     boxShadow: "rgba(0, 0, 0, 0.1) -4px 9px 25px -6px",

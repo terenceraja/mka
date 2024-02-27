@@ -12,6 +12,8 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import { Box } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
 
 import SentCard from "../components/SentCard";
 import DemandCard from "../components/DemandCard";
@@ -31,6 +33,7 @@ const Doc = () => {
   // console.log("sentlist", sentDocs);
   // console.log("demandlist", onDemandDocs);
 
+  const theme = useTheme();
   const navigate = useNavigate();
 
   // GET CLI ID FROM STORE
@@ -193,7 +196,11 @@ const Doc = () => {
               title="DOCUMENTS A ENVOYER"
               subTitle="Fichier : pdf, png, jpeg | Taille max : 10MB"
             >
-              <Box sx={styles.docsContainer} id="docsContainer">
+              <Box
+                sx={styles.docsContainer}
+                bgcolor={theme.palette.background.main}
+                id="docsContainer"
+              >
                 {onDemandDocs.length > 0
                   ? onDemandlist
                   : "Pas de documents à envoyer"}
@@ -202,13 +209,36 @@ const Doc = () => {
           </TabPanel>
 
           <TabPanel sx={styles.tabContent} value="2">
-            <Card title="DOCUMENTS ENVOYES">
-              <Box sx={styles.docsContainer}>
-                {sentDocs.length > 0 ? sentList : "Aucun documents envoyés"}
+            <Card
+              title="DOCUMENTS ENVOYES"
+              subTitle="Fichier : pdf, png, jpeg | Taille max : 10MB"
+            >
+              <Box
+                sx={styles.docsContainer}
+                bgcolor={theme.palette.background.main}
+              >
+                {sentDocs.length > 0 ? (
+                  sentList
+                ) : (
+                  <Typography variant="link">
+                    Aucun documents envoyés
+                  </Typography>
+                )}
               </Box>
             </Card>
           </TabPanel>
         </TabContext>
+        <Card title="CONTACT :">
+          <Box
+            sx={styles.footer}
+            id="footer"
+            bgcolor={theme.palette.primary.main}
+          >
+            <Typography variant="navLink">tel: 00.00.00.00.00</Typography>
+            <Typography variant="navLink">e-mail: user@gmail.com</Typography>
+            <Typography variant="navLink">Powered by KeeSystem</Typography>
+          </Box>
+        </Card>
       </Box>
     </>
   );
@@ -219,13 +249,11 @@ const styles = {
   content: {
     display: "flex",
     flexDirection: "column",
-    maxHeight: "calc(100vh - 112px)",
   },
   tabContent: {
     display: "flex",
     flexDirection: "column",
     p: 0,
-    height: "100%", // Ensure the TabPanel takes up all available space
   },
 
   formContainer: {
@@ -236,10 +264,22 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "15px",
-    maxHeight: "calc(100vh - 250px)",
-
+    minHeight: "calc(100vh - 245px)",
+    maxHeight: "calc(100vh - 245px)",
     overflowY: "auto",
     p: 1,
+    borderRadius: 1,
+  },
+  footer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "100px",
+    p: 2,
+    borderRadius: 1,
+    gap: "5px",
   },
 };
 
