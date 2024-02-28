@@ -12,8 +12,7 @@ const SentCard = ({ sentDate, demandDate, title, desc, file, remove }) => {
   const theme = useTheme();
   const [status, setStatus] = useState({ label: "", color: "" });
   const [anchorEl, setAnchorEl] = useState(null);
-
-  console.log(file);
+  console.log("sentCard rendrer");
 
   // SETTING STATUS
   useEffect(() => {

@@ -104,7 +104,8 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    bgcolor: "background.main",
+    // bgcolor: "background.main",
+
     height: "calc(100vh - 112px)", // MINUS NAV & HEADER
     // padding: "10px 0px 0px 0px",
     overflow: "auto",

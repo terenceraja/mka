@@ -7,6 +7,9 @@ import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 // MUI
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import { Stack } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
@@ -15,6 +18,7 @@ import { Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
+import CheckBoxGroup from "../components/CheckBoxGroup.jsx";
 import SentCard from "../components/SentCard";
 import DemandCard from "../components/DemandCard";
 
@@ -30,8 +34,7 @@ const Doc = () => {
   const [onDemandDocs, setOnDemandDocs] = useState([]);
   const [sentDocs, setSentDocs] = useState([]);
   const [error, setError] = useState("");
-  // console.log("sentlist", sentDocs);
-  // console.log("demandlist", onDemandDocs);
+  console.log("doc rendered");
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -209,10 +212,8 @@ const Doc = () => {
           </TabPanel>
 
           <TabPanel sx={styles.tabContent} value="2">
-            <Card
-              title="DOCUMENTS ENVOYES"
-              subTitle="Fichier : pdf, png, jpeg | Taille max : 10MB"
-            >
+            <Card title="DOCUMENTS ENVOYES">
+              <CheckBoxGroup />
               <Box
                 sx={styles.docsContainer}
                 bgcolor={theme.palette.background.main}
@@ -264,7 +265,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "15px",
-    minHeight: "calc(100vh - 245px)",
+    minHeight: "calc(100vh - 270px)",
     maxHeight: "calc(100vh - 245px)",
     overflowY: "auto",
     p: 1,
