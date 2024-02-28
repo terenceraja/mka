@@ -21,11 +21,13 @@ export default function LabelBottomNavigation() {
   const theme = useTheme();
   const pathname = useLocation().pathname;
   const [value, setValue] = useState(pathname);
+  console.log("navValue", value);
 
   useEffect(() => {
     if (pathname !== value) {
       setValue("");
     }
+    setValue(pathname);
   }, [pathname]);
 
   const handleChange = (event, newValue) => {

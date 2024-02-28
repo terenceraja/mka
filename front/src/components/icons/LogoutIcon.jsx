@@ -8,8 +8,8 @@ const LogoutIcon = ({ fill, onClick }) => {
     <svg
       onClick={() => handleClick()}
       xmlns="http://www.w3.org/2000/svg"
-      width="30"
-      height="30"
+      width="20"
+      height="20"
       viewBox="0 0 20 20"
       version="1.1"
     >

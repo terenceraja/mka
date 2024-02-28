@@ -9,6 +9,7 @@ import { useTheme } from "@mui/material/styles";
 import Modal from "./Modal";
 import { useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import MenuButton from "./MenuButton";
 
 const Header = () => {
   const theme = useTheme();
@@ -83,7 +84,8 @@ const Header = () => {
         </Stack>
 
         <Box sx={{ flexGrow: 1 }} />
-        <LogoutIcon fill="white" onClick={handleOpenModal} />
+        <MenuButton id="menuButton" onClick={handleOpenModal} />
+        {/* <LogoutIcon fill="white" onClick={handleOpenModal} /> */}
       </Toolbar>
 
       <Modal

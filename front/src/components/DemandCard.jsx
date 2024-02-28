@@ -268,7 +268,10 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
                 >
                   {selectedFile.name}
                 </Typography>
-                <DeleteIcon fill="red" onClick={handleRemove} />
+                <DeleteIcon
+                  fill={theme.palette.primary.main}
+                  onClick={handleRemove}
+                />
               </>
             ) : (
               <Typography variant="fileCard2">

@@ -15,7 +15,7 @@ let theme = createTheme({
     background: {
       main: "#f2f4f3",
     },
-    orange: { main: "#ef8026", light: "rgba(239, 128, 38, 0.8)" },
+    orange: { main: "#ef8026", light: "rgba(239, 128, 38, 0.6)" },
     card: {
       main: "#FFFF",
     },

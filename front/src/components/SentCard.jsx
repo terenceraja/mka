@@ -122,7 +122,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    bgcolor: "background.main",
+    bgcolor: "white",
     borderRadius: "4px",
     boxSizing: "border-box",
     gap: "8px",
