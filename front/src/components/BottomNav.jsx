@@ -22,6 +22,7 @@ export default function LabelBottomNavigation() {
   const pathname = useLocation().pathname;
   const [value, setValue] = useState(pathname);
   console.log("navValue", value);
+  console.log("path", pathname);
 
   useEffect(() => {
     if (pathname !== value) {
@@ -38,7 +39,16 @@ export default function LabelBottomNavigation() {
     <Paper sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}>
       <BottomNavigation
         showLabels
-        sx={styles.navBar}
+        sx={{
+          bgcolor: theme.palette.primary.main,
+          width: "100%",
+          "& .MuiSvgIcon-root, & .MuiBottomNavigationAction-label": {
+            color: "white",
+          },
+          "& .Mui-selected": {
+            color: value === pathname ? theme.palette.orange.main : "white",
+          },
+        }}
         value={value}
         onChange={handleChange}
       >
@@ -61,13 +71,11 @@ export default function LabelBottomNavigation() {
           label="Documents"
           value="/layout/doc"
           icon={
-            <Badge badgeContent={4} color="secondary">
-              <DocIcon
-                fill={
-                  value === "/layout/doc" ? theme.palette.orange.main : "white"
-                }
-              />
-            </Badge>
+            <DocIcon
+              fill={
+                value === "/layout/doc" ? theme.palette.orange.main : "white"
+              }
+            />
           }
           component={NavLink}
           to="/layout/doc"
@@ -121,10 +129,15 @@ export default function LabelBottomNavigation() {
   );
 }
 
+/**@type {import("@mui/material".SxProps)} */
 const styles = {
   navBar: {
     bgcolor: "primary.main",
     width: "100%",
+
+    "& .MuiSvgIcon-root, & .MuiBottomNavigationAction-label": {
+      color: "white",
+    },
   },
   buttonAction: {
     minWidth: "50px",

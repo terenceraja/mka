@@ -255,3 +255,22 @@ export const getChat = async (dataToPost) => {
 
   return resData;
 };
+
+// znews TO GET MESSAGE BY IDCHAT
+export const getNews = async (dataToPost) => {
+  const response = await fetch("http://localhost:3000/news", {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};

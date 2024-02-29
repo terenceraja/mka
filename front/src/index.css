@@ -5,10 +5,6 @@ body,
   width: 100%;
 }
 
-.MuiBottomNavigationAction-label {
-  color: white;
-}
-
 .css-1fgtnsp-MuiCardContent-root:last-child {
   padding-bottom: 8px !important;
 }
@@ -27,11 +23,21 @@ input {
   width: 100% !important;
   height: 100% !important;
 }
-
 .react-pdf__Document {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+/* BOTTOM NAV*/
+.css-imwso6-MuiBottomNavigationAction-label {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 0.75rem;
+  opacity: 1;
+  transition: none !important;
+}
+.css-imwso6-MuiBottomNavigationAction-label.Mui-selected {
+  font-size: 0.75rem !important;
 }
 
 /* CHARTJS */

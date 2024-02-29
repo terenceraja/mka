@@ -4,17 +4,32 @@ const DownloadIcon = ({ fill }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      version="1.1"
+      fill="none"
+      viewBox="0 0 30 30"
+      height="25"
+      width="25"
+      id="Download-File--Streamline-Sharp.svg"
     >
-      <path
-        d="M9.24 6.3849599999999995L9.24 11.24992 7.5749 9.584900000000001L5.90982 7.9199 5.37496 8.45504L4.8401 8.99016 7.420059999999999 11.570060000000002L10 14.149939999999999 12.579939999999999 11.570060000000002L15.1599 8.99016 14.625039999999998 8.45504L14.09018 7.9199 12.4251 9.584900000000001L10.76 11.24992 10.76 6.3849599999999995L10.76 1.52 10 1.52L9.24 1.52 9.24 6.3849599999999995M1.54 16.16L1.54 18.46 10 18.46L18.46 18.46 18.46 16.16L18.46 13.86 17.71 13.86L16.96 13.86 16.96 15.41L16.96 16.96 10 16.96L3.04 16.96 3.04 15.41L3.04 13.86 2.29 13.86L1.54 13.86 1.54 16.16"
-        stroke="none"
-        fill={fill}
-        fillRule="evenodd"
-      ></path>
+      <g id="Download-File--Streamline-Sharp.svg">
+        <path
+          id="vector 377"
+          stroke={fill}
+          strokeWidth="2"
+          d="M20.625 14.375 15 20l-5.625 -5.625"
+        ></path>
+        <path
+          id="vector 378"
+          stroke={fill}
+          strokeWidth="2"
+          d="m15 20 0 -11.25"
+        ></path>
+        <path
+          id="Rectangle 844"
+          stroke={fill}
+          strokeWidth="2"
+          d="M20 1.25H3.75v27.5h22.5V7.5l-6.25 -6.25Z"
+        ></path>
+      </g>
     </svg>
   );
 };

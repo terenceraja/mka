@@ -8,8 +8,11 @@ import Stack from "@mui/material/Stack";
 import InfoIcon from "./icons/InfoIcon";
 import { useTheme } from "@mui/material/styles";
 import ViewFileIcon from "./ViewFileIcon";
+import { Link } from "react-router-dom";
+import DownloadIcon from "./icons/DownloadIcon";
+import { formatISODate } from "../utils/functions";
 
-const NewsCard = ({ title, subtitle, date }) => {
+const NewsCard = ({ title, subtitle, date, fileName }) => {
   const theme = useTheme();
 
   const handleClick = () => {
@@ -17,13 +20,27 @@ const NewsCard = ({ title, subtitle, date }) => {
   };
 
   return (
-    <Box onClick={handleClick} sx={styles.fileCard}>
-      <Stack>
-        <Typography variant="fileCard2">{title}</Typography>
-        <Typography variant="fileCard2">{subtitle}</Typography>
-        <Typography variant="fileCard2">{date}</Typography>
+    <Box
+      onClick={handleClick}
+      sx={{
+        ...styles.fileCard,
+        borderLeft: `5px solid ${theme.palette.orange.main}`,
+      }}
+    >
+      <Stack spacing={1}>
+        <Typography variant="title">{title}</Typography>
+        <Typography variant="subTitle">{subtitle}</Typography>
+        <Typography variant="fileCard2">{formatISODate(date)}</Typography>
       </Stack>
-      <ViewFileIcon fill={theme.palette.orange.main} />
+      <Link
+        to={`../../../newsPost/${fileName}`}
+        download={fileName}
+        target="_blank"
+        rel="noreferrer"
+        style={{ maxHeight: "30px", maxWidth: "30px" }}
+      >
+        <DownloadIcon fill={theme.palette.orange.main} />
+      </Link>
     </Box>
   );
 };
@@ -37,7 +54,8 @@ const styles = {
     alignItems: "center",
     bgcolor: "white",
     boxSizing: "border-box",
-    p: 1.5,
+    px: 1.5,
+    py: 1,
     boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
     width: "100%",
   },

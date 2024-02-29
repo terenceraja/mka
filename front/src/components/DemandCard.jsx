@@ -14,7 +14,7 @@ import Button from "@mui/material/Button";
 
 import Stack from "@mui/material/Stack";
 import DeleteIcon from "./icons/DeleteIcon";
-import DownloadIcon from "./icons/DownloadIcon";
+import UploadIcon from "./icons/UploadIcon";
 import InfoIcon from "./icons/InfoIcon";
 import { useTheme } from "@mui/material/styles";
 
@@ -247,7 +247,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
               component="label"
               role={undefined}
               startIcon={
-                <DownloadIcon
+                <UploadIcon
                   component="label"
                   fill={theme.palette.orange.main}
                 />

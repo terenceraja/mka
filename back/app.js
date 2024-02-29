@@ -7,6 +7,7 @@ require("dotenv").config();
 
 var indexRouter = require("./routes/index");
 var docRouter = require("./routes/doc");
+var newsRouter = require("./routes/news");
 var iisRouter = require("./routes/iisTest");
 var messageRouter = require("./routes/message");
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/doc", docRouter);
+app.use("/news", newsRouter);
 app.use("/message", messageRouter);
 app.use("/iis", iisRouter);
 
