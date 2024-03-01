@@ -34,7 +34,6 @@ const styles = {
     width: "100%",
     px: 2,
     bgcolor: "card.main",
-    boxShadow: "rgba(0, 0, 0, 0.1) -4px 9px 25px -6px",
     flexGrow: 1,
   },
 
