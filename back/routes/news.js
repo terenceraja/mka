@@ -13,12 +13,11 @@ const verifyJwt = require("../middleware/jwt");
 // ROUTE ON PAGE DOC : GET DEMAND DOCS VIA IdCLI IdMANAGER
 router.post("/", verifyJwt, async function (req, res, next) {
   try {
-    const { IdManager, IdCtraCli } = req.body;
+    const { IdCtraCli } = req.body;
     console.log(req.body);
 
     const news = await znews.findAll({
       where: {
-        IdManager: IdManager,
         IdCtraCli: IdCtraCli,
       },
       // order: [["CptaDateOPE_lsd", "DESC"]], // ASC for ascending, DESC for descending
