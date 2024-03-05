@@ -12,6 +12,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      IdCtraCli: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "zctracli", // Referenced table name
+          key: "IdCtraCli", // Referenced column name
+        },
+      },
       Title: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -9,6 +9,8 @@ import { Outlet } from "react-router-dom";
 
 import { useEffect, useState, useRef } from "react";
 
+import { useSelector } from "react-redux";
+
 import Modal from "../components/Modal";
 
 import { getNews } from "../utils/http";
@@ -17,6 +19,9 @@ const NewsPosts = () => {
   const [news, setNews] = useState([]);
   const [error, setError] = useState("");
   console.log("newsState", news);
+
+  // GET CLI ID FROM STORE
+  const IdCtraCli = useSelector((state) => state.keys.value.IdCtraCli);
 
   const theme = useTheme();
 
@@ -49,7 +54,7 @@ const NewsPosts = () => {
     let IdManager = 1;
     try {
       //NEWS
-      const responseNews = await getNews({ IdManager });
+      const responseNews = await getNews({ IdManager, IdCtraCli });
 
       // AUTHENTIFICATION
       console.log("response", responseNews);
