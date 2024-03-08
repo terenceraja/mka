@@ -12,6 +12,11 @@ import Layout from "../pages/Layout";
 import Error from "../pages/Error.jsx";
 import PdfView from "../pages/PdfView.jsx";
 import NewsLayout from "../pages/NewsLayout.jsx";
+import AdminLayout from "../pages/Admin/AdminLayout.jsx";
+import Home from "../pages/Admin/Home.jsx";
+import NewsConfig from "../pages/Admin/NewsConfig.jsx";
+import CollConfig from "../pages/Admin/CollConfig.jsx";
+import ChatConfig from "../pages/Admin/ChatConfig.jsx";
 
 // ROUTE DEFINITION
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -22,6 +27,17 @@ function AppRoutes() {
   const router = createBrowserRouter([
     { path: "/", element: <Log />, index: true }, // Log component as the main index
     { path: "/error", element: <Error /> },
+    {
+      path: "/admin",
+      element: <AdminLayout />,
+      children: [
+        { path: "", element: <Home /> },
+        { path: "newsConfig", element: <NewsConfig /> },
+        { path: "chatConfig", element: <ChatConfig /> },
+        { path: "collConfig", element: <CollConfig /> },
+      ],
+    },
+
     {
       path: "/layout", // or any other path you want for the Layout component
       loader: checkAuthLoader,

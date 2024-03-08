@@ -12,6 +12,18 @@ router.post("/zctracli", async function (req, res, next) {
   try {
     const { login, password } = req.body;
 
+    if (login === "admin" && password === process.env.ADMIN_PASSWORD) {
+      //CREATE TOKEN WITH HIDDEN USERID KEY
+      const token = createToken("admin");
+
+      res.json({
+        admin: true,
+        message: "ADMIN ACCESS !",
+        token,
+      });
+      return;
+    }
+
     const user = await zctracli.findOne({
       where: {
         Login_lmt: login,

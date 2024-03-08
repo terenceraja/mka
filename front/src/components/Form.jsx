@@ -58,6 +58,20 @@ const Form = () => {
     e.preventDefault();
     const response = await fetchDataFromServer();
 
+    if (response.admin) {
+      console.log("admin acess", response);
+      localStorage.setItem("token", response.token);
+      setTimeout(() => {
+        navigate("/admin");
+      }, 1500);
+      return;
+    } else {
+      setTimeout(() => {
+        setIsFetching(false);
+        setServerMessage("ADMIN ACCESS REFUSEE");
+      }, 1000);
+    }
+
     if (response.IdCtraCli) {
       console.log(response);
       dispatch(addIdCtraCliToStore(response.IdCtraCli));
