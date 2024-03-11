@@ -65,11 +65,6 @@ const Form = () => {
         navigate("/admin");
       }, 1500);
       return;
-    } else {
-      setTimeout(() => {
-        setIsFetching(false);
-        setServerMessage("ADMIN ACCESS REFUSEE");
-      }, 1000);
     }
 
     if (response.IdCtraCli) {

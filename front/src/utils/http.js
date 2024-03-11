@@ -274,3 +274,21 @@ export const getNews = async (dataToPost) => {
 
   return resData;
 };
+
+// zcoll TO GET ALL COLLABS
+export const getCollabs = async () => {
+  const response = await fetch("http://localhost:3000/collabs", {
+    method: "GET",
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};
