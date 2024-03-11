@@ -9,7 +9,7 @@ const { Sequelize } = require("sequelize");
 
 const { zcoll } = require("../models"); // Import your Sequelize model
 
-// ROUTE ON PAGE DOC : GET DEMAND DOCS VIA IdCLI IdMANAGER
+// ROUTE ON PAGE ADMIN COLLABCONFIG : GET ALL COLLABS
 router.get("/", verifyJwt, async function (req, res, next) {
   try {
     const collabs = await zcoll.findAll({
@@ -17,6 +17,52 @@ router.get("/", verifyJwt, async function (req, res, next) {
     });
 
     res.json({ auth: true, message: "Collabs found !", data: collabs }); // Send the result as JSON
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.post("/add", verifyJwt, async function (req, res, next) {
+  try {
+    const { name, surname, color } = req.body;
+
+    // Create a new entry in the database with the provided data
+    const newCollab = await zcoll.create({
+      Name: name,
+      Surname: surname,
+      Color: color,
+    });
+
+    // Fetch all collabs after adding the new entry (optional, for demonstration purposes)
+    const collabs = await zcoll.findAll();
+
+    res.json({
+      auth: true,
+      message: "Collab added successfully",
+      data: collabs,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.post("/delete", verifyJwt, async function (req, res, next) {
+  try {
+    const { IdColl } = req.body;
+
+    // Delete the entry from the database with the provided IdColl
+    await zcoll.destroy({ where: { IdColl } });
+
+    // Fetch all collabs after deleting the entry (optional, for demonstration purposes)
+    const collabs = await zcoll.findAll();
+
+    res.json({
+      auth: true,
+      message: "Collab deleted successfully",
+      data: collabs,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

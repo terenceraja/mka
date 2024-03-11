@@ -292,3 +292,41 @@ export const getCollabs = async () => {
 
   return resData;
 };
+
+// zcoll TO SAVE COLL
+export const addColl = async (dataToPost) => {
+  const response = await fetch("http://localhost:3000/collabs/add", {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};
+
+// zcoll TO DELETE COLL
+export const deleteColl = async (dataToPost) => {
+  const response = await fetch("http://localhost:3000/collabs/delete", {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};

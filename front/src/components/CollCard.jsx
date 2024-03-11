@@ -8,11 +8,9 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 
-// HTTP
-
-const CollCard = ({ id, name, surname, remove }) => {
+const CollCard = ({ IdColl, Name, Surname, Color, remove }) => {
   const theme = useTheme();
-  const [anchorEl, setAnchorEl] = useState(null);
+
   const [error, setError] = useState("");
 
   //MODAL
@@ -29,75 +27,40 @@ const CollCard = ({ id, name, surname, remove }) => {
       open: true,
       message: `Êtes-vous sûre de vouloir supprimer le collaborateur ?`,
       confirmation: "SUPPRIMER",
-      auth: false,
+      auth: true,
     });
   };
-  const handleConfirmation = () => {
-    console.log("delete");
-  };
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  // REMOVE
-  const upload = async (fileToPost) => {
-    const IdFile = file.IdFile;
-    try {
-      const response = await postFile(fileToPost, IdFile);
-
-      // AUTHENTIFICATION
-      console.log("response", response);
-      if (!response.auth) {
-        handleOpenModal();
-        return;
-      }
-
-      setTimeout(function () {
-        remove(IdFile);
-        setIsSent((prev) => !prev);
-      }, 3000); // Executes after 1000 milliseconds (1 second)
-    } catch (error) {
-      setError({ message: error.message || "custom error message" });
-    }
-  };
-
-  // REMOVE CLICK
-  const handleRemove = () => {
-    console.log("remove colalb");
+  const handleDeleteConfirmation = () => {
+    remove(IdColl);
   };
 
   return (
     <>
       <Modal
         setModalStateRef={setModalStateRef}
-        onConfirmation={handleConfirmation}
+        onConfirmation={handleDeleteConfirmation}
       />
       <Box
         sx={{
           ...styles.fileCard,
-          borderLeft: `10px solid ${theme.palette.orange.main}`,
+          borderLeft: `10px solid ${Color}`,
         }}
       >
         <Stack
           direction="row"
-          spacing={4}
+          spacing={2}
           alignItems="center"
           //   justifyContent={"center"}
           id="TOPSECTION"
         >
-          <Typography variant="fileCard2">ID: {id}</Typography>
+          <Typography variant="fileCard2">ID: {IdColl}</Typography>
 
           <Typography minWidth={50} variant="fileCard2">
-            Nom: {surname}
+            Nom: {Surname}
           </Typography>
 
           <Typography minWidth={50} variant="fileCard2">
-            Prénom: {name}
+            Prénom: {Name}
           </Typography>
         </Stack>
         <Divider />
@@ -108,7 +71,7 @@ const CollCard = ({ id, name, surname, remove }) => {
             p: 0,
             color: theme.palette.orange.main,
           }}
-          onClick={() => handleRemove()}
+          onClick={() => handleOpenModal()}
         >
           Supprimer
         </Button>

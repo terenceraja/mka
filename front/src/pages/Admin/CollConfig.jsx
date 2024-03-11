@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import colors from "../../utils/collabColors";
+
 import Modal from "@mui/material/Modal";
 import { Button, Typography } from "@mui/material";
 import {
@@ -22,10 +24,10 @@ import CollCard from "../../components/CollCard";
 import Card from "../../components/Card";
 
 // HTTP
-import { getCollabs } from "../../utils/http";
+import { getCollabs, addColl, deleteColl } from "../../utils/http";
 
 function CollConfig() {
-  const [color, setColor] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
   const [collab, setCollab] = useState([]);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
@@ -36,7 +38,20 @@ function CollConfig() {
     color: "",
   });
 
+  console.log(colors);
   console.log(form);
+  const theme = useTheme();
+
+  // POST FETCHING EXAMPLE
+  const postForm = async () => {
+    setIsFetching(true);
+    try {
+      const response = await addColl(form);
+      return response;
+    } catch (error) {
+      setError({ message: error.message || "custom error message" });
+    }
+  };
 
   // INPUT/SELECT ONCHANGE
   const handleChange = (e) => {
@@ -47,8 +62,6 @@ function CollConfig() {
       return { ...prev, [name]: value };
     });
   };
-
-  const theme = useTheme();
 
   //MODAL
   const setModalStateRef = useRef(null); // Create a ref to store setSnackState function
@@ -68,7 +81,7 @@ function CollConfig() {
     });
   };
 
-  // FETCH ONDEMAND DOC
+  // FETCH ALL COLLABS
   const fetchCollab = async () => {
     try {
       //COLLABS
@@ -92,31 +105,72 @@ function CollConfig() {
   }, []);
   //
 
+  // REMOVE CLICK
+  const handleRemove = async (IdColl) => {
+    console.log("remove collab");
+    try {
+      const response = await deleteColl({ IdColl });
+
+      // AUTHENTIFICATION
+      console.log("response000", response);
+      if (!response.auth) {
+        handleOpenModal();
+        return;
+      }
+      setTimeout(() => {
+        setCollab(response.data);
+      }, 1500);
+    } catch (error) {
+      setError({ message: error.message || "custom error message" });
+    }
+  };
+
   // COLLAB LIST RENDER
   const CollabList = collab.map((obj, key) => {
     return (
       <CollCard
         key={key}
-        id={obj.IdColl}
-        name={obj.Name}
-        surname={obj.Surname}
-        // remove={handleRemove}
+        IdColl={obj.IdColl}
+        Name={obj.Name}
+        Surname={obj.Surname}
+        Color={obj.Color}
+        remove={handleRemove}
       />
     );
   });
 
+  // ADD MODAL
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setForm((prev) => ({ ...prev, name: "", surname: "", color: "" }));
     setOpen(false);
   };
 
-  //HANDLE LOGIN CLICK
-  const handleConfirmCollab = async (e) => {
+  //HANDLE CONFIRM COLL
+  const handleConfirmColl = async (e) => {
     e.preventDefault();
-    console.log("collab confirmed");
+    const response = await postForm();
+    console.log("response000", response);
+    setCollab(response.data);
     handleClose();
   };
+
+  //LIST OF COLORS
+  const colorList = colors.map((obj, key) => {
+    return (
+      <MenuItem key={key} value={obj.color}>
+        <Typography
+          borderRadius={"4px"}
+          p={0.5}
+          bgcolor={obj.color}
+          marginTop={"2px"}
+          variant="title"
+        >
+          {obj.name}
+        </Typography>
+      </MenuItem>
+    );
+  });
 
   return (
     <Box sx={styles.content} id="content">
@@ -153,7 +207,7 @@ function CollConfig() {
               noValidate
               autoComplete="off"
               sx={styles.formContainer}
-              onSubmit={(e) => handleConfirmCollab(e)}
+              onSubmit={(e) => handleConfirmColl(e)}
               id="form"
             >
               <Typography variant="title">DEFINITION COLLABORATEUR</Typography>
@@ -193,9 +247,7 @@ function CollConfig() {
                       label="Code Couleur"
                       onChange={handleChange}
                     >
-                      <MenuItem value={10}>Ten</MenuItem>
-                      <MenuItem value={20}>Twenty</MenuItem>
-                      <MenuItem value={30}>Thirty</MenuItem>
+                      {colorList}
                     </Select>
                   </FormControl>
                   {(!form.name || !form.surname || !form.color) && (
