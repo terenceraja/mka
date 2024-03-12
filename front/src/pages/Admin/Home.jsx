@@ -39,7 +39,7 @@ const Home = () => {
           style={{ justifyContent: "space-between" }}
           variant="contained"
         >
-          Poster des news
+          PUBLICATION des news
           <NewsIcon fill={theme.palette.orange.main} />
         </Button>
       </Stack>{" "}

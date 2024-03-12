@@ -49,7 +49,6 @@ router.post(
   async function (req, res, next) {
     try {
       console.log(req.file);
-      console.log("YOOOOOOOOOO", req.body);
       const { Title, Subtitle } = req.body;
       const { filename, path } = req.file;
 
@@ -61,12 +60,17 @@ router.post(
         Subtitle: Subtitle,
       });
 
+      const news = await znews.findAll({
+        order: [["TimeStampCreation", "DESC"]], // ASC for ascending, DESC for descending
+      });
+
       console.log("RESPONSE", response);
 
       res.json({
         auth: true,
         message: "News stored in backend !",
         data: response,
+        dataList: news,
       });
     } catch (error) {
       console.error(error);
@@ -79,7 +83,7 @@ router.post(
 router.get("/", verifyJwt, async function (req, res, next) {
   try {
     const news = await znews.findAll({
-      // order: [["CptaDateOPE_lsd", "DESC"]], // ASC for ascending, DESC for descending
+      order: [["TimeStampCreation", "DESC"]], // ASC for ascending, DESC for descending
     });
 
     res.json({ auth: true, message: "News found !", data: news }); // Send the result as JSON

@@ -1,12 +1,8 @@
 import React from "react";
 
-const LogoutIcon = ({ fill, onClick }) => {
-  const handleClick = () => {
-    onClick();
-  };
+const LogoutIcon = ({ fill }) => {
   return (
     <svg
-      onClick={() => handleClick()}
       xmlns="http://www.w3.org/2000/svg"
       width="20"
       height="20"

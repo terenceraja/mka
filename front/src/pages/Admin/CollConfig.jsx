@@ -137,7 +137,7 @@ function CollConfig() {
   };
 
   // COLLAB LIST RENDER
-  const CollabList = collab.map((obj, key) => {
+  const collabList = collab.map((obj, key) => {
     return (
       <CollCard
         key={key}
@@ -204,7 +204,13 @@ function CollConfig() {
             sx={styles.docsContainer}
             bgcolor={theme.palette.background.main}
           >
-            {CollabList}
+            {collabList.length > 0 ? (
+              collabList
+            ) : (
+              <Typography variant="link">
+                Aucuns collaborateurs ajoutés
+              </Typography>
+            )}
           </Box>
 
           <Modal

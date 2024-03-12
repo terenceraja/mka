@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
 import Divider from "@mui/material/Divider";
@@ -27,19 +27,34 @@ const NewsCard = ({ title, subtitle, date, fileName }) => {
         borderLeft: `5px solid ${theme.palette.orange.main}`,
       }}
     >
-      <Stack spacing={1}>
+      <Stack direction="column" spacing={0.5} id="TOPSECTION">
         <Typography variant="title">{title}</Typography>
         <Typography variant="subTitle">{subtitle}</Typography>
-        <Typography variant="fileCard2">{formatISODate(date)}</Typography>
+        <Typography variant="fileCard2">
+          Publication : {formatISODate(date)}
+        </Typography>
       </Stack>
+      <Divider />
       <Link
         to={`../../../newsPost/${fileName}`}
         download={fileName}
         target="_blank"
         rel="noreferrer"
-        style={{ maxHeight: "30px", maxWidth: "30px" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          textDecoration: "none",
+        }}
       >
-        <DownloadIcon fill={theme.palette.orange.main} />
+        <Button
+          sx={{
+            width: "auto",
+            p: 0,
+            color: theme.palette.orange.main,
+          }}
+        >
+          TELECHARGER
+        </Button>
       </Link>
     </Box>
   );
@@ -49,15 +64,15 @@ const NewsCard = ({ title, subtitle, date, fileName }) => {
 const styles = {
   fileCard: {
     display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    bgcolor: "white",
-    boxSizing: "border-box",
-    px: 1.5,
-    py: 1,
-    boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
+    flexDirection: "column",
     width: "100%",
+    bgcolor: "white",
+    borderRadius: "4px",
+    boxSizing: "border-box",
+    gap: "10px",
+    p: 1,
+    px: 2,
+    boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
   },
 };
 

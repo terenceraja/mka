@@ -86,7 +86,6 @@ const Header = () => {
 
         <Box sx={{ flexGrow: 1 }} />
         <MenuButton id="menuButton" onClick={handleOpenModal} />
-        {/* <LogoutIcon fill="white" onClick={handleOpenModal} /> */}
       </Toolbar>
 
       <CustomModal

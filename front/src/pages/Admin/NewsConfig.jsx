@@ -201,7 +201,7 @@ function NewsConfig() {
     e.preventDefault();
     const response = await postNews(form, selectedFile);
     console.log("response000", response);
-    setNews((prev) => [...prev, response.data]);
+    setNews(response.dataList);
     handleClose();
   };
 
@@ -228,7 +228,11 @@ function NewsConfig() {
               sx={styles.docsContainer}
               bgcolor={theme.palette.background.main}
             >
-              {newsList}
+              {newsList.length > 0 ? (
+                newsList
+              ) : (
+                <Typography variant="link">Aucuns articles publiés</Typography>
+              )}
             </Box>
 
             <Modal
