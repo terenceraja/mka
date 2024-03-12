@@ -51,10 +51,9 @@ const NewsPosts = () => {
 
   // FETCH ALL NEWS
   const fetchNewsPost = async () => {
-    let IdManager = 1;
     try {
       //NEWS
-      const responseNews = await getNews({ IdManager, IdCtraCli });
+      const responseNews = await getNews();
 
       // AUTHENTIFICATION
       console.log("response", responseNews);

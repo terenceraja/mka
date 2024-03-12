@@ -174,14 +174,14 @@ function CollConfig() {
 
   return (
     <Box sx={styles.content} id="content">
-      <Card title="COLLABORATEUR">
+      <Card title="CONFIGURATION COLLABORATEUR">
         <Box>
           <Button
             endIcon={<AddIcon fill={theme.palette.orange.main} />}
             onClick={handleOpen}
           >
             <Typography marginTop={"2px"} variant="link">
-              Ajouter
+              Ajouter collaborateur
             </Typography>
           </Button>
 

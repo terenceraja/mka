@@ -256,11 +256,10 @@ export const getChat = async (dataToPost) => {
   return resData;
 };
 
-// znews TO GET MESSAGE BY IDCHAT
-export const getNews = async (dataToPost) => {
+// znews TO GET ALL NEWS
+export const getNews = async () => {
   const response = await fetch("http://localhost:3000/news", {
-    method: "POST",
-    body: JSON.stringify(dataToPost),
+    method: "GET",
     headers: {
       "x-access-token": localStorage.getItem("token"),
       "Content-Type": "application/json",

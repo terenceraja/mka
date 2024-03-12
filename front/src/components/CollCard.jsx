@@ -25,7 +25,7 @@ const CollCard = ({ IdColl, Name, Surname, Color, remove }) => {
     triggerModalStateChange({
       ...setModalStateRef.current,
       open: true,
-      message: `Êtes-vous sûre de vouloir supprimer le collaborateur ?`,
+      message: `Êtes-vous sûre de vouloir retirer le collaborateur ?`,
       confirmation: "SUPPRIMER",
       auth: true,
     });
@@ -73,7 +73,7 @@ const CollCard = ({ IdColl, Name, Surname, Color, remove }) => {
           }}
           onClick={() => handleOpenModal()}
         >
-          Supprimer
+          Retirer
         </Button>
       </Box>
     </>

@@ -10,16 +10,74 @@ const { znews } = require("../models"); // Import your Sequelize model
 //JWT
 const verifyJwt = require("../middleware/jwt");
 
-// ROUTE ON PAGE DOC : GET DEMAND DOCS VIA IdCLI IdMANAGER
-router.post("/", verifyJwt, async function (req, res, next) {
-  try {
-    const { IdCtraCli } = req.body;
-    console.log(req.body);
+const multer = require("multer");
 
+const storage = multer.diskStorage({
+  destination: (req, files, cb) => {
+    cb(null, "../../storeNews");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
+
+// Define a file filter function to accept only PDF files
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "application/pdf") {
+    cb(null, true); // Accept the file
+  } else {
+    cb(new Error("Only PDF files are allowed"), false); // Reject the file
+  }
+};
+
+// Set the file size limit to 5MB
+const limits = {
+  fileSize: 10 * 1024 * 1024, // 10MB in bytes
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: limits,
+});
+
+// CREATE/UPLOAD NEWS
+router.post(
+  "/upload",
+  verifyJwt,
+  upload.single("file"),
+  async function (req, res, next) {
+    try {
+      console.log(req.file);
+      const { Title, Subtitle } = req.body;
+      const { filename, path } = req.file;
+
+      // Update the record in the database
+      const response = await znews.create({
+        FileName: filename,
+        FilePath: path,
+        Title: Title,
+        Subtitle: Subtitle,
+      });
+
+      console.log("RESPONSE", response);
+
+      res.json({
+        auth: true,
+        message: "News stored in backend !",
+        data: response,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+);
+
+// ROUTE ON PAGE NEWS : GET ALL NEWS
+router.get("/", verifyJwt, async function (req, res, next) {
+  try {
     const news = await znews.findAll({
-      where: {
-        IdCtraCli: IdCtraCli,
-      },
       // order: [["CptaDateOPE_lsd", "DESC"]], // ASC for ascending, DESC for descending
     });
 
