@@ -26,7 +26,7 @@ const CollCard = ({ IdColl, Name, Surname, Color, remove }) => {
       ...setModalStateRef.current,
       open: true,
       message: `Êtes-vous sûre de vouloir retirer le collaborateur ?`,
-      confirmation: "SUPPRIMER",
+      confirmation: "RETIRER",
       auth: true,
     });
   };
@@ -43,7 +43,7 @@ const CollCard = ({ IdColl, Name, Surname, Color, remove }) => {
       <Box
         sx={{
           ...styles.fileCard,
-          borderLeft: `10px solid ${Color}`,
+          borderLeft: `15px solid ${Color}`,
         }}
       >
         <Stack

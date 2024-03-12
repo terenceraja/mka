@@ -44,7 +44,7 @@ const NewsCardAdmin = ({ IdNews, Date, Title, Subtitle, remove }) => {
       <Box
         sx={{
           ...styles.fileCard,
-          borderLeft: `5px solid ${theme.palette.orange.main}`,
+          borderLeft: `15px solid ${theme.palette.orange.main}`,
         }}
       >
         <Stack direction="column" spacing={1} id="TOPSECTION">
