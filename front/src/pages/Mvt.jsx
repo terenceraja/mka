@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../components/Card";
 import Table from "../components/Table";
-import Modal from "../components/Modal";
+import CustomModal from "../components/CustomModal";
 import { useState, useEffect, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
@@ -115,7 +115,7 @@ const Mvt = () => {
   //
   return (
     <Box sx={styles.content}>
-      <Modal
+      <CustomModal
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
       />

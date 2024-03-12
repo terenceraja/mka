@@ -11,7 +11,7 @@ import { useEffect, useState, useRef } from "react";
 
 import { useSelector } from "react-redux";
 
-import Modal from "../components/Modal";
+import CustomModal from "../components/CustomModal";
 
 import { getNews } from "../utils/http";
 
@@ -87,7 +87,7 @@ const NewsPosts = () => {
 
   return (
     <Box sx={styles.content} id="content">
-      <Modal
+      <CustomModal
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
       />

@@ -11,7 +11,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { Box } from "@mui/material";
 
-const Modal = ({ setModalStateRef, onConfirmation }) => {
+const CustomModal = ({ setModalStateRef, onConfirmation }) => {
   const [modalState, setModalState] = useState({
     open: false,
     message: "",
@@ -71,4 +71,4 @@ const Modal = ({ setModalStateRef, onConfirmation }) => {
   );
 };
 
-export default Modal;
+export default CustomModal;

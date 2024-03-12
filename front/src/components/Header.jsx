@@ -6,7 +6,7 @@ import ReturnIcon from "./icons/ReturnIcon";
 
 import { useTheme } from "@mui/material/styles";
 
-import Modal from "./Modal";
+import CustomModal from "./CustomModal";
 import { useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import MenuButton from "./MenuButton";
@@ -89,7 +89,7 @@ const Header = () => {
         {/* <LogoutIcon fill="white" onClick={handleOpenModal} /> */}
       </Toolbar>
 
-      <Modal
+      <CustomModal
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
       />

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
-import Modal from "../components/Modal";
+import CustomModal from "../components/CustomModal";
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useMediaQuery } from "react-responsive";
@@ -198,7 +198,7 @@ const Cons = () => {
   };
   return (
     <Box sx={styles.content}>
-      <Modal
+      <CustomModal
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
       />

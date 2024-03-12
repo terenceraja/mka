@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useRef } from "react";
-import Modal from "../components/Modal";
+import Modal from "./CustomModal";
 import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";

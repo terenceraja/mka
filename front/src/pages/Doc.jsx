@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "../components/Card";
-import Modal from "../components/Modal";
+import CustomModal from "../components/CustomModal.jsx";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
@@ -183,7 +183,7 @@ const Doc = () => {
   return (
     <>
       <Snack setSnackStateRef={setSnackStateRef} />
-      <Modal
+      <CustomModal
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
       />

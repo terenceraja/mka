@@ -49,6 +49,7 @@ router.post(
   async function (req, res, next) {
     try {
       console.log(req.file);
+      console.log("YOOOOOOOOOO", req.body);
       const { Title, Subtitle } = req.body;
       const { filename, path } = req.file;
 
@@ -82,6 +83,28 @@ router.get("/", verifyJwt, async function (req, res, next) {
     });
 
     res.json({ auth: true, message: "News found !", data: news }); // Send the result as JSON
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// ROUTE ON PAGE NEWSADMIN : DELETE NEWS BY ID
+router.post("/delete", verifyJwt, async function (req, res, next) {
+  try {
+    const { IdNews } = req.body;
+
+    // Delete the entry from the database with the provided IdNews
+    await znews.destroy({ where: { IdNews } });
+
+    // Fetch all collabs after deleting the entry (optional, for demonstration purposes)
+    const news = await znews.findAll();
+
+    res.json({
+      auth: true,
+      message: "News deleted successfully",
+      data: news,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

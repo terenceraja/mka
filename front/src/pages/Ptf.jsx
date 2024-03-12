@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../components/Card";
 import ChartPie from "../components/ChartPie";
-import Modal from "../components/Modal";
+import CustomModal from "../components/CustomModal";
 
 // MUI
 import { Box } from "@mui/material";
@@ -235,7 +235,7 @@ const Ptf = () => {
 
   return (
     <Box sx={styles.content} id="content">
-      <Modal
+      <CustomModal
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
       />

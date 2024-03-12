@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useRef } from "react";
-import Modal from "../components/Modal";
+import CustomModal from "./CustomModal";
 import { useNavigate } from "react-router-dom";
 import Snack from "../components/Snack";
 
@@ -104,7 +104,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
       triggerSnack({
         open: true,
         message:
-          "Veuillez sélectionner un fichier d'une taille maximale de 5 Mo.",
+          "Veuillez sélectionner un fichier d'une taille maximale de 5MB.",
         severity: "error",
       });
     }
@@ -152,7 +152,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
   return (
     <>
       <Snack setSnackStateRef={setSnackStateRef} />
-      <Modal
+      <CustomModal
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
       />

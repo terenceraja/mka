@@ -2,7 +2,7 @@ import React from "react";
 import Card from "../components/Card";
 import Table from "../components/Table";
 import ChartBar from "../components/ChartBar";
-import Modal from "../components/Modal";
+import CustomModal from "../components/CustomModal";
 
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -207,7 +207,7 @@ const DetPtf = () => {
   };
   return (
     <Box sx={styles.content}>
-      <Modal
+      <CustomModal
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
       />

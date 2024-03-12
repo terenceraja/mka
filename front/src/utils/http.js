@@ -274,6 +274,55 @@ export const getNews = async () => {
   return resData;
 };
 
+// zcoll TO DELETE COLL
+export const deleteNews = async (dataToPost) => {
+  const response = await fetch("http://localhost:3000/news/delete", {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};
+
+// znews UPLOAD and SAVE NEWS
+export const postNews = async (form, fileToPost) => {
+  console.log("file upload", fileToPost);
+  const formData = new FormData();
+  formData.append("file", fileToPost);
+  formData.append("Title", form.title); // Append the document ID to the FormData
+  formData.append("Subtitle", form.subtitle); // Append the document ID to the FormData
+
+  console.log("formdata", formData.values);
+  try {
+    const response = await fetch("http://localhost:3000/news/upload", {
+      method: "POST",
+      body: formData,
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
+
+    const resData = await response.json();
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+
+    return resData;
+  } catch (error) {
+    console.error("Error:", error); // Log any errors that occur during the request
+    throw new Error("Something went wrong");
+  }
+};
+
 // zcoll TO GET ALL COLLABS
 export const getCollabs = async () => {
   const response = await fetch("http://localhost:3000/collabs", {

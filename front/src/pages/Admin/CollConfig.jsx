@@ -14,8 +14,12 @@ import {
   FormControl,
   Divider,
 } from "@mui/material";
+
+import CustomModal from "../../components/CustomModal";
+
 import { useTheme } from "@mui/material/styles";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useEffect } from "react";
 
@@ -40,6 +44,7 @@ function CollConfig() {
 
   console.log(colors);
   console.log(form);
+  const navigate = useNavigate();
   const theme = useTheme();
 
   // POST FETCHING EXAMPLE
@@ -79,6 +84,12 @@ function CollConfig() {
       confirmation: "SE RECONNECTER",
       auth: false,
     });
+  };
+  const handleConfirmation = () => {
+    localStorage.clear();
+    setTimeout(() => {
+      navigate("/");
+    }, 1200);
   };
 
   // FETCH ALL COLLABS
@@ -174,6 +185,10 @@ function CollConfig() {
 
   return (
     <Box sx={styles.content} id="content">
+      <CustomModal
+        setModalStateRef={setModalStateRef}
+        onConfirmation={handleConfirmation}
+      />
       <Card title="CONFIGURATION COLLABORATEUR">
         <Box>
           <Button
@@ -250,6 +265,7 @@ function CollConfig() {
                       {colorList}
                     </Select>
                   </FormControl>
+
                   {(!form.name || !form.surname || !form.color) && (
                     <Typography
                       variant="link"
