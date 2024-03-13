@@ -23,12 +23,21 @@ router.get("/", verifyJwt, async function (req, res, next) {
   }
 });
 
+// ROUTE ON PAGE ADMIN COLLABCONFIG : SAVE A COLLAB
 router.post("/add", verifyJwt, async function (req, res, next) {
   try {
-    const { name, surname, color } = req.body;
+    const { IdColl, name, surname, color } = req.body;
+    console.log(typeof IdColl);
+
+    // Check if a collab with the same IdColl already exists
+    const existingCollab = await zcoll.findOne({ where: { IdColl: IdColl } });
+    if (existingCollab) {
+      return res.json({ error: true, message: "IdColl déjà utilisé" });
+    }
 
     // Create a new entry in the database with the provided data
     const newCollab = await zcoll.create({
+      IdColl: IdColl,
       Name: name,
       Surname: surname,
       Color: color,
