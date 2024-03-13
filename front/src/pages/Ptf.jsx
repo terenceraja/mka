@@ -230,7 +230,8 @@ const Ptf = () => {
   const rowClick = (row) => {
     const activePtf = row.getData();
     dispatch(addActivePtfToStore(activePtf));
-    navigate("/layout/detPtf");
+
+    navigate("/layout/detPtf?param1=value1&param2=value2");
   };
 
   return (

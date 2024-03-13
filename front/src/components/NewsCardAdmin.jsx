@@ -9,7 +9,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 
-const NewsCardAdmin = ({ IdNews, Date, Title, Subtitle, remove }) => {
+const NewsCardAdmin = ({ IdNews, Date, Title, Subtitle, remove, File }) => {
   const theme = useTheme();
 
   //MODAL
@@ -51,6 +51,7 @@ const NewsCardAdmin = ({ IdNews, Date, Title, Subtitle, remove }) => {
           <Typography variant="fileCard2">Titre : {Title}</Typography>
           <Typography variant="fileCard2">Sous-titre : {Subtitle}</Typography>
           <Typography variant="fileCard2">Publication : {Date}</Typography>
+          <Typography variant="fileCard2">Fichier : {File}</Typography>
         </Stack>
         <Divider />
 

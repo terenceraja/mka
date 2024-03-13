@@ -50,11 +50,12 @@ router.post(
     try {
       console.log(req.file);
       const { Title, Subtitle } = req.body;
-      const { filename, path } = req.file;
+      const { filename, path, originalname } = req.file;
 
       // Update the record in the database
       const response = await znews.create({
         FileName: filename,
+        FileOriginalName: originalname,
         FilePath: path,
         Title: Title,
         Subtitle: Subtitle,

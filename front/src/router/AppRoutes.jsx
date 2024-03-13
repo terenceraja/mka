@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Cons from "../pages/Cons";
 import Ptf from "../pages/Ptf";
 import DetPtf from "../pages/DetPtf";
@@ -17,6 +17,8 @@ import Home from "../pages/Admin/Home.jsx";
 import NewsConfig from "../pages/Admin/NewsConfig.jsx";
 import CollConfig from "../pages/Admin/CollConfig.jsx";
 import ChatConfig from "../pages/Admin/ChatConfig.jsx";
+import KeesenseChatList from "../pages/KeesenseChatList.jsx";
+import KeesenseChatBox from "../pages/KeesenseChatBox.jsx";
 
 // ROUTE DEFINITION
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -27,7 +29,8 @@ function AppRoutes() {
   const router = createBrowserRouter([
     { path: "/", element: <Log />, index: true }, // Log component as the main index
     { path: "/error", element: <Error /> },
-    { path: "/keesense/chat/:IdColl", element: <Home /> },
+    { path: "/keesense/chat/:IdColl", element: <KeesenseChatBox /> },
+    { path: "/keesense/chat", element: <KeesenseChatList /> },
     {
       path: "/admin",
       element: <AdminLayout />,

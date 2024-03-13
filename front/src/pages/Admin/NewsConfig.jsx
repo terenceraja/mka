@@ -54,7 +54,7 @@ function NewsConfig() {
     subtitle: "",
   });
 
-  console.log(form);
+  console.log(news);
   const navigate = useNavigate();
   const theme = useTheme();
 
@@ -176,6 +176,7 @@ function NewsConfig() {
 
   // COLLAB LIST RENDER
   const newsList = news.map((obj, key) => {
+    console.log("tyottoot", obj.originalFile);
     return (
       <NewsCardAdmin
         key={key}
@@ -183,6 +184,7 @@ function NewsConfig() {
         Title={obj.Title}
         Subtitle={obj.Subtitle}
         Date={formatISODate(obj.TimeStampCreation)}
+        File={obj.FileOriginalName}
         remove={handleRemoveNews}
       />
     );
@@ -220,7 +222,7 @@ function NewsConfig() {
               onClick={handleOpen}
             >
               <Typography marginTop={"2px"} variant="link">
-                Ajouter news
+                Nouvelle publication
               </Typography>
             </Button>
 

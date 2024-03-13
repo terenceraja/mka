@@ -53,7 +53,7 @@ const CollCard = ({ IdColl, Name, Surname, Color, remove }) => {
           //   justifyContent={"center"}
           id="TOPSECTION"
         >
-          <Typography variant="fileCard2">ID: {IdColl}</Typography>
+          <Typography variant="fileCard2">IdColl: {IdColl}</Typography>
 
           <Typography minWidth={50} variant="fileCard2">
             Nom: {Surname}
