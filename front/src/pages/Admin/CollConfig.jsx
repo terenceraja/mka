@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
 import colors from "../../utils/collabColors";
-
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import Modal from "@mui/material/Modal";
+import Alert from "@mui/material/Alert";
 import { Button, Typography } from "@mui/material";
 import {
   Box,
@@ -40,6 +41,7 @@ function CollConfig() {
     name: "",
     surname: "",
     color: "",
+    IdColl: "",
   });
 
   console.log(colors);
@@ -123,7 +125,7 @@ function CollConfig() {
       const response = await deleteColl({ IdColl });
 
       // AUTHENTIFICATION
-      console.log("response000", response);
+      console.log("responsedelete", response);
       if (!response.auth) {
         handleOpenModal();
         return;
@@ -153,7 +155,14 @@ function CollConfig() {
   // ADD MODAL
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
-    setForm((prev) => ({ ...prev, name: "", surname: "", color: "" }));
+    setForm((prev) => ({
+      ...prev,
+      name: "",
+      surname: "",
+      color: "",
+      IdColl: "",
+    }));
+    setError("");
     setOpen(false);
   };
 
@@ -161,8 +170,14 @@ function CollConfig() {
   const handleConfirmColl = async (e) => {
     e.preventDefault();
     const response = await postForm();
-    console.log("response000", response);
-    setCollab(response.data);
+    console.log("responseconfirm", response);
+    if (response.error) {
+      setError(response.message);
+      setForm((prev) => ({ ...prev, IdColl: "" }));
+      return;
+    } else {
+      setCollab(response.data);
+    }
     handleClose();
   };
 
@@ -234,12 +249,22 @@ function CollConfig() {
               <Typography variant="title">DEFINITION COLLABORATEUR</Typography>
               <Divider
                 sx={{
-                  marginTop: 2,
                   marginBottom: 1,
                 }}
               />
               <Stack direction={"column"} spacing={3}>
                 <Stack direction={"column"} spacing={2}>
+                  <TextField
+                    onClick={() => {
+                      setError("");
+                    }}
+                    name="IdColl"
+                    onChange={(e) => handleChange(e)}
+                    label="IdColl"
+                    type="number"
+                    variant="standard"
+                    value={form.IdColl}
+                  />
                   <TextField
                     name="name"
                     onChange={(e) => handleChange(e)}
@@ -272,7 +297,10 @@ function CollConfig() {
                     </Select>
                   </FormControl>
 
-                  {(!form.name || !form.surname || !form.color) && (
+                  {(!form.name ||
+                    !form.surname ||
+                    !form.color ||
+                    !form.IdColl) && (
                     <Typography
                       variant="link"
                       color={theme.palette.orange.main}
@@ -285,18 +313,29 @@ function CollConfig() {
                 <Button
                   type="submit"
                   disabled={
-                    form.name && form.surname && form.color ? false : true
+                    form.name && form.surname && form.color && form.IdColl
+                      ? false
+                      : true
                   }
                   sx={{
-                    width: "100px",
+                    width: "auto",
                     alignSelf: "end",
-
+                    p: 0,
                     color: theme.palette.orange.main,
                   }}
                 >
                   Confirmer
                 </Button>
               </Stack>
+              {error && (
+                <Alert
+                  icon={<ErrorOutlineIcon fontSize="inherit" />}
+                  severity="success"
+                  color="error"
+                >
+                  {error}
+                </Alert>
+              )}
             </Box>
           </Modal>
         </Box>

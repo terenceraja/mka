@@ -27,6 +27,7 @@ function AppRoutes() {
   const router = createBrowserRouter([
     { path: "/", element: <Log />, index: true }, // Log component as the main index
     { path: "/error", element: <Error /> },
+    { path: "/keesense/chat/:IdColl", element: <Home /> },
     {
       path: "/admin",
       element: <AdminLayout />,
@@ -46,14 +47,15 @@ function AppRoutes() {
         { path: "ptf", element: <Ptf /> },
         { path: "doc", element: <Doc /> },
         { path: "quest", element: <Quest /> },
-        {
-          path: "news",
-          element: <NewsLayout />,
-          children: [
-            { path: "posts", element: <News /> },
-            { path: ":viewpdf", element: <PdfView /> },
-          ],
-        },
+        { path: "news", element: <News /> },
+        // {
+        //   path: "news",
+        //   element: <NewsLayout />,
+        //   children: [
+        //     { path: "posts", element: <News /> },
+        //     { path: ":viewpdf", element: <PdfView /> },
+        //   ],
+        // },
         { path: "chat", element: <Chat /> },
         { path: "detPtf", element: <DetPtf /> },
         { path: "cons", element: <Cons /> },

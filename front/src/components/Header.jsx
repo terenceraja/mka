@@ -56,7 +56,7 @@ const Header = () => {
       path !== "/layout/ptf" &&
       path !== "/layout/doc" &&
       path !== "/layout/quest" &&
-      path !== "/layout/news/posts" &&
+      path !== "/layout/news" &&
       path !== "/layout/chat" &&
       path !== "/admin"
     ) {

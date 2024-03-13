@@ -259,7 +259,6 @@ function NewsConfig() {
 
                 <Divider
                   sx={{
-                    marginTop: 2,
                     marginBottom: 1,
                   }}
                 />
@@ -349,8 +348,9 @@ function NewsConfig() {
                       form.title && form.subtitle && selectedFile ? false : true
                     }
                     sx={{
-                      width: "100px",
+                      width: "auto",
                       alignSelf: "end",
+                      p: 0,
 
                       color: theme.palette.orange.main,
                     }}

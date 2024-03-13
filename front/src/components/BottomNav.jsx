@@ -97,18 +97,16 @@ export default function LabelBottomNavigation() {
         <BottomNavigationAction
           sx={styles.buttonAction}
           label="News"
-          value="/layout/news/posts"
+          value="/layout/news"
           icon={
             <NewsIcon
               fill={
-                value === "/layout/news/posts"
-                  ? theme.palette.orange.main
-                  : "white"
+                value === "/layout/news" ? theme.palette.orange.main : "white"
               }
             />
           }
           component={NavLink}
-          to="/layout/news/posts"
+          to="/layout/news"
         />
         <BottomNavigationAction
           sx={styles.buttonAction}
