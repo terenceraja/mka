@@ -378,3 +378,21 @@ export const deleteColl = async (dataToPost) => {
 
   return resData;
 };
+
+// zcoll TO check COLL USER
+export const getAllChat = async () => {
+  const response = await fetch("http://localhost:3000/chat/getAll", {
+    method: "GET",
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};

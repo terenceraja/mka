@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material/styles";
 
-const CollCard = ({ IdColl, Name, Surname, Color, remove }) => {
+const CollCard = ({ IdColl, Name, Surname, Color, remove, Password }) => {
   const theme = useTheme();
 
   const [error, setError] = useState("");
@@ -48,21 +48,19 @@ const CollCard = ({ IdColl, Name, Surname, Color, remove }) => {
       >
         <Stack
           direction="row"
-          spacing={2}
-          alignItems="center"
-          //   justifyContent={"center"}
+          // alignItems="center"
+          justifyContent={"space-between"}
           id="TOPSECTION"
         >
-          <Typography variant="fileCard2">IdColl: {IdColl}</Typography>
-
           <Typography minWidth={50} variant="fileCard2">
-            Nom: {Surname}
+            Nom : {Surname}
           </Typography>
-
-          <Typography minWidth={50} variant="fileCard2">
-            Prénom: {Name}
-          </Typography>
+          <Typography variant="fileCard2">IdColl : {IdColl}</Typography>
         </Stack>
+        <Typography minWidth={50} variant="fileCard2">
+          Prénom : {Name}
+        </Typography>
+
         <Divider />
 
         <Button

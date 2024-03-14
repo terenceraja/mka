@@ -6,7 +6,7 @@ const ClientCard = () => {
 
   const handleClick = () => {
     console.log("Card clicked");
-    navigate("idColl");
+    navigate("/keesense/chat/IdChat");
   };
   return (
     <Box sx={styles.card} onClick={handleClick}>
@@ -27,8 +27,9 @@ const styles = {
   card: {
     bgcolor: "white",
     width: "100%",
-    height: "80px",
+    height: "75px",
     p: 2,
+    borderBottom: "1px solid rgba(169, 169, 169, 0.3)",
     "&:hover": {
       bgcolor: "#f0f0f0", // Example: change background color on hover
       cursor: "pointer", // Example: change cursor to pointer on hover

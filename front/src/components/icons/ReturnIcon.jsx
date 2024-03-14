@@ -1,6 +1,6 @@
 import React from "react";
 
-const ReturnIcon = ({ fill, onClick }) => {
+const ReturnIcon = ({ fill, onClick, size }) => {
   const handleOnClick = () => {
     onClick();
   };
@@ -11,8 +11,8 @@ const ReturnIcon = ({ fill, onClick }) => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="-0.5 -0.5 15 15"
-      height="25"
-      width="25"
+      height={size}
+      width={size}
       id="Return-1--Streamline-Sharp.svg"
     >
       <desc>Return 1 Streamline Icon: https://streamlinehq.com</desc>

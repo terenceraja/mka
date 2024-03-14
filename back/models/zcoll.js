@@ -2,12 +2,8 @@ module.exports = (sequelize, DataTypes) => {
   const zcoll = sequelize.define(
     "zcoll",
     {
-      Id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
       IdColl: {
+        primaryKey: true,
         type: DataTypes.INTEGER,
         allowNull: false,
       },

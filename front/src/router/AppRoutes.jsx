@@ -19,6 +19,7 @@ import CollConfig from "../pages/Admin/CollConfig.jsx";
 import ChatConfig from "../pages/Admin/ChatConfig.jsx";
 import KeesenseChatList from "../pages/KeesenseChatList.jsx";
 import KeesenseChatBox from "../pages/KeesenseChatBox.jsx";
+import KeesenseLayout from "../pages/KeesenseLayout.jsx";
 
 // ROUTE DEFINITION
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -29,8 +30,17 @@ function AppRoutes() {
   const router = createBrowserRouter([
     { path: "/", element: <Log />, index: true }, // Log component as the main index
     { path: "/error", element: <Error /> },
-    { path: "/keesense/chat/:IdColl", element: <KeesenseChatBox /> },
-    { path: "/keesense/chat", element: <KeesenseChatList /> },
+
+    {
+      path: "/keesense",
+      element: <KeesenseLayout />,
+      children: [
+        { path: "chatlist/:IdColl", element: <KeesenseChatList /> },
+
+        { path: "chat/:IdChat", element: <KeesenseChatBox /> },
+      ],
+    },
+
     {
       path: "/admin",
       element: <AdminLayout />,

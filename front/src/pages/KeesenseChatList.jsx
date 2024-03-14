@@ -1,17 +1,36 @@
-import React from "react";
-import { Box, Stack } from "@mui/material";
+import React, { useEffect } from "react";
+import { Box, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+
+import { useState } from "react";
 
 import ClientCard from "../components/ClientCard";
 
 const KeesenseChatList = () => {
+  const [error, setError] = useState("");
+
   const theme = useTheme();
+  const chatList = [
+    <ClientCard key={1} />,
+    <ClientCard key={2} />,
+    <ClientCard key={3} />,
+    <ClientCard key={4} />,
+    <ClientCard key={5} />,
+    <ClientCard key={6} />,
+    <ClientCard key={7} />,
+    <ClientCard key={8} />,
+    <ClientCard key={9} />,
+    <ClientCard key={10} />,
+  ];
+
   return (
     <Box sx={styles.mainContent}>
-      <Box sx={styles.header}>HEADER</Box>
-      <Box sx={styles.listContainer}>
-        <ClientCard />
+      <Box sx={styles.header}>
+        <Typography color={"white"} variant="title">
+          CHAT LIST
+        </Typography>
       </Box>
+      <Box sx={styles.listContainer}>{chatList}</Box>
     </Box>
   );
 };
@@ -29,16 +48,19 @@ const styles = {
     bgcolor: "background.main",
     width: "100%",
     display: "flex",
+    flexDirection: "column",
     flex: 1,
+    overflow: "hidden",
   },
   header: {
-    bgcolor: "yellow",
+    bgcolor: "primary.main",
     width: "100%",
-    height: "50px",
+    height: "55px",
     display: "flex",
     alignItems: "center",
     boxSizing: "border-box",
-    p: 1,
+    py: 1,
+    px: 2,
   },
 };
 

@@ -265,6 +265,7 @@ function CollConfig() {
                     variant="standard"
                     value={form.IdColl}
                   />
+
                   <TextField
                     name="name"
                     onChange={(e) => handleChange(e)}

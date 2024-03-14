@@ -78,7 +78,7 @@ const Header = () => {
             src="/src/assets/img/kslogo.png"
           />
           {showReturn() ? (
-            <ReturnIcon onClick={handleReturn} fill="white" />
+            <ReturnIcon onClick={handleReturn} fill="white" size="25" />
           ) : (
             <></>
           )}

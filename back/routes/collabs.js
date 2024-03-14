@@ -26,7 +26,7 @@ router.get("/", verifyJwt, async function (req, res, next) {
 // ROUTE ON PAGE ADMIN COLLABCONFIG : SAVE A COLLAB
 router.post("/add", verifyJwt, async function (req, res, next) {
   try {
-    const { IdColl, name, surname, color } = req.body;
+    const { IdColl, name, surname, color, password } = req.body;
     console.log(typeof IdColl);
 
     // Check if a collab with the same IdColl already exists
@@ -40,6 +40,7 @@ router.post("/add", verifyJwt, async function (req, res, next) {
       IdColl: IdColl,
       Name: name,
       Surname: surname,
+      Password: password,
       Color: color,
     });
 
@@ -72,6 +73,32 @@ router.post("/delete", verifyJwt, async function (req, res, next) {
       message: "Collab deleted successfully",
       data: collabs,
     });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.post("/check", verifyJwt, async function (req, res, next) {
+  try {
+    const { IdColl } = req.body;
+
+    // Delete the entry from the database with the provided IdColl
+    const collab = await zcoll.findOne({ where: { IdColl } });
+
+    console.log(collab);
+    if (!collab) {
+      res.json({
+        auth: true,
+        message: "Collab not found !",
+      });
+    } else {
+      res.json({
+        auth: true,
+        message: "Collab found !",
+        data: collab,
+      });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

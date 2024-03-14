@@ -11,6 +11,7 @@ var collabsRouter = require("./routes/collabs");
 var newsRouter = require("./routes/news");
 var iisRouter = require("./routes/iisTest");
 var messageRouter = require("./routes/message");
+var chatRouter = require("./routes/chat");
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use("/doc", docRouter);
 app.use("/collabs", collabsRouter);
 app.use("/news", newsRouter);
 app.use("/message", messageRouter);
+app.use("/chat", chatRouter);
 app.use("/iis", iisRouter);
 
 // ///////// IIS CONFIG ///////////
