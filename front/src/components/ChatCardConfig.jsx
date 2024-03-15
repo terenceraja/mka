@@ -43,9 +43,9 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
   const [collabs, setCollabs] = useState(collabsProp);
   const [allCollabs, setAllCollabs] = useState([]);
   const [error, setError] = useState("");
-  const [openListItem, setOpenListItem] = React.useState(true);
+  const [openListItem, setOpenListItem] = useState(false);
   const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   // FORM
   const [form, setForm] = useState({
     name: "",
@@ -145,6 +145,7 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
     try {
       const response = await deleteCollabFromChat({ IdColl, IdChat });
       console.log("delete", response);
+      setCollabs(response.data);
     } catch (error) {
       setError({ message: error.message || "custom error message" });
     }
@@ -192,9 +193,6 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
     );
   });
 
-  const isOpenPopover = Boolean(anchorEl);
-  const id = isOpenPopover ? "simple-popover" : undefined;
-
   // LIST ITEM
   const handleClickListItem = () => {
     setOpenListItem(!openListItem);
@@ -211,7 +209,6 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
           <Stack direction={"row"} justifyContent={"space-between"}>
             <Typography variant="fileCard2"> ID Client : {idClient}</Typography>
             <Typography variant="fileCard2">
-              {" "}
               Total : {collabs.length + 1} pers.
             </Typography>
           </Stack>
@@ -224,10 +221,9 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
             >
               <Stack direction={"row"} spacing={1} alignItems={"center"}>
                 <Typography variant="fileCard2">
-                  {" "}
                   {collabs.length} Collaborateurs
                 </Typography>
-                {openListItem ? (
+                {openListItem && collabs.length !== 0 ? (
                   <ExpandLess
                     sx={{ color: theme.palette.orange.main, fontSize: 20 }}
                   />
@@ -250,7 +246,6 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Button
             sx={{
-              // fontSize: "10px",
               width: "auto",
               p: 0,
               color: theme.palette.orange.main,
@@ -307,7 +302,7 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
                     allCollabList
                   ) : (
                     <Typography variant="link">
-                      Aucuns collaborateurs ajoutés
+                      Aucuns collaborateurs disponibles
                     </Typography>
                   )}
                 </Box>
