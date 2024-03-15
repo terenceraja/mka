@@ -396,3 +396,43 @@ export const getAllChat = async () => {
 
   return resData;
 };
+
+// zchatcoll TO JOIN COLL IN CHAT
+export const addCollabInChat = async (dataToPost) => {
+  const response = await fetch("http://localhost:3000/chat/addCollab", {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};
+
+// zchatcoll TO JOIN COLL IN CHAT
+export const deleteCollabFromChat = async (dataToPost) => {
+  const response = await fetch("http://localhost:3000/chat/deleteCollab", {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};
+
+deleteCollabFromChat;

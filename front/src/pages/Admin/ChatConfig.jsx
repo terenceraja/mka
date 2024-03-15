@@ -2,10 +2,9 @@ import React, { useState } from "react";
 
 import colors from "../../utils/collabColors";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import Modal from "@mui/material/Modal";
-import Alert from "@mui/material/Alert";
-import { Button, Typography } from "@mui/material";
 import {
+  Modal,
+  Alert,
   Box,
   Stack,
   TextField,
@@ -14,16 +13,15 @@ import {
   MenuItem,
   FormControl,
   Divider,
+  Button,
+  Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
+import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 import CustomModal from "../../components/CustomModal";
-
-import { useTheme } from "@mui/material/styles";
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
-
-import { useEffect } from "react";
-
 import AddIcon from "../../components/icons/AddIcon";
 import ChartCardConfig from "../../components/ChatCardConfig";
 import Card from "../../components/Card";
@@ -32,6 +30,7 @@ import Card from "../../components/Card";
 import { getAllChat } from "../../utils/http";
 
 function CollConfig() {
+  const [chatListState, setChatListState] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
   const [collab, setCollab] = useState([]);
   const [open, setOpen] = useState(false);
@@ -94,7 +93,7 @@ function CollConfig() {
       //   return;
       // }
 
-      // setCollab(collabs);
+      setChatListState(responseChatList);
     } catch (error) {
       setError({ message: error.message || "custom error message" });
     }
@@ -153,20 +152,16 @@ function CollConfig() {
     handleClose();
   };
 
-  //LIST OF COLORS
-  const colorList = colors.map((obj, key) => {
+  // RENDER CHATLIST
+  const chatList = chatListState.map((obj, key) => {
+    console.log(obj.zchatcoll);
     return (
-      <MenuItem key={key} value={obj.color}>
-        <Typography
-          borderRadius={"4px"}
-          p={0.5}
-          bgcolor={obj.color}
-          marginTop={"2px"}
-          variant="title"
-        >
-          {obj.name}
-        </Typography>
-      </MenuItem>
+      <ChartCardConfig
+        key={key}
+        idClient={obj.IdCtraCli}
+        collabsProp={obj.zchatcolls}
+        IdChat={obj.IdChat}
+      />
     );
   });
 
@@ -191,7 +186,13 @@ function CollConfig() {
             sx={styles.docsContainer}
             bgcolor={theme.palette.background.main}
           >
-            <ChartCardConfig />
+            {chatList.length > 0 ? (
+              chatList
+            ) : (
+              <Typography variant="subTitle">
+                Aucunes conversations existantes
+              </Typography>
+            )}
           </Box>
 
           <Modal

@@ -2,17 +2,17 @@ import React from "react";
 import { useState, useRef } from "react";
 import CustomModal from "./CustomModal";
 import { useNavigate } from "react-router-dom";
-import Snack from "../components/Snack";
-
-import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Popover from "@mui/material/Popover";
+import Snack from "./Snack";
+import {
+  Box,
+  Typography,
+  Popover,
+  Divider,
+  Button,
+  Stack,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Divider from "@mui/material/Divider";
 
-import Button from "@mui/material/Button";
-
-import Stack from "@mui/material/Stack";
 import DeleteIcon from "./icons/DeleteIcon";
 import UploadIcon from "./icons/UploadIcon";
 import InfoIcon from "./icons/InfoIcon";
@@ -271,6 +271,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
                 <DeleteIcon
                   fill={theme.palette.primary.main}
                   onClick={handleRemove}
+                  size={"15"}
                 />
               </>
             ) : (

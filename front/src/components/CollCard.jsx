@@ -1,14 +1,19 @@
 import React from "react";
 import { useState, useRef } from "react";
 import Modal from "./CustomModal";
-import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
+import { Box, Typography, Divider, Button, Stack } from "@mui/material";
+
 import { useTheme } from "@mui/material/styles";
 
-const CollCard = ({ IdColl, Name, Surname, Color, remove, Password }) => {
+const CollCard = ({
+  IdColl,
+  Name,
+  Surname,
+  Color,
+  remove,
+  Add = false,
+  JoinClick,
+}) => {
   const theme = useTheme();
 
   const [error, setError] = useState("");
@@ -32,6 +37,11 @@ const CollCard = ({ IdColl, Name, Surname, Color, remove, Password }) => {
   };
   const handleDeleteConfirmation = () => {
     remove(IdColl);
+  };
+
+  const handleJoindre = () => {
+    console.log("join");
+    JoinClick();
   };
 
   return (
@@ -63,16 +73,29 @@ const CollCard = ({ IdColl, Name, Surname, Color, remove, Password }) => {
 
         <Divider />
 
-        <Button
-          sx={{
-            width: "auto",
-            p: 0,
-            color: theme.palette.orange.main,
-          }}
-          onClick={() => handleOpenModal()}
-        >
-          Retirer
-        </Button>
+        {Add ? (
+          <Button
+            sx={{
+              width: "auto",
+              p: 0,
+              color: theme.palette.orange.main,
+            }}
+            onClick={() => handleJoindre()}
+          >
+            JOINDRE
+          </Button>
+        ) : (
+          <Button
+            sx={{
+              width: "auto",
+              p: 0,
+              color: theme.palette.orange.main,
+            }}
+            onClick={() => handleOpenModal()}
+          >
+            Retirer
+          </Button>
+        )}
       </Box>
     </>
   );

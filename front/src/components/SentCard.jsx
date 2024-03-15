@@ -1,10 +1,5 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Popover from "@mui/material/Popover";
-import Divider from "@mui/material/Divider";
-import Stack from "@mui/material/Stack";
+import React, { useEffect, useState } from "react";
+import { Box, Typography, Popover, Divider, Stack } from "@mui/material";
 import InfoIcon from "./icons/InfoIcon";
 import { useTheme } from "@mui/material/styles";
 

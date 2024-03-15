@@ -2,14 +2,16 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 //MODAL LOGOUT
-import LinearProgress from "@mui/material/LinearProgress";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { Box } from "@mui/material";
+import {
+  Box,
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+  DialogActions,
+  Dialog,
+  Button,
+  LinearProgress,
+} from "@mui/material";
 
 const CustomModal = ({ setModalStateRef, onConfirmation }) => {
   const [modalState, setModalState] = useState({

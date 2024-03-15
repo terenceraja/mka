@@ -1,6 +1,6 @@
 import React from "react";
 
-const DeleteIcon = ({ fill, onClick }) => {
+const DeleteIcon = ({ fill, onClick, size }) => {
   const handleClick = () => {
     onClick();
   };
@@ -8,8 +8,8 @@ const DeleteIcon = ({ fill, onClick }) => {
     <svg
       onClick={() => handleClick()}
       xmlns="http://www.w3.org/2000/svg"
-      width="15"
-      height="15"
+      width={size}
+      height={size}
       viewBox="0 0 20 20"
       version="1.1"
     >

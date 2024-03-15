@@ -2,10 +2,12 @@ import React, { useState } from "react";
 
 import colors from "../../utils/collabColors";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
-import Modal from "@mui/material/Modal";
-import Alert from "@mui/material/Alert";
-import { Button, Typography } from "@mui/material";
+
 import {
+  Modal,
+  Alert,
+  Button,
+  Typography,
   Box,
   Stack,
   TextField,
@@ -19,10 +21,9 @@ import {
 import CustomModal from "../../components/CustomModal";
 
 import { useTheme } from "@mui/material/styles";
-import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import AddIcon from "../../components/icons/AddIcon";
 import CollCard from "../../components/CollCard";

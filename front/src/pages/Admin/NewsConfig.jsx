@@ -11,12 +11,12 @@ import {
   InputLabel,
 } from "@mui/material";
 
-import Snack from "../../components/Snack";
 import CustomModal from "../../components/CustomModal";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import { useRef, useEffect } from "react";
 
+import Snack from "../../components/Snack";
 import AddIcon from "../../components/icons/AddIcon";
 import Card from "../../components/Card";
 import NewsCardAdmin from "../../components/NewsCardAdmin";
@@ -233,7 +233,9 @@ function NewsConfig() {
               {newsList.length > 0 ? (
                 newsList
               ) : (
-                <Typography variant="link">Aucuns articles publiés</Typography>
+                <Typography variant="subTitle">
+                  Aucuns articles publiés
+                </Typography>
               )}
             </Box>
 

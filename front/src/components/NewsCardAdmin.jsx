@@ -1,12 +1,9 @@
 import React from "react";
 import { useState, useRef } from "react";
 import Modal from "./CustomModal";
-import Snack from "../components/Snack";
-import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
+import Snack from "./Snack";
+import { Box, Typography, Divider, Button, Stack } from "@mui/material";
+
 import { useTheme } from "@mui/material/styles";
 
 const NewsCardAdmin = ({ IdNews, Date, Title, Subtitle, remove, File }) => {

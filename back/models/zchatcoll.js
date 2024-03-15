@@ -30,5 +30,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  // ASSOCIATION EXAMPLE
+  zchatcoll.associate = (models) => {
+    zchatcoll.belongsTo(models.zcoll, { foreignKey: "IdColl" });
+  };
+
   return zchatcoll;
 };
