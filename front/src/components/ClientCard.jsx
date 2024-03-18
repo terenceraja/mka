@@ -1,18 +1,18 @@
 import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-const ClientCard = () => {
+const ClientCard = ({ Client }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     console.log("Card clicked");
-    navigate("/keesense/chat/IdChat");
+    navigate(`/keesense/chat/${Client}`);
   };
   return (
     <Box sx={styles.card} onClick={handleClick}>
       <Stack direction={"column"} spacing={1}>
         <Stack direction={"row"} justifyContent={"space-between"}>
-          <Typography variant="title">Name</Typography>
+          <Typography variant="title">{Client}</Typography>
           <Typography variant="subTitle">last date</Typography>
         </Stack>
 

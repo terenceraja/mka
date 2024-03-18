@@ -3,7 +3,7 @@ const router = express.Router();
 const { zchat, zchatcoll, zcoll } = require("../models");
 
 // Route to fetch all lines from zchat and include associated IdColl from zchatcoll along with details from zcoll
-router.get("/getAll", async (req, res) => {
+router.get("/getAllChat", async (req, res) => {
   try {
     const result = await zchat.findAll({
       include: [
@@ -19,7 +19,34 @@ router.get("/getAll", async (req, res) => {
         },
       ],
     });
-    res.json(result);
+    res.json({ auth: true, message: "All chats found !", data: result });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route to fetch all lines from zchat and include associated IdColl from zchatcoll along with details from zcoll
+router.get("/getAll/:IdColl", async (req, res) => {
+  const { IdColl } = req.params;
+  console.log(req.params);
+  try {
+    const result = await zchatcoll.findAll({
+      where: {
+        IdColl,
+      },
+      include: [
+        {
+          model: zchat,
+          attributes: ["IdCtraCli"],
+        },
+      ],
+    });
+    res.json({
+      auth: true,
+      message: `All chats for coll ${IdColl}  found !`,
+      data: result,
+    });
   } catch (error) {
     console.error("Error fetching data:", error);
     res.status(500).send("Internal Server Error");

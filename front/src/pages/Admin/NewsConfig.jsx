@@ -325,8 +325,9 @@ function NewsConfig() {
                               {selectedFile.name}
                             </Typography>
                             <DeleteIcon
-                              fill={theme.palette.primary.main}
+                              fill={theme.palette.orange.main}
                               onClick={handleRemove}
+                              size="15"
                             />
                           </>
                         ) : (

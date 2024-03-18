@@ -381,7 +381,7 @@ export const deleteColl = async (dataToPost) => {
 
 // zcoll TO check COLL USER
 export const getAllChat = async () => {
-  const response = await fetch("http://localhost:3000/chat/getAll", {
+  const response = await fetch("http://localhost:3000/chat/getAllChat", {
     method: "GET",
     headers: {
       "x-access-token": localStorage.getItem("token"),
@@ -468,6 +468,28 @@ export const createChat = async (dataToPost) => {
       "Content-Type": "application/json",
     },
   });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};
+
+// zchatcoll TO JOIN COLL IN CHAT
+export const getAllChatIdColl = async (dataToPost) => {
+  console.log("DATATOPOST", dataToPost);
+  const response = await fetch(
+    `http://localhost:3000/chat/getAll/${dataToPost}`,
+    {
+      method: "GET",
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
   const resData = await response.json();
   if (!response.ok) {

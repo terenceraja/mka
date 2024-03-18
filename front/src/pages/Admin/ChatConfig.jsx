@@ -31,6 +31,7 @@ import { getAllChat, createChat } from "../../utils/http";
 
 function CollConfig() {
   const [chatListState, setChatListState] = useState([]);
+
   const [isFetching, setIsFetching] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -90,7 +91,7 @@ function CollConfig() {
       //   return;
       // }
 
-      setChatListState(responseChatList);
+      setChatListState(responseChatList.data);
     } catch (error) {
       setError({ message: error.message || "custom error message" });
     }
@@ -133,7 +134,11 @@ function CollConfig() {
     const filteredChatListState = chatListState.filter(
       (item) => item.IdChat !== IdChat
     );
-    setChatListState(filteredChatListState);
+
+    setTimeout(() => {
+      setChatListState(filteredChatListState);
+    }, 1200);
+
     console.log("deleted", filteredChatListState);
   };
 
@@ -200,7 +205,7 @@ function CollConfig() {
               onSubmit={(e) => handleConfirmCreate(e)}
               id="form"
             >
-              <Typography variant="title">CREATION CHAT</Typography>
+              <Typography variant="title">CREATION CHAT POUR CLIENT</Typography>
               <Divider
                 sx={{
                   marginBottom: 1,

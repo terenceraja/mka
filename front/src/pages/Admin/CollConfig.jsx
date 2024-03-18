@@ -223,7 +223,7 @@ function CollConfig() {
             {collabList.length > 0 ? (
               collabList
             ) : (
-              <Typography variant="link">
+              <Typography variant="subTitle">
                 Aucuns collaborateurs ajoutés
               </Typography>
             )}

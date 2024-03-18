@@ -1,27 +1,39 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import ClientCard from "../components/ClientCard";
 
+//HTTPL
+import { getAllChatIdColl } from "../utils/http";
 const KeesenseChatList = () => {
+  const [allChatList, setAllChatLIst] = useState([]);
   const [error, setError] = useState("");
 
+  const { IdColl } = useParams();
+  console.log(IdColl);
+  useEffect(() => {
+    const fetchAllChatForColl = async () => {
+      try {
+        const response = await getAllChatIdColl(IdColl); //TEMPORARY IDCOLL, MUST BE INJECTED BY PARAMS
+        console.log(response);
+        setAllChatLIst(response.data);
+      } catch (error) {
+        setError({ message: error.message || "custom error message" });
+      }
+    };
+    fetchAllChatForColl();
+  }, []);
+
   const theme = useTheme();
-  const chatList = [
-    <ClientCard key={1} />,
-    <ClientCard key={2} />,
-    <ClientCard key={3} />,
-    <ClientCard key={4} />,
-    <ClientCard key={5} />,
-    <ClientCard key={6} />,
-    <ClientCard key={7} />,
-    <ClientCard key={8} />,
-    <ClientCard key={9} />,
-    <ClientCard key={10} />,
-  ];
+
+  // RENDER CHAT LIST FOR COLL
+  const chatList = allChatList.map((obj, key) => {
+    return <ClientCard key={key} Client={obj.zchat.IdCtraCli} />;
+  });
 
   return (
     <Box sx={styles.mainContent}>
