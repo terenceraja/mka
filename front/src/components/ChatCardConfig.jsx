@@ -40,7 +40,7 @@ import {
   deleteChat,
 } from "../utils/http";
 
-const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
+const ChartCardConfig = ({ IdChat, idClient, collabsProp, Remove }) => {
   const theme = useTheme();
 
   const [collabs, setCollabs] = useState(collabsProp);
@@ -83,6 +83,7 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
   // CUSTOM  MODAL CREATE CONV
   const handleConfirmation = async () => {
     const response = await deleteChat(IdChat);
+    Remove(IdChat);
     console.log(response);
   };
 

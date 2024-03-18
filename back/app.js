@@ -34,6 +34,6 @@ app.use("/chat", chatRouter);
 app.use("/iis", iisRouter);
 
 // ///////// IIS CONFIG ///////////
-// app.listen(process.env.PORT);
+app.listen(process.env.PORT);
 
 module.exports = { app, http }; // Export both the app and the http server

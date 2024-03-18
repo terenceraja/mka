@@ -399,6 +399,7 @@ export const getAllChat = async () => {
 
 // zchatcoll TO JOIN COLL IN CHAT
 export const addCollabInChat = async (dataToPost) => {
+  console.log("DATATOPOST", dataToPost);
   const response = await fetch("http://localhost:3000/chat/addCollab", {
     method: "POST",
     body: JSON.stringify(dataToPost),
@@ -458,7 +459,8 @@ export const deleteChat = async (dataToPost) => {
 
 // zchat TO JOIN COLL IN CHAT
 export const createChat = async (dataToPost) => {
-  const response = await fetch(`http://localhost:3000/chat/create`, {
+  console.log("DATATOPOST", dataToPost);
+  const response = await fetch(`http://localhost:3000/chat/createChat`, {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
@@ -474,5 +476,3 @@ export const createChat = async (dataToPost) => {
 
   return resData;
 };
-
-deleteCollabFromChat;

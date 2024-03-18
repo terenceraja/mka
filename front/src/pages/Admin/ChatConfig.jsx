@@ -115,16 +115,26 @@ function CollConfig() {
   //HANDLE CONFIRM CREATE CHAT
   const handleConfirmCreate = async (e) => {
     e.preventDefault();
-    const response = await createChat(form.IdCtraCli);
+
+    const response = await createChat({ IdCtraCli: form.IdCtraCli });
     console.log("responseconfirm", response);
     if (response.error) {
       setError(response.message);
       setForm((prev) => ({ ...prev, IdColl: "" }));
       return;
     } else {
-      setChatListState(response.updatedChatList);
+      setChatListState(response.data);
     }
     handleClose();
+  };
+
+  // HANDLE DELECHAT
+  const handleDeleteChat = (IdChat) => {
+    const filteredChatListState = chatListState.filter(
+      (item) => item.IdChat !== IdChat
+    );
+    setChatListState(filteredChatListState);
+    console.log("deleted", filteredChatListState);
   };
 
   // RENDER CHATLIST
@@ -136,6 +146,7 @@ function CollConfig() {
         idClient={obj.IdCtraCli}
         collabsProp={obj.zchatcolls}
         IdChat={obj.IdChat}
+        Remove={handleDeleteChat}
       />
     );
   });
@@ -149,6 +160,7 @@ function CollConfig() {
       <Card title="CONFIGURATION CHAT">
         <Box>
           <Button
+            disableRipple={true}
             endIcon={<AddIcon fill={theme.palette.orange.main} />}
             onClick={handleOpen}
           >

@@ -32,7 +32,10 @@ router.post("/add", verifyJwt, async function (req, res, next) {
     // Check if a collab with the same IdColl already exists
     const existingCollab = await zcoll.findOne({ where: { IdColl: IdColl } });
     if (existingCollab) {
-      return res.json({ error: true, message: "IdColl déjà utilisé" });
+      return res.json({
+        error: true,
+        message: "ID Collaborateur déjà utilisé ",
+      });
     }
 
     // Create a new entry in the database with the provided data

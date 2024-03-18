@@ -31,20 +31,17 @@ router.post("/addCollab", async (req, res) => {
   try {
     // Extract IdChat and IdColl from the request body
     const { IdChat, IdColl } = req.body;
-
     // Create a new entry in zchatcoll table with the provided IdChat and IdColl
     const result = await zchatcoll.create({
       IdChat: IdChat,
       IdColl: IdColl,
     });
-
     const addedCollab = await zcoll.findOne({
       where: {
         IdColl: result.IdColl,
       },
       attributes: ["IdColl", "Name", "Surname", "Color"], // Select only the IdColl field from zchatcoll
     });
-
     // Send the created entry as the response
     res.json({
       auth: true,
@@ -57,22 +54,47 @@ router.post("/addCollab", async (req, res) => {
   }
 });
 
-// Route to add a new line to zchatcoll with IdChat and IdColl
-router.post("/create", async (req, res) => {
+router.post("/createChat", async (req, res) => {
+  console.log("yoooo", req.body);
   try {
-    // Extract IdChat and IdColl from the request body
-    const { IdCrtaCli } = req.body;
+    // Extract IdCtraCli from the request body
+    const { IdCtraCli } = req.body;
 
-    // Create a new entry in zchatcoll table with the provided IdChat and IdColl
-    const result = await zchat.create({
-      IdCrtaCli,
+    // Check if IdCtraCli already exists in zchat
+    const existingChat = await zchat.findOne({ where: { IdCtraCli } });
+    if (existingChat) {
+      return res.json({
+        auth: true,
+        error: true,
+        message: `Chat pour ID client ${IdCtraCli} exist déjà`,
+      });
+    }
+
+    // Create a new entry in zchatcoll table with the provided IdCtraCli
+    await zchat.create({
+      IdCtraCli,
+    });
+
+    const updatedChatList = await zchat.findAll({
+      include: [
+        {
+          model: zchatcoll,
+          attributes: ["IdColl"], // Select only the IdColl field from zchatcoll
+          include: [
+            {
+              model: zcoll, // Include the zcoll model
+              attributes: ["Name", "Surname", "Color"], // Select specific attributes from zcoll
+            },
+          ],
+        },
+      ],
     });
 
     // Send the created entry as the response
     res.json({
       auth: true,
-      message: `Chat for ${IdCrtaCli} created`,
-      data: result,
+      message: `Chat for ${IdCtraCli} created`,
+      data: updatedChatList,
     });
   } catch (error) {
     console.error("Error adding collaborator:", error);
@@ -95,26 +117,11 @@ router.delete("/delete/:IdChat", async (req, res) => {
       },
     });
 
-    const updatedChatList = await zchat.findAll({
-      include: [
-        {
-          model: zchatcoll,
-          attributes: ["IdColl"], // Select only the IdColl field from zchatcoll
-          include: [
-            {
-              model: zcoll, // Include the zcoll model
-              attributes: ["Name", "Surname", "Color"], // Select specific attributes from zcoll
-            },
-          ],
-        },
-      ],
-    });
-
     // Send the created entry as the response
     res.json({
       auth: true,
       message: `Chat ${IdChat} deleted`,
-      data: updatedChatList,
+      response: response,
     });
   } catch (error) {
     console.error("Error adding collaborator:", error);
