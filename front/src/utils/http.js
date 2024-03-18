@@ -435,4 +435,44 @@ export const deleteCollabFromChat = async (dataToPost) => {
   return resData;
 };
 
+// zchat TO JOIN COLL IN CHAT
+export const deleteChat = async (dataToPost) => {
+  const response = await fetch(
+    `http://localhost:3000/chat/delete/${dataToPost}`,
+    {
+      method: "DELETE",
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};
+
+// zchat TO JOIN COLL IN CHAT
+export const createChat = async (dataToPost) => {
+  const response = await fetch(`http://localhost:3000/chat/create`, {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "x-access-token": localStorage.getItem("token"),
+      "Content-Type": "application/json",
+    },
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};
+
 deleteCollabFromChat;

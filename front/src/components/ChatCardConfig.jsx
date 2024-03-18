@@ -37,6 +37,7 @@ import {
   getCollabs,
   addCollabInChat,
   deleteCollabFromChat,
+  deleteChat,
 } from "../utils/http";
 
 const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
@@ -80,10 +81,9 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
   };
 
   // CUSTOM  MODAL CREATE CONV
-  const handleConfirmation = () => {
-    setTimeout(() => {
-      navigate("/");
-    }, 1200);
+  const handleConfirmation = async () => {
+    const response = await deleteChat(IdChat);
+    console.log(response);
   };
 
   // ADD MODAL 1 (CLICK ON INCLURE)
@@ -368,18 +368,6 @@ const styles = {
     boxSizing: "border-box",
     width: "100%",
     borderRadius: "4px",
-  },
-  fileCard: {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
-    bgcolor: "white",
-    borderRadius: "4px",
-    boxSizing: "border-box",
-    gap: "10px",
-    p: 1,
-    px: 2,
-    boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
   },
 
   docsContainer: {

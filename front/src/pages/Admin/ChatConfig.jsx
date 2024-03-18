@@ -27,20 +27,17 @@ import ChartCardConfig from "../../components/ChatCardConfig";
 import Card from "../../components/Card";
 
 // HTTP
-import { getAllChat } from "../../utils/http";
+import { getAllChat, createChat } from "../../utils/http";
 
 function CollConfig() {
   const [chatListState, setChatListState] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
-  const [collab, setCollab] = useState([]);
+
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
   // FORM
   const [form, setForm] = useState({
-    name: "",
-    surname: "",
-    color: "",
-    IdColl: "",
+    IdCtraCli: "",
   });
 
   const navigate = useNavigate();
@@ -103,51 +100,29 @@ function CollConfig() {
   }, []);
   //
 
-  // REMOVE CLICK
-  const handleRemove = async (IdColl) => {
-    console.log("remove collab");
-    try {
-      const response = await deleteColl({ IdColl });
-
-      // AUTHENTIFICATION
-      console.log("responsedelete", response);
-      if (!response.auth) {
-        handleOpenModal();
-        return;
-      }
-      setTimeout(() => {
-        setCollab(response.data);
-      }, 1500);
-    } catch (error) {
-      setError({ message: error.message || "custom error message" });
-    }
-  };
-
   // ADD MODAL
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setForm((prev) => ({
       ...prev,
-      name: "",
-      surname: "",
-      color: "",
-      IdColl: "",
+
+      IdCtraCli: "",
     }));
     setError("");
     setOpen(false);
   };
 
-  //HANDLE CONFIRM COLL
-  const handleConfirmColl = async (e) => {
+  //HANDLE CONFIRM CREATE CHAT
+  const handleConfirmCreate = async (e) => {
     e.preventDefault();
-    const response = await postForm();
+    const response = await createChat(form.IdCtraCli);
     console.log("responseconfirm", response);
     if (response.error) {
       setError(response.message);
       setForm((prev) => ({ ...prev, IdColl: "" }));
       return;
     } else {
-      setCollab(response.data);
+      setChatListState(response.updatedChatList);
     }
     handleClose();
   };
@@ -210,12 +185,10 @@ function CollConfig() {
               noValidate
               autoComplete="off"
               sx={styles.formContainer}
-              onSubmit={(e) => handleConfirmColl(e)}
+              onSubmit={(e) => handleConfirmCreate(e)}
               id="form"
             >
-              <Typography variant="title">
-                EN CONVERSATION AVEC ID CLIENT XXX
-              </Typography>
+              <Typography variant="title">CREATION CHAT</Typography>
               <Divider
                 sx={{
                   marginBottom: 1,
@@ -227,18 +200,15 @@ function CollConfig() {
                     onClick={() => {
                       setError("");
                     }}
-                    name="IdColl"
+                    name="IdCtraCli"
                     onChange={(e) => handleChange(e)}
-                    label="IdColl"
+                    label="ID Client"
                     type="number"
                     variant="standard"
-                    value={form.IdColl}
+                    value={form.IdCtraCli}
                   />
 
-                  {(!form.name ||
-                    !form.surname ||
-                    !form.color ||
-                    !form.IdColl) && (
+                  {!form.IdCtraCli && (
                     <Typography
                       variant="link"
                       color={theme.palette.orange.main}
@@ -250,11 +220,7 @@ function CollConfig() {
 
                 <Button
                   type="submit"
-                  disabled={
-                    form.name && form.surname && form.color && form.IdColl
-                      ? false
-                      : true
-                  }
+                  disabled={form.IdCtraCli ? false : true}
                   sx={{
                     width: "auto",
                     alignSelf: "end",
@@ -262,7 +228,7 @@ function CollConfig() {
                     color: theme.palette.orange.main,
                   }}
                 >
-                  Confirmer
+                  CREER
                 </Button>
               </Stack>
               {error && (

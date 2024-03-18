@@ -57,6 +57,71 @@ router.post("/addCollab", async (req, res) => {
   }
 });
 
+// Route to add a new line to zchatcoll with IdChat and IdColl
+router.post("/create", async (req, res) => {
+  try {
+    // Extract IdChat and IdColl from the request body
+    const { IdCrtaCli } = req.body;
+
+    // Create a new entry in zchatcoll table with the provided IdChat and IdColl
+    const result = await zchat.create({
+      IdCrtaCli,
+    });
+
+    // Send the created entry as the response
+    res.json({
+      auth: true,
+      message: `Chat for ${IdCrtaCli} created`,
+      data: result,
+    });
+  } catch (error) {
+    console.error("Error adding collaborator:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route to to delete chat from IdChat
+router.delete("/delete/:IdChat", async (req, res) => {
+  try {
+    // Extract IdChat and IdColl from the request body
+    const { IdChat } = req.params;
+
+    console.log(IdChat);
+
+    // Create a new entry in zchatcoll table with the provided IdChat and IdColl
+    const response = await zchat.destroy({
+      where: {
+        IdChat,
+      },
+    });
+
+    const updatedChatList = await zchat.findAll({
+      include: [
+        {
+          model: zchatcoll,
+          attributes: ["IdColl"], // Select only the IdColl field from zchatcoll
+          include: [
+            {
+              model: zcoll, // Include the zcoll model
+              attributes: ["Name", "Surname", "Color"], // Select specific attributes from zcoll
+            },
+          ],
+        },
+      ],
+    });
+
+    // Send the created entry as the response
+    res.json({
+      auth: true,
+      message: `Chat ${IdChat} deleted`,
+      data: updatedChatList,
+    });
+  } catch (error) {
+    console.error("Error adding collaborator:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 // Route to delete a line from zchatcoll with IdChat and IdColl
 router.post("/deleteCollab", async (req, res) => {
   try {
