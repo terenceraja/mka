@@ -40,8 +40,7 @@ const CollCard = ({
   };
 
   const handleJoindre = () => {
-    console.log("join");
-    JoinClick();
+    JoinClick(IdColl);
   };
 
   return (
@@ -82,7 +81,7 @@ const CollCard = ({
             }}
             onClick={() => handleJoindre()}
           >
-            JOINDRE
+            AJOUTER
           </Button>
         ) : (
           <Button

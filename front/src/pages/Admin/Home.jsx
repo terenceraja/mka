@@ -32,7 +32,7 @@ const Home = () => {
           variant="contained"
         >
           Ajouter des collaborateurs
-          <CollabIcon fill={theme.palette.orange.main} />
+          <CollabIcon fill={theme.palette.orange.main} size="30" stroke="2" />
         </Button>
         <Button
           onClick={() => navigate("newsConfig")}

@@ -38,11 +38,18 @@ router.post("/addCollab", async (req, res) => {
       IdColl: IdColl,
     });
 
+    const addedCollab = await zcoll.findOne({
+      where: {
+        IdColl: result.IdColl,
+      },
+      attributes: ["IdColl", "Name", "Surname", "Color"], // Select only the IdColl field from zchatcoll
+    });
+
     // Send the created entry as the response
     res.json({
       auth: true,
       message: `Collab added in group chat ${IdChat}`,
-      result,
+      addedCollab: addedCollab,
     });
   } catch (error) {
     console.error("Error adding collaborator:", error);

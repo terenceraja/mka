@@ -27,6 +27,8 @@ import SendIcon from "@mui/icons-material/Send";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
+import CollabIcon from "./icons/CollabIcon";
+import Snack from "./Snack";
 
 import CollCard from "./CollCard";
 import AddIcon from "./icons/AddIcon";
@@ -41,20 +43,23 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
   const theme = useTheme();
 
   const [collabs, setCollabs] = useState(collabsProp);
+  console.log(collabs);
   const [allCollabs, setAllCollabs] = useState([]);
   const [error, setError] = useState("");
   const [openListItem, setOpenListItem] = useState(false);
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  // FORM
-  const [form, setForm] = useState({
-    name: "",
-    surname: "",
-    color: "",
-    IdColl: "",
-  });
 
   const navigate = useNavigate();
+
+  // SNACK
+  const setSnackStateRef = useRef(null); // Create a ref to store setSnackState function
+  // Function to trigger state change in Snack component
+  const triggerSnack = (newState) => {
+    if (setSnackStateRef.current) {
+      setSnackStateRef.current(newState);
+    }
+  };
 
   //MODAL
   const setModalStateRef = useRef(null); // Create a ref to store setSnackState function
@@ -87,14 +92,6 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
     setOpen(true);
   };
   const handleClose = () => {
-    setForm((prev) => ({
-      ...prev,
-      name: "",
-      surname: "",
-      color: "",
-      IdColl: "",
-    }));
-    setError("");
     setOpen(false);
   };
 
@@ -126,9 +123,7 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
 
   // JOIN COLLAB FUNCTION
 
-  const joinCollab = async () => {
-    setIsFetching(true);
-
+  const joinCollab = async (IdColl) => {
     try {
       const response = await addCollabInChat({ IdChat, IdColl });
       return response;
@@ -138,7 +133,25 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
   };
 
   // HANDLE JOIN COLALB CLICK
-  const handleJoin = () => {};
+  const handleJoin = async (IdColl) => {
+    const response = await joinCollab(IdColl); // Await the joinCollab function call
+    const addedCollab = response.addedCollab;
+
+    const filteredAllCollab = allCollabs.filter(
+      (obj) => obj.IdColl !== addedCollab.IdColl
+    );
+    setAllCollabs(filteredAllCollab);
+    const { Name, Surname, Color } = addedCollab;
+    triggerSnack({
+      open: true,
+      message: `${Name + " " + Surname} a été ajouter dans la conversation`,
+      severity: "info",
+    });
+    setCollabs((prev) => [
+      ...prev,
+      { IdColl: IdColl, zcoll: { Color, Name, Surname } },
+    ]);
+  };
 
   //HANDLE REMOVE COLLAB FROM CHAT CLICK
   const handleRemoveCollab = async (IdColl) => {
@@ -200,6 +213,7 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
 
   return (
     <>
+      <Snack setSnackStateRef={setSnackStateRef} />
       <CustomModal
         setModalStateRef={setModalStateRef}
         onConfirmation={handleConfirmation}
@@ -245,6 +259,13 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
         <Divider />
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Button
+            endIcon={
+              <CollabIcon
+                fill={theme.palette.orange.main}
+                size="15"
+                stroke="3"
+              />
+            }
             sx={{
               width: "auto",
               p: 0,
@@ -252,7 +273,7 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
             }}
             onClick={() => handleOpen()}
           >
-            JOINDRE
+            AJOUTER
           </Button>
           <Button
             sx={{
@@ -278,14 +299,7 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
           }}
         >
           <>
-            <Box
-              component="form"
-              noValidate
-              autoComplete="off"
-              sx={styles.formContainer}
-              onSubmit={(e) => handleConfirmColl(e)}
-              id="form"
-            >
+            <Box sx={styles.formContainer}>
               <Typography variant="title">LISTE DES COLLABORATEURS</Typography>
               <Divider
                 sx={{
@@ -308,12 +322,7 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
                 </Box>
 
                 <Button
-                  type="submit"
-                  disabled={
-                    form.name && form.surname && form.color && form.IdColl
-                      ? false
-                      : true
-                  }
+                  onClick={handleClose}
                   sx={{
                     width: "auto",
                     alignSelf: "end",
@@ -321,7 +330,7 @@ const ChartCardConfig = ({ IdChat, idClient, collabsProp, remove }) => {
                     color: theme.palette.orange.main,
                   }}
                 >
-                  Confirmer
+                  RETOUR
                 </Button>
               </Stack>
             </Box>
