@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       TimeStampModification: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: "0000-00-00 00:00:00",
+        defaultValue: DataTypes.NOW, // Use Sequelize's NOW function
       },
       Status: {
         type: DataTypes.ENUM("demand", "pending", "accepted", "rejected"),

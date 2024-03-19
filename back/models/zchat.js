@@ -15,6 +15,16 @@ module.exports = (sequelize, DataTypes) => {
           key: "IdCtraCli", // Referenced column name
         },
       },
+      TimeStampCreation: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      TimeStampModification: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW, // Use Sequelize's NOW function
+      },
     },
     {
       freezeTableName: true, // prevent automatic pluralization

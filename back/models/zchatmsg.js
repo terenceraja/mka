@@ -1,8 +1,9 @@
+// Define the Message model
 module.exports = (sequelize, DataTypes) => {
-  const zchatcoll = sequelize.define(
-    "zchatcoll",
+  const zchatmsg = sequelize.define(
+    "zchatmsg",
     {
-      id: {
+      IdMsg: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -11,17 +12,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "zchat", // Assuming 'zchat' is the name of your 'zchat' table
+          model: "zchat",
           key: "IdChat",
         },
       },
-      IdColl: {
+      IdSender: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "zcoll", // Assuming 'zcoll' is the name of your 'zcoll' table
-          key: "IdColl",
-        },
+      },
+      Message: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      SenderType: {
+        type: DataTypes.ENUM("Collaborator", "Client"),
+        allowNull: false,
       },
       TimeStampCreation: {
         type: DataTypes.DATE,
@@ -35,23 +40,20 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      freezeTableName: true, // prevent automatic pluralization
+      freezeTableName: true,
       timestamps: false,
     }
   );
 
   // Define associations
-  zchatcoll.associate = (models) => {
-    // Association with ZCOLL
-    zchatcoll.belongsTo(models.zcoll, {
-      foreignKey: "IdColl",
-    });
-
-    // Association with ZCHAT
-    zchatcoll.belongsTo(models.zchat, {
+  zchatmsg.associate = (models) => {
+    // Association with Chat
+    zchatmsg.belongsTo(models.zchat, {
       foreignKey: "IdChat",
     });
+
+    // You can define associations with Collaborator and Client here if necessary
   };
 
-  return zchatcoll;
+  return zchatmsg;
 };
