@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { zchat, zchatcoll, zcoll } = require("../models");
+const { zchat, zchatcoll, zcoll, zchatmsg } = require("../models");
 
 // Route to fetch all lines from zchat and include associated IdColl from zchatcoll along with details from zcoll
 router.get("/getAllChat", async (req, res) => {
@@ -136,6 +136,13 @@ router.delete("/delete/:IdChat", async (req, res) => {
     const { IdChat } = req.params;
 
     console.log(IdChat);
+
+    // Delete associated chat messages first
+    await zchatmsg.destroy({
+      where: {
+        IdChat: IdChat,
+      },
+    });
 
     // Create a new entry in zchatcoll table with the provided IdChat and IdColl
     const response = await zchat.destroy({

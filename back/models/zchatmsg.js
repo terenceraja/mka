@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       TimeStampModification: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW, // Use Sequelize's NOW function
+        defaultValue: DataTypes.NOW,
       },
     },
     {
@@ -52,7 +52,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "IdChat",
     });
 
-    // You can define associations with Collaborator and Client here if necessary
+    // Define the association with the zcoll model
+    zchatmsg.belongsTo(models.zcoll, {
+      foreignKey: "IdSender",
+      as: "Collaborator",
+    });
   };
 
   return zchatmsg;

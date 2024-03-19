@@ -239,9 +239,8 @@ export const sendMessage = async (dataToPost) => {
 
 // zmessage TO GET MESSAGE BY IDCHAT
 export const getChat = async (dataToPost) => {
-  const response = await fetch("http://localhost:3000/message/get", {
-    method: "POST",
-    body: JSON.stringify(dataToPost),
+  const response = await fetch(`http://localhost:3000/message/${dataToPost}`, {
+    method: "GET",
     headers: {
       "x-access-token": localStorage.getItem("token"),
       "Content-Type": "application/json",

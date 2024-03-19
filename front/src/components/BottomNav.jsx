@@ -11,10 +11,8 @@ import ChatIcon from "./icons/ChatIcon";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Paper from "@mui/material/Paper";
-import Badge from "@mui/material/Badge";
-
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-
 import { useLocation } from "react-router-dom";
 
 export default function LabelBottomNavigation() {
@@ -23,6 +21,9 @@ export default function LabelBottomNavigation() {
   const [value, setValue] = useState(pathname);
   console.log("navValue", value);
   console.log("path", pathname);
+
+  // GET CLI ID FROM STORE
+  const IdCtraCli = useSelector((state) => state.keys.value.IdCtraCli);
 
   useEffect(() => {
     if (pathname !== value) {
@@ -111,16 +112,18 @@ export default function LabelBottomNavigation() {
         <BottomNavigationAction
           sx={styles.buttonAction}
           label="Chat"
-          value="/layout/chat"
+          value={`/layout/chat/${IdCtraCli}`}
           icon={
             <ChatIcon
               fill={
-                value === "/layout/chat" ? theme.palette.orange.main : "white"
+                value === `/layout/chat/${IdCtraCli}`
+                  ? theme.palette.orange.main
+                  : "white"
               }
             />
           }
           component={NavLink}
-          to="/layout/chat"
+          to={`/layout/chat/${IdCtraCli}`}
         />
       </BottomNavigation>
     </Paper>

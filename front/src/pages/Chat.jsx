@@ -1,17 +1,21 @@
 import { useState, useEffect, useRef } from "react";
 import { useOutletContext } from "react-router-dom";
-import { Stack } from "@mui/material";
+import { Stack, Alert } from "@mui/material";
 import { Box } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import SendIcon from "../components/icons/SendIcon";
 import IconButton from "@mui/material/IconButton";
 import { useTheme } from "@mui/material/styles";
 import MessageCard from "../components/MessageCard";
+import { useParams } from "react-router-dom";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 // HTTP
 import { sendMessage, getChat } from "../utils/http";
 
 const ChatComponent = () => {
+  const { IdCtraCli } = useParams();
+
   const theme = useTheme();
   console.log("color", theme.palette.orange.main);
   const [
@@ -28,6 +32,7 @@ const ChatComponent = () => {
   console.log("messageData", messageData);
   console.log(user);
   const [error, setError] = useState("");
+  console.log(error);
   const [inputMessage, setInputMessage] = useState("");
 
   const messagesEndRef = useRef(null); // Reference to the chat container
@@ -36,19 +41,25 @@ const ChatComponent = () => {
     messagesEndRef.current?.scrollIntoView();
   }, [messageData]);
 
-  // FETCH ALL MESSAGES FROM IDCHAT
+  // FETCH ALL MESSAGES FOR IDCTRACLI
   useEffect(() => {
     const fetchChat = async () => {
       try {
-        //PORTFOLIOS
-        const responseChat = await getChat({ IdChat: 1 });
+        const responseChat = await getChat(IdCtraCli);
         console.log(responseChat.data);
         // // AUTHENTIFICATION
-        if (!responseChat.auth) {
-          handleOpenModal();
+        // if (!responseChat.auth) {
+        //   handleOpenModal();
+        //   return;
+        // }
+
+        console.log(responseChat);
+        if (responseChat.error) {
+          setError(responseChat.message);
           return;
         }
-        setMessageData(responseChat.data);
+
+        // setMessageData(responseChat.data);
       } catch (error) {
         setError({ message: error.message || "custom error message" });
       }
@@ -96,55 +107,55 @@ const ChatComponent = () => {
         {messageList}
         <div ref={messagesEndRef} />
       </Box>
-      <Box
-        component="form"
-        autoComplete="off"
-        onSubmit={(e) => handleSendMessage(e)}
-        id="form"
-        height={"100%"}
-        py={2}
-        bgcolor={theme.palette.background.main}
-      >
-        <Stack
-          marginX={1}
-          direction={"row"}
-          justifyContent={"center"}
-          alignItems={"center"}
-          bgcolor={"white"}
-          borderRadius={2}
-          spacing={1}
-          paddingX={2}
-          height={"100%"}
-          boxShadow={"rgba(0, 0, 0, 0.15) 0px 2px 8px"}
-        >
-          <TextField
-            onChange={(e) => setInputMessage(e.target.value)}
-            placeholder="Message...
-          "
-            value={inputMessage}
-            size="small"
-            InputProps={{
-              sx: {
-                bgcolor: "white",
-                "& fieldset": { border: "none" },
-              },
-            }}
-            fullWidth
-          />
 
-          <IconButton
-            type="submit"
-            sx={{
-              borderRadius: 2,
-              height: "30px",
-              width: "30px",
-              bgcolor: theme.palette.primary.main,
-            }}
-          >
-            <SendIcon fill={"white"} />
-          </IconButton>
-        </Stack>
-      </Box>
+      {error ? (
+        <Alert
+          icon={<ErrorOutlineIcon fontSize="inherit" />}
+          severity="success"
+          color="info"
+        >
+          {error}
+        </Alert>
+      ) : (
+        <Box
+          component="form"
+          autoComplete="off"
+          onSubmit={(e) => handleSendMessage(e)}
+          id="form"
+          height={"100%"}
+          py={2}
+          bgcolor={theme.palette.background.main}
+        >
+          <Stack sx={styles.formContainer}>
+            <TextField
+              onChange={(e) => setInputMessage(e.target.value)}
+              placeholder="Message...
+          "
+              value={inputMessage}
+              size="small"
+              InputProps={{
+                sx: {
+                  bgcolor: "white",
+                  "& fieldset": { border: "none" },
+                },
+              }}
+              fullWidth
+            />
+
+            <IconButton
+              type="submit"
+              sx={{
+                borderRadius: 2,
+                height: "30px",
+                width: "30px",
+                bgcolor: theme.palette.primary.main,
+              }}
+            >
+              <SendIcon fill={"white"} />
+            </IconButton>
+          </Stack>
+        </Box>
+      )}
     </Box>
   );
 };
@@ -166,6 +177,18 @@ const styles = {
     bgcolor: "white",
     p: 1,
     gap: "25px",
+    boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
+  },
+  formContainer: {
+    display: "flex",
+    mx: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    bgcolor: "white",
+    borderRadius: 2,
+    px: 2,
+    height: "100%",
     boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
   },
 };

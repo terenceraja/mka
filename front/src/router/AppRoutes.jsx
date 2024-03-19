@@ -69,7 +69,7 @@ function AppRoutes() {
         //     { path: ":viewpdf", element: <PdfView /> },
         //   ],
         // },
-        { path: "chat", element: <Chat /> },
+        { path: "chat/:IdCtraCli", element: <Chat /> },
         { path: "detPtf", element: <DetPtf /> },
         { path: "cons", element: <Cons /> },
         { path: "mvt", element: <Mvt /> },
