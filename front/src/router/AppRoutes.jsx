@@ -37,7 +37,7 @@ function AppRoutes() {
       children: [
         { path: "chatlist/:IdColl", element: <KeesenseChatList /> },
 
-        { path: "chat/:IdChat", element: <KeesenseChatBox /> },
+        { path: "chat/:IdCtraCli", element: <KeesenseChatBox /> },
       ],
     },
 

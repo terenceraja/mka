@@ -82,7 +82,6 @@ router.post("/addCollab", async (req, res) => {
 });
 
 router.post("/createChat", async (req, res) => {
-  console.log("yoooo", req.body);
   try {
     // Extract IdCtraCli from the request body
     const { IdCtraCli } = req.body;
@@ -199,6 +198,39 @@ router.post("/deleteCollab", async (req, res) => {
     });
   } catch (error) {
     console.error("Error removing collaborator:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route to fetch all lines from zchat and include associated IdColl from zchatcoll along with details from zcoll
+router.get("/getChat/:IdCtraCli", async (req, res) => {
+  const { IdCtraCli } = req.params;
+  console.log(req.params);
+  try {
+    const result = await zchat.findOne({
+      where: {
+        IdCtraCli,
+      },
+      include: [
+        {
+          model: zchatcoll,
+          attributes: ["IdColl"], // Select only the IdColl field from zchatcoll
+          include: [
+            {
+              model: zcoll, // Include the zcoll model
+              attributes: ["Name", "Surname", "Color"], // Select specific attributes from zcoll
+            },
+          ],
+        },
+      ],
+    });
+    res.json({
+      auth: true,
+      message: `IdChat for ${IdCtraCli} found !`,
+      data: result,
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
     res.status(500).send("Internal Server Error");
   }
 });

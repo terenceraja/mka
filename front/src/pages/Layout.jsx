@@ -7,9 +7,19 @@ import Footer from "../components/Footer";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { useSelector } from "react-redux";
+
+//HTTP
+import { getChatId } from "../utils/http";
 
 const Layout = () => {
+  // GET CLI ID FROM STORE
+  const IdCtraCli = useSelector((state) => state.keys.value.IdCtraCli);
+
+  // const [chatId, setChatId] = useState(null);
   const [user, setUser] = useState(null);
+  const [collabs, setCollabs] = useState([]);
+  console.log("COLLABS ARRAY", collabs);
   const [messageToSend, setMessageToSend] = useState("");
   const [sendTimeStamp, setSendTimeStamp] = useState(null);
   const [recievedMessage, setRecievedMessage] = useState("the message");
@@ -21,14 +31,33 @@ const Layout = () => {
   console.log("recieved message", recievedMessage);
   console.log(user);
 
-  // GET IdCtraCli FROM TOKEN
+  // SET ONLINE USER AND IDCHAT
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const decodedId = jwtDecode(token);
-    const IdCtraCli = decodedId.IdCtraCli;
-    setUser(IdCtraCli);
-    console.log(IdCtraCli);
+    const getChatIdForIdCtraCli = async () => {
+      const response = await getChatId(IdCtraCli);
+      console.log(response);
+      // setChatId(response.data.IdChat);
+
+      // ID USER
+      const userId = response.data.IdCtraCli;
+      setUser(userId);
+
+      //COLLABS ARRAY IN GROUP CHAT
+      const collabsArray = response.data.zchatcolls;
+      const collabsInject = collabsArray.map((collab) => {
+        return collab.IdColl;
+      });
+      setCollabs(collabsInject);
+    };
+    getChatIdForIdCtraCli();
   }, []);
+
+  // GET CHAT ID
+  useEffect(() => {
+    const newSocket = io.connect("http://localhost:3000"); // Create the socket connection outside the component
+    setSocket(newSocket);
+    return () => newSocket.disconnect();
+  }, [user]);
 
   // ON CONNECTION
   useEffect(() => {
@@ -37,10 +66,11 @@ const Layout = () => {
     return () => newSocket.disconnect();
   }, [user]);
 
-  // ADDONLINE USERS IN ARRAY
+  // ADD ONLINE USERS IN ARRAY
   useEffect(() => {
     if (socket === null) return;
-    socket.emit("addNewUser", user);
+    const userData = { IdUser: user, userType: "client" };
+    socket.emit("addNewUser", userData);
     socket.on("getOnlineUsers", (res) => {
       setOnlineUsers(res);
     });
@@ -53,11 +83,11 @@ const Layout = () => {
   // SEND MESSAGING
   useEffect(() => {
     if (socket === null) return;
-    let a = user === 1364 ? 13 : 1364;
-    console.log("USER TO SEND TO", a);
+
+    console.log("USERS TO SEND TO", collabs); /////////////CONTINUE HERE
     socket.emit("sendMessage", {
       messageToSend,
-      recipientUser: user === 1364 ? 13 : 1364, ////// MAKE DYNAMIC
+      recipientUser: collabs, ////// MAKE DYNAMIC
     });
   }, [messageToSend, sendTimeStamp]);
 

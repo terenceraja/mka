@@ -9,10 +9,12 @@ import { useTheme } from "@mui/material/styles";
 import MessageCard from "../components/MessageCard";
 import ReturnIcon from "../components/icons/ReturnIcon";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 // HTTP
 import { sendMessage, getChat } from "../utils/http";
 
 const KeesenseChatBox = () => {
+  const { IdCtraCli } = useParams();
   const navigate = useNavigate();
   const theme = useTheme();
   console.log("color", theme.palette.orange.main);
@@ -34,22 +36,24 @@ const KeesenseChatBox = () => {
 
   const messagesEndRef = useRef(null); // Reference to the chat container
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView();
-  }, [messageData]);
-
-  // FETCH ALL MESSAGES FROM IDCHAT
+  // FETCH ALL MESSAGES FOR IDCTRACLI
   useEffect(() => {
     const fetchChat = async () => {
       try {
-        //PORTFOLIOS
-        const responseChat = await getChat({ IdChat: 1 });
+        const responseChat = await getChat(IdCtraCli);
         console.log(responseChat.data);
         // // AUTHENTIFICATION
-        if (!responseChat.auth) {
-          handleOpenModal();
+        // if (!responseChat.auth) {
+        //   handleOpenModal();
+        //   return;
+        // }
+
+        console.log(responseChat);
+        if (responseChat.error) {
+          setError(responseChat.message);
           return;
         }
+
         setMessageData(responseChat.data);
       } catch (error) {
         setError({ message: error.message || "custom error message" });

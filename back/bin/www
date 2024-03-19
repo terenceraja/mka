@@ -54,12 +54,20 @@ io.on("connection", (socket) => {
     io.emit("getOnlineUsers", onlineUsers);
   });
 
-  socket.on("addNewUser", (userId) => {
-    const existingUser = onlineUsers.find((user) => user.userId === userId);
+  socket.on("addNewUser", (userData) => {
+    console.log("USER DATA");
+    const existingUser = onlineUsers.find(
+      (user) => user.IdUser === userData.IdUser
+    );
     if (existingUser) {
       existingUser.socketId = socket.id;
     } else {
-      onlineUsers.push({ userId, socketId: socket.id });
+      onlineUsers.push({
+        IdUser: userData.IdUser,
+        // IdChat: userData.IdChat,
+        userType: userData.userType,
+        socketId: socket.id,
+      });
     }
     console.log("onlineUsers", onlineUsers);
     io.emit("getOnlineUsers", onlineUsers);

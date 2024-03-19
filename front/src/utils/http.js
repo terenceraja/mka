@@ -497,3 +497,25 @@ export const getAllChatIdColl = async (dataToPost) => {
 
   return resData;
 };
+
+// zchat TO GET CHAT ID FROM IDCTRACLI
+export const getChatId = async (dataToPost) => {
+  console.log("DATATOPOST", dataToPost);
+  const response = await fetch(
+    `http://localhost:3000/chat/getChat/${dataToPost}`,
+    {
+      method: "GET",
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};

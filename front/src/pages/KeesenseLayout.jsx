@@ -1,14 +1,12 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
-import BottomNavigation from "../components/BottomNav";
-import { Box } from "@mui/material";
-import Footer from "../components/Footer";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
+import { useParams } from "react-router-dom";
 
 const KeesenseLayout = () => {
+  const { IdColl } = useParams();
+
   const [user, setUser] = useState(null);
   const [messageToSend, setMessageToSend] = useState("");
   const [sendTimeStamp, setSendTimeStamp] = useState(null);
@@ -21,14 +19,10 @@ const KeesenseLayout = () => {
   console.log("recieved message", recievedMessage);
   console.log(user);
 
-  //   // GET IdCtraCli FROM TOKEN
-  //   useEffect(() => {
-  //     const token = localStorage.getItem("token");
-  //     const decodedId = jwtDecode(token);
-  //     const IdCtraCli = decodedId.IdCtraCli;
-  //     setUser(IdCtraCli);
-  //     console.log(IdCtraCli);
-  //   }, []);
+  // SET ONLINE USER AND IDCHAT
+  useEffect(() => {
+    setUser(parseInt(IdColl));
+  }, []);
 
   // ON CONNECTION
   useEffect(() => {
@@ -40,7 +34,8 @@ const KeesenseLayout = () => {
   // ADDONLINE USERS IN ARRAY
   useEffect(() => {
     if (socket === null) return;
-    socket.emit("addNewUser", user);
+    const userData = { IdUser: user, userType: "collaborator" };
+    socket.emit("addNewUser", userData);
     socket.on("getOnlineUsers", (res) => {
       setOnlineUsers(res);
     });

@@ -59,7 +59,7 @@ const ChatComponent = () => {
           return;
         }
 
-        // setMessageData(responseChat.data);
+        setMessageData(responseChat.data);
       } catch (error) {
         setError({ message: error.message || "custom error message" });
       }
