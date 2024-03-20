@@ -28,6 +28,9 @@ const ChatComponent = () => {
     messageData,
     setMessageData,
     user,
+    setUser,
+    chatId,
+    setChatId,
   ] = useOutletContext();
   console.log("messageData", messageData);
   console.log(user);
@@ -74,10 +77,13 @@ const ChatComponent = () => {
     return (
       <MessageCard
         key={key}
-        IdSender={obj.IdSender}
+        Name={obj.Collaborator ? obj.Collaborator.Name : obj.IdSender}
+        Surname={obj.Collaborator ? obj.Collaborator.Surname : ""}
+        Color={obj.Collaborator ? obj.Collaborator.Color : ""}
         Message={obj.Message}
         sendTimeStamp={obj.TimeStampCreation}
         user={user}
+        IdSender={obj.IdSender}
       />
     );
   });
@@ -87,9 +93,10 @@ const ChatComponent = () => {
 
     if (inputMessage) {
       const response = await sendMessage({
-        IdChat: 1,
-        IdSender: user === 1364 ? user : 13, ////// MAKE DYNAMIC,
+        IdChat: chatId,
+        IdSender: user,
         Message: inputMessage,
+        SenderType: "Client",
       });
       console.log("response", response);
       console.log("response timestamp", response.data.TimeStampCreation);

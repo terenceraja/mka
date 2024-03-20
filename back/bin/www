@@ -36,17 +36,25 @@ let onlineUsers = [];
 io.on("connection", (socket) => {
   console.log(`socket connection ${socket.id}`);
 
-  socket.on("sendMessage", (data) => {
-    console.log("server recieving sent message", data);
-    const user = onlineUsers.find((user) => user.userId === data.recipientUser);
-    console.log("hoho", user);
-    if (user) {
-      console.log("sending", data.messageToSend);
-
-      io.to(user.socketId).emit("getMessage", data.messageToSend);
-    }
+  // JOIN CHAT/ROOM
+  socket.on("joinRoom", (IdChat) => {
+    console.log(`USER JOINED ROOM : ${IdChat}`);
+    socket.join(IdChat);
   });
 
+  // SENDING MESSAGE
+  socket.on("sendMessage", (data) => {
+    // console.log("server recieving sent message", data);
+    // const user = onlineUsers.find((user) => user.userId === data.recipientUser);
+    // console.log("hoho", user);
+    // if (user) {
+    // console.log("sending", data.messageToSend);
+    io.sockets.in(data.room).emit("getMessage", data.messageToSend);
+    // io.to(user.socketId).emit("getMessage", data.messageToSend);
+    // }
+  });
+
+  // DISCONNECT
   socket.on("disconnect", () => {
     console.log("socket disconnected", socket.id);
     onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
@@ -54,6 +62,7 @@ io.on("connection", (socket) => {
     io.emit("getOnlineUsers", onlineUsers);
   });
 
+  // ADD ONLINE USERS
   socket.on("addNewUser", (userData) => {
     console.log("USER DATA");
     const existingUser = onlineUsers.find(
@@ -64,7 +73,7 @@ io.on("connection", (socket) => {
     } else {
       onlineUsers.push({
         IdUser: userData.IdUser,
-        // IdChat: userData.IdChat,
+        Room: userData.room,
         userType: userData.userType,
         socketId: socket.id,
       });

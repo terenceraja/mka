@@ -16,10 +16,11 @@ const Layout = () => {
   // GET CLI ID FROM STORE
   const IdCtraCli = useSelector((state) => state.keys.value.IdCtraCli);
 
-  // const [chatId, setChatId] = useState(null);
+  const [chatId, setChatId] = useState(null);
   const [user, setUser] = useState(null);
+  console.log("COLLABS ARRAY", user);
   const [collabs, setCollabs] = useState([]);
-  console.log("COLLABS ARRAY", collabs);
+
   const [messageToSend, setMessageToSend] = useState("");
   const [sendTimeStamp, setSendTimeStamp] = useState(null);
   const [recievedMessage, setRecievedMessage] = useState("the message");
@@ -35,8 +36,7 @@ const Layout = () => {
   useEffect(() => {
     const getChatIdForIdCtraCli = async () => {
       const response = await getChatId(IdCtraCli);
-      console.log(response);
-      // setChatId(response.data.IdChat);
+      console.log("SET ONLINE USER", response);
 
       // ID USER
       const userId = response.data.IdCtraCli;
@@ -48,16 +48,13 @@ const Layout = () => {
         return collab.IdColl;
       });
       setCollabs(collabsInject);
+
+      // //IDCHAT
+      const IdChat = response.data.IdChat;
+      setChatId(IdChat);
     };
     getChatIdForIdCtraCli();
   }, []);
-
-  // GET CHAT ID
-  useEffect(() => {
-    const newSocket = io.connect("http://localhost:3000"); // Create the socket connection outside the component
-    setSocket(newSocket);
-    return () => newSocket.disconnect();
-  }, [user]);
 
   // ON CONNECTION
   useEffect(() => {
@@ -68,8 +65,8 @@ const Layout = () => {
 
   // ADD ONLINE USERS IN ARRAY
   useEffect(() => {
-    if (socket === null) return;
-    const userData = { IdUser: user, userType: "client" };
+    if (!socket || !chatId) return; // Ensure socket and chatId are defined
+    const userData = { IdUser: user, userType: "client", room: chatId };
     socket.emit("addNewUser", userData);
     socket.on("getOnlineUsers", (res) => {
       setOnlineUsers(res);
@@ -78,16 +75,21 @@ const Layout = () => {
     return () => {
       socket.off("getOnlineUsers");
     };
-  }, [socket]);
+  }, [socket, chatId]);
+
+  // JOIN ROOM
+  useEffect(() => {
+    if (!socket || !chatId) return; // Ensure socket and chatId are defined
+    socket.emit("joinRoom", 7);
+  }, [socket, chatId]); // Listen for changes in socket and chatId
 
   // SEND MESSAGING
   useEffect(() => {
     if (socket === null) return;
 
-    console.log("USERS TO SEND TO", collabs); /////////////CONTINUE HERE
     socket.emit("sendMessage", {
       messageToSend,
-      recipientUser: collabs, ////// MAKE DYNAMIC
+      room: chatId,
     });
   }, [messageToSend, sendTimeStamp]);
 
@@ -117,6 +119,9 @@ const Layout = () => {
             messageData,
             setMessageData,
             user,
+            setUser,
+            chatId,
+            setChatId,
           ]}
         />
         {/* <Footer /> */}

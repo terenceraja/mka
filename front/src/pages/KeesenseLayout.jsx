@@ -7,6 +7,8 @@ import { useParams } from "react-router-dom";
 const KeesenseLayout = () => {
   const { IdColl } = useParams();
 
+  const [allChatList, setAllChatLIst] = useState([]);
+  const [chatId, setChatId] = useState(null);
   const [user, setUser] = useState(null);
   const [messageToSend, setMessageToSend] = useState("");
   const [sendTimeStamp, setSendTimeStamp] = useState(null);
@@ -17,12 +19,12 @@ const KeesenseLayout = () => {
   // console.log("onlineUsers", onlineUsers);
   console.log("hey", messageToSend);
   console.log("recieved message", recievedMessage);
-  console.log(user);
+  console.log("ALLCHATLISTFORCOLLAB", chatId);
+  console.log("lol0", user);
 
-  // SET ONLINE USER AND IDCHAT
   useEffect(() => {
     setUser(parseInt(IdColl));
-  }, []);
+  }, [user]);
 
   // ON CONNECTION
   useEffect(() => {
@@ -31,10 +33,16 @@ const KeesenseLayout = () => {
     return () => newSocket.disconnect();
   }, [user]);
 
+  // JOIN ROOM
+  useEffect(() => {
+    if (!socket || !chatId) return; // Ensure socket and chatId are defined
+    socket.emit("joinRoom", 7);
+  }, [socket, chatId]); // Listen for changes in socket and chatId
+
   // ADDONLINE USERS IN ARRAY
   useEffect(() => {
-    if (socket === null) return;
-    const userData = { IdUser: user, userType: "collaborator" };
+    if (!socket || !chatId) return; // Ensure socket and chatId are defined
+    const userData = { IdUser: user, userType: "collaborator", room: chatId };
     socket.emit("addNewUser", userData);
     socket.on("getOnlineUsers", (res) => {
       setOnlineUsers(res);
@@ -43,16 +51,15 @@ const KeesenseLayout = () => {
     return () => {
       socket.off("getOnlineUsers");
     };
-  }, [socket]);
+  }, [socket, chatId]);
 
   // SEND MESSAGING
   useEffect(() => {
     if (socket === null) return;
-    let a = user === 1364 ? 13 : 1364;
-    console.log("USER TO SEND TO", a);
+
     socket.emit("sendMessage", {
       messageToSend,
-      recipientUser: user === 1364 ? 13 : 1364, ////// MAKE DYNAMIC
+      room: chatId,
     });
   }, [messageToSend, sendTimeStamp]);
 
@@ -70,6 +77,10 @@ const KeesenseLayout = () => {
   return (
     <Outlet
       context={[
+        chatId,
+        setChatId,
+        allChatList,
+        setAllChatLIst,
         messageToSend,
         setMessageToSend,
         sendTimeStamp,
@@ -79,6 +90,7 @@ const KeesenseLayout = () => {
         messageData,
         setMessageData,
         user,
+        setUser,
       ]}
     />
   );

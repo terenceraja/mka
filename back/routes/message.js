@@ -11,21 +11,35 @@ const { zchatmsg, zchat, zcoll, zchatcoll, zmessage } = require("../models"); //
 router.post("/send", verifyJwt, async function (req, res, next) {
   try {
     console.log("saving");
-    const { IdChat, IdSender, Message } = req.body;
+    const { IdChat, IdSender, Message, SenderType } = req.body;
     console.log(req.body);
 
-    const result = await zmessage.create({
+    const result = await zchatmsg.create({
       IdChat: IdChat,
       IdSender: IdSender,
       Message: Message,
+      SenderType: SenderType,
     });
 
-    console.log("RESPONSE", result);
+    const message = await zchatmsg.findOne({
+      where: {
+        IdMsg: result.IdMsg,
+      },
+      include: [
+        {
+          model: zcoll,
+          required: false,
+          where: { IdColl: Sequelize.col("zchatmsg.IdSender") }, // Correct reference to IdSender
+          as: "Collaborator",
+        },
+      ],
+      order: [["TimeStampCreation", "ASC"]], // ASC for ascending, DESC for descending
+    });
 
     res.json({
       auth: true,
       message: "Message Saved !",
-      data: result,
+      data: message,
     });
   } catch (error) {
     console.error(error);

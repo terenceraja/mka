@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-const ClientCard = ({ Client }) => {
+const ClientCard = ({ Client, IdChat }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log("Card clicked");
-    navigate(`/keesense/chat/${Client}`);
+    console.log("Card clicked", IdChat);
+    navigate(`/keesense/chat/${IdChat}`);
   };
   return (
     <Box sx={styles.card} onClick={handleClick}>

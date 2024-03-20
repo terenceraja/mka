@@ -1,24 +1,24 @@
 import { useState, useEffect, useRef } from "react";
-import { useOutletContext } from "react-router-dom";
-import { Stack } from "@mui/material";
-import { Box, Typography } from "@mui/material";
-import TextField from "@mui/material/TextField";
+
+import { Stack, Box, Typography, TextField, IconButton } from "@mui/material";
+
 import SendIcon from "../components/icons/SendIcon";
-import IconButton from "@mui/material/IconButton";
 import { useTheme } from "@mui/material/styles";
 import MessageCard from "../components/MessageCard";
 import ReturnIcon from "../components/icons/ReturnIcon";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useParams } from "react-router-dom";
 // HTTP
 import { sendMessage, getChat } from "../utils/http";
 
 const KeesenseChatBox = () => {
-  const { IdCtraCli } = useParams();
   const navigate = useNavigate();
   const theme = useTheme();
-  console.log("color", theme.palette.orange.main);
   const [
+    chatId,
+    setChatId,
+    allChatList,
+    setAllChatLIst,
     messageToSend,
     setMessageToSend,
     sendTimeStamp,
@@ -29,19 +29,29 @@ const KeesenseChatBox = () => {
     setMessageData,
     user,
   ] = useOutletContext();
-  console.log("messageData", messageData);
-  console.log(user);
+
+  const { IdChat } = useParams();
+  console.log("test1", allChatList);
+  // Find the object in allChatList with the specified IdChat
+  const targetIdCtraCli = allChatList.find(
+    (chat) => chat.IdChat === parseInt(IdChat)
+  );
+  // Extract the IdCtraCli value from the found object
+  const IdCtraCli = targetIdCtraCli ? targetIdCtraCli.zchat.IdCtraCli : null;
+
+  console.log("lol", IdCtraCli);
   const [error, setError] = useState("");
   const [inputMessage, setInputMessage] = useState("");
+  console.log(inputMessage);
 
   const messagesEndRef = useRef(null); // Reference to the chat container
 
-  // FETCH ALL MESSAGES FOR IDCTRACLI
+  // FETCH ALL MESSAGES FOR IDCTRACLI ROOM
   useEffect(() => {
     const fetchChat = async () => {
       try {
         const responseChat = await getChat(IdCtraCli);
-        console.log(responseChat.data);
+        console.log("bap", responseChat.data);
         // // AUTHENTIFICATION
         // if (!responseChat.auth) {
         //   handleOpenModal();
@@ -64,15 +74,18 @@ const KeesenseChatBox = () => {
   }, []);
   //
 
-  // RENDER MESSAGES
+  // // RENDER MESSAGES
   const messageList = messageData.map((obj, key) => {
     return (
       <MessageCard
         key={key}
-        IdSender={obj.IdSender}
+        Name={obj.Collaborator ? obj.Collaborator.Name : obj.IdSender}
+        Surname={obj.Collaborator ? obj.Collaborator.Surname : ""}
+        Color={obj.Collaborator ? obj.Collaborator.Color : ""}
         Message={obj.Message}
         sendTimeStamp={obj.TimeStampCreation}
         user={user}
+        IdSender={obj.IdSender}
       />
     );
   });
@@ -82,9 +95,10 @@ const KeesenseChatBox = () => {
 
     if (inputMessage) {
       const response = await sendMessage({
-        IdChat: 1,
-        IdSender: user === 1364 ? user : 13, ////// MAKE DYNAMIC,
+        IdChat: parseInt(IdChat),
+        IdSender: user,
         Message: inputMessage,
+        SenderType: "Collaborator",
       });
       console.log("response", response);
       console.log("response timestamp", response.data.TimeStampCreation);

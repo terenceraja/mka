@@ -7,7 +7,15 @@ import { useTheme } from "@mui/material/styles";
 // UTILS
 import { formatDate, formatTime } from "../utils/functions";
 
-const MessageCard = ({ IdSender, Message, sendTimeStamp, user }) => {
+const MessageCard = ({
+  IdSender,
+  Message,
+  sendTimeStamp,
+  user,
+  Name,
+  Surname,
+  Color,
+}) => {
   const theme = useTheme();
   return (
     <Stack
@@ -18,13 +26,12 @@ const MessageCard = ({ IdSender, Message, sendTimeStamp, user }) => {
       <Stack
         sx={styles.messageTag}
         style={{
-          backgroundColor:
-            IdSender === user ? theme.palette.orange.light : "white",
+          backgroundColor: Color,
           color: theme.palette.darkBlue.main,
         }}
         direction={"column"}
       >
-        <Typography variant="messageLabel">{IdSender}</Typography>
+        <Typography variant="messageLabel">{Name + Surname}</Typography>
 
         <Typography sx={{ overflowWrap: "break-word", marginY: "5px" }}>
           {Message}
