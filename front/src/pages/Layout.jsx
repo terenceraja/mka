@@ -3,10 +3,8 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
 import BottomNavigation from "../components/BottomNav";
 import { Box } from "@mui/material";
-import Footer from "../components/Footer";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
 import { useSelector } from "react-redux";
 
 //HTTP
@@ -28,8 +26,8 @@ const Layout = () => {
   const [socket, setSocket] = useState(null);
   const [messageData, setMessageData] = useState([]);
   // console.log("onlineUsers", onlineUsers);
-  console.log("hey", messageToSend);
-  console.log("recieved message", recievedMessage);
+  console.log("CLIENT MESSAGE SENT", messageToSend);
+  console.log("CLIENT RECIEVE MESSAGE", recievedMessage);
   console.log(user);
 
   // SET ONLINE USER AND IDCHAT
@@ -80,7 +78,7 @@ const Layout = () => {
   // JOIN ROOM
   useEffect(() => {
     if (!socket || !chatId) return; // Ensure socket and chatId are defined
-    socket.emit("joinRoom", 7);
+    socket.emit("joinRoom", chatId);
   }, [socket, chatId]); // Listen for changes in socket and chatId
 
   // SEND MESSAGING
@@ -89,7 +87,6 @@ const Layout = () => {
 
     socket.emit("sendMessage", {
       messageToSend,
-      room: chatId,
     });
   }, [messageToSend, sendTimeStamp]);
 

@@ -44,12 +44,13 @@ io.on("connection", (socket) => {
 
   // SENDING MESSAGE
   socket.on("sendMessage", (data) => {
+    console.log("THE ROOM TO SEND TO", data.messageToSend.IdChat);
     // console.log("server recieving sent message", data);
     // const user = onlineUsers.find((user) => user.userId === data.recipientUser);
     // console.log("hoho", user);
     // if (user) {
     // console.log("sending", data.messageToSend);
-    io.sockets.in(data.room).emit("getMessage", data.messageToSend);
+    io.to(data.messageToSend.IdChat).emit("getMessage", data.messageToSend);
     // io.to(user.socketId).emit("getMessage", data.messageToSend);
     // }
   });

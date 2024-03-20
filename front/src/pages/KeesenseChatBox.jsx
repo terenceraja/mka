@@ -15,6 +15,8 @@ const KeesenseChatBox = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const [
+    activeChatId,
+    setActiveChatId,
     chatId,
     setChatId,
     allChatList,
@@ -31,6 +33,12 @@ const KeesenseChatBox = () => {
   ] = useOutletContext();
 
   const { IdChat } = useParams();
+
+  // SETACTIVE ROOM
+  useEffect(() => {
+    setActiveChatId(parseInt(IdChat));
+  }, [IdChat]);
+
   console.log("test1", allChatList);
   // Find the object in allChatList with the specified IdChat
   const targetIdCtraCli = allChatList.find(
@@ -45,6 +53,9 @@ const KeesenseChatBox = () => {
   console.log(inputMessage);
 
   const messagesEndRef = useRef(null); // Reference to the chat container
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView();
+  }, [messageData]);
 
   // FETCH ALL MESSAGES FOR IDCTRACLI ROOM
   useEffect(() => {
@@ -103,7 +114,7 @@ const KeesenseChatBox = () => {
       console.log("response", response);
       console.log("response timestamp", response.data.TimeStampCreation);
       if (response.auth) {
-        setMessageData((prev) => [...prev, response.data]);
+        // setMessageData((prev) => [...prev, response.data]);
         setMessageToSend(response.data);
         setInputMessage("");
       }

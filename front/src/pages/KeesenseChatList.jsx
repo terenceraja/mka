@@ -1,17 +1,16 @@
 import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useOutletContext } from "react-router-dom";
-
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
+import { useParams, useOutletContext } from "react-router-dom";
 import ClientCard from "../components/ClientCard";
 
 //HTTPL
 import { getAllChatIdColl } from "../utils/http";
 const KeesenseChatList = () => {
   const [
+    activeChatId,
+    setActiveChatId,
     chatId,
     setChatId,
     allChatList,

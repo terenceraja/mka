@@ -1,13 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { useOutletContext } from "react-router-dom";
-import { Stack, Alert } from "@mui/material";
-import { Box } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { useOutletContext, useParams } from "react-router-dom";
+import { Stack, Alert, IconButton, TextField, Box } from "@mui/material";
 import SendIcon from "../components/icons/SendIcon";
-import IconButton from "@mui/material/IconButton";
 import { useTheme } from "@mui/material/styles";
 import MessageCard from "../components/MessageCard";
-import { useParams } from "react-router-dom";
+
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 // HTTP
@@ -92,6 +89,7 @@ const ChatComponent = () => {
     e.preventDefault();
 
     if (inputMessage) {
+      console.log("YOLOYOYOYO", chatId);
       const response = await sendMessage({
         IdChat: chatId,
         IdSender: user,
@@ -101,7 +99,7 @@ const ChatComponent = () => {
       console.log("response", response);
       console.log("response timestamp", response.data.TimeStampCreation);
       if (response.auth) {
-        setMessageData((prev) => [...prev, response.data]);
+        // setMessageData((prev) => [...prev, response.data]);
         setMessageToSend(response.data);
         setInputMessage("");
       }

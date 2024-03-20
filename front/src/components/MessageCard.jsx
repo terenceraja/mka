@@ -1,7 +1,5 @@
 import React from "react";
-import { Stack } from "@mui/material";
-import { Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
+import { Box, Typography, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 // UTILS
