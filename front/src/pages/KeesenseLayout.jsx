@@ -5,6 +5,8 @@ import { useParams, Outlet } from "react-router-dom";
 
 const KeesenseLayout = () => {
   const { IdColl } = useParams();
+  const [lastMsg, setLastMsg] = useState([]);
+  const [lastDate, setLastDate] = useState([]);
   const [allChatList, setAllChatLIst] = useState([]);
   const [activeChatId, setActiveChatId] = useState(null);
   const [chatId, setChatId] = useState(null);
@@ -91,6 +93,10 @@ const KeesenseLayout = () => {
         setMessageData,
         user,
         setUser,
+        lastMsg,
+        setLastMsg,
+        lastDate,
+        setLastDate,
       ]}
     />
   );

@@ -1,7 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 
-import { Stack, Box, Typography, TextField, IconButton } from "@mui/material";
+import {
+  Stack,
+  Box,
+  Typography,
+  TextField,
+  IconButton,
+  Button,
+  Popover,
+} from "@mui/material";
 
+import QuestIcon from "../components/icons/QuestIcon";
+import FileCopyIcon from "@mui/icons-material/FileCopyOutlined";
+import SaveIcon from "@mui/icons-material/Save";
+import PrintIcon from "@mui/icons-material/Print";
+import ShareIcon from "@mui/icons-material/Share";
 import SendIcon from "../components/icons/SendIcon";
 import { useTheme } from "@mui/material/styles";
 import MessageCard from "../components/MessageCard";
@@ -9,11 +22,18 @@ import ReturnIcon from "../components/icons/ReturnIcon";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { useParams } from "react-router-dom";
 // HTTP
-import { sendMessage, getChat } from "../utils/http";
+import { sendMessage, getChat, getChatId } from "../utils/http";
 
 const KeesenseChatBox = () => {
+  const [members, setMembers] = useState([]);
   const navigate = useNavigate();
   const theme = useTheme();
+  const actions = [
+    { icon: <FileCopyIcon />, name: "Copy" },
+    { icon: <SaveIcon />, name: "Save" },
+    { icon: <PrintIcon />, name: "Print" },
+    { icon: <ShareIcon />, name: "Share" },
+  ];
   const [
     activeChatId,
     setActiveChatId,
@@ -30,6 +50,11 @@ const KeesenseChatBox = () => {
     messageData,
     setMessageData,
     user,
+    setUser,
+    lastMsg,
+    setLastMsg,
+    lastDate,
+    setLastDate,
   ] = useOutletContext();
 
   const { IdChat } = useParams();
@@ -52,6 +77,22 @@ const KeesenseChatBox = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView();
   }, [messageData]);
+
+  // SETTING MEMBER FOR MEMBER BUTTON
+  useEffect(() => {
+    const fetchCollabs = async () => {
+      try {
+        const response = await getChatId(IdCtraCli);
+        console.log("response all collab memebers IdChat/IdCtraCli", response);
+
+        setMembers(response.data.zchatcolls);
+      } catch (error) {
+        setError({ message: error.message || "custom error message" });
+      }
+    };
+
+    fetchCollabs();
+  }, []);
 
   // FETCH ALL MESSAGES FOR IDCTRACLI ROOM
   useEffect(() => {
@@ -121,15 +162,78 @@ const KeesenseChatBox = () => {
     navigate(-1);
   };
 
+  // RENDER MEMBERS TAGS
+  const memberList = members.map((obj, key) => {
+    return (
+      <Typography
+        borderRadius={1}
+        p={0.5}
+        bgcolor={obj.zcoll.Color}
+        variant="title"
+      >
+        {obj.zcoll.Name} {obj.zcoll.Surname}
+      </Typography>
+    );
+  });
+
+  // HANDLE POPOVER
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handlePopoverClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
   return (
     <Box sx={styles.mainContent} id="content">
       <Box sx={styles.header}>
-        <Stack direction={"row"} alignItems={"center"} spacing={1}>
+        <Stack
+          direction={"row"}
+          alignItems={"center"}
+          spacing={1}
+          justifyContent={"space-between"}
+        >
           <ReturnIcon onClick={handleReturn} fill="white" size="20" />
           <Typography color={"white"} variant="title">
-            CLIENT NAME [GROUP]
+            CLIENT {IdCtraCli}
           </Typography>
         </Stack>
+        <>
+          <QuestIcon
+            fill={theme.palette.orange.main}
+            onClick={handlePopoverClick}
+          />
+
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            <Stack sx={{ p: 1 }} direction={"column"} spacing={1}>
+              <Typography
+                borderRadius={1}
+                p={0.5}
+                sx={{ border: `solid 1px lightgrey` }}
+                // bgcolor={obj.zcoll.Color}
+                variant="title"
+              >
+                Client {IdCtraCli}
+              </Typography>
+              {memberList}
+            </Stack>
+          </Popover>
+        </>
       </Box>
       <Box sx={styles.chatContainer} id="chatContainer">
         {messageList}
@@ -207,6 +311,7 @@ const styles = {
     boxShadow: "rgba(0, 0, 0, 0.15) 0px 2px 8px",
   },
   header: {
+    justifyContent: "space-between",
     bgcolor: "primary.main",
     width: "100%",
     height: "55px",

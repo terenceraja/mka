@@ -45,7 +45,7 @@ const Layout = () => {
       const collabsInject = collabsArray.map((collab) => {
         return collab.IdColl;
       });
-      setCollabs(collabsInject);
+      setCollabs(collabsArray);
 
       // //IDCHAT
       const IdChat = response.data.IdChat;
@@ -112,6 +112,8 @@ const Layout = () => {
       <Box component={"main"} sx={styles.mainContent}>
         <Outlet
           context={[
+            collabs,
+
             messageToSend,
             setMessageToSend,
             sendTimeStamp,

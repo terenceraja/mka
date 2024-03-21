@@ -1,7 +1,11 @@
 import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-const ClientCard = ({ Client, IdChat }) => {
+// UTILS
+import { formatDate, formatTime } from "../utils/functions";
+
+const ClientCard = ({ Client, IdChat, LastMsg, LastDate }) => {
+  console.log(LastMsg);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -13,10 +17,10 @@ const ClientCard = ({ Client, IdChat }) => {
       <Stack direction={"column"} spacing={1}>
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Typography variant="title">{Client}</Typography>
-          <Typography variant="subTitle">last date</Typography>
+          <Typography variant="subTitle">{formatDate(LastDate)}</Typography>
         </Stack>
 
-        <Typography variant="subTitle">lastmessage</Typography>
+        <Typography variant="subTitle">{LastMsg}</Typography>
       </Stack>
     </Box>
   );

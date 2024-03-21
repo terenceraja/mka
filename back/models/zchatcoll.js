@@ -51,6 +51,12 @@ module.exports = (sequelize, DataTypes) => {
     zchatcoll.belongsTo(models.zchat, {
       foreignKey: "IdChat",
     });
+
+    // Change this association to HasMany
+    zchatcoll.hasMany(models.zchatmsg, {
+      // Changed from belongsTo to hasMany
+      foreignKey: "IdChat", // Use the foreign key from zchatmsg
+    });
   };
 
   return zchatcoll;

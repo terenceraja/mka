@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { zchat, zchatcoll, zcoll, zchatmsg } = require("../models");
+const { Sequelize, Op } = require("sequelize");
 
 // Route to fetch all lines from zchat and include associated IdColl from zchatcoll along with details from zcoll
 router.get("/getAllChat", async (req, res) => {
@@ -26,7 +27,6 @@ router.get("/getAllChat", async (req, res) => {
   }
 });
 
-// Route to fetch all lines from zchat and include associated IdColl from zchatcoll along with details from zcoll
 router.get("/getAll/:IdColl", async (req, res) => {
   const { IdColl } = req.params;
   console.log(req.params);
@@ -39,12 +39,19 @@ router.get("/getAll/:IdColl", async (req, res) => {
         {
           model: zchat,
           attributes: ["IdCtraCli"],
+          include: [
+            {
+              model: zchatmsg,
+              attributes: ["Message", "TimeStampCreation"],
+              order: [["TimeStampCreation", "DESC"]],
+            },
+          ],
         },
       ],
     });
     res.json({
       auth: true,
-      message: `All chats for coll ${IdColl}  found !`,
+      message: `All chats for coll ${IdColl} found!`,
       data: result,
     });
   } catch (error) {

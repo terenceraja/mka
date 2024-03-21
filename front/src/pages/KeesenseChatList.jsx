@@ -25,15 +25,20 @@ const KeesenseChatList = () => {
     setMessageData,
     user,
     setUser,
+    lastMsg,
+    setLastMsg,
+    lastDate,
+    setLastDate,
   ] = useOutletContext();
   const [error, setError] = useState("");
-
+  console.log("last", lastDate);
   const { IdColl } = useParams();
   useEffect(() => {
     const fetchAllChatForColl = async () => {
       try {
         const response = await getAllChatIdColl(IdColl); //TEMPORARY IDCOLL, MUST BE INJECTED BY PARAMS
         console.log(`response allchatlist for collab ${IdColl}`, response);
+
         setAllChatLIst(response.data);
 
         setUser(parseInt(IdColl));
@@ -55,12 +60,19 @@ const KeesenseChatList = () => {
 
   // RENDER CHAT LIST FOR COLL
   const chatList = allChatList.map((obj, key) => {
+    const msgArray = obj.zchat.zchatmsgs;
+    const lastPosition = msgArray.length - 1;
+    const LastMsg = msgArray[lastPosition].Message;
+    const LastDate = msgArray[lastPosition].TimeStampCreation;
+
     return (
       <ClientCard
         key={key}
         Client={obj.zchat.IdCtraCli}
         IdColl={IdColl}
         IdChat={obj.IdChat}
+        LastMsg={LastMsg}
+        LastDate={LastDate}
       />
     );
   });

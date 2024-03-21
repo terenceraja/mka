@@ -1,8 +1,13 @@
 import React from "react";
 
-const QuestIcon = ({ fill }) => {
+const QuestIcon = ({ fill, onClick }) => {
+  const handleClick = (event) => {
+    onClick(event);
+  };
   return (
     <svg
+      cursor={"pointer"}
+      onClick={(event) => handleClick(event)}
       xmlns="http://www.w3.org/2000/svg"
       width="25"
       height="25"

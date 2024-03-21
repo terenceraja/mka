@@ -38,6 +38,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "IdChat",
       onDelete: "CASCADE",
     }); // Add onDelete option
+
+    zchat.hasMany(models.zchatmsg, {
+      foreignKey: "IdChat",
+      onDelete: "CASCADE",
+    }); // Add onDelete option
   };
   return zchat;
 };

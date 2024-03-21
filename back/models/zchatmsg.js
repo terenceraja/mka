@@ -47,6 +47,11 @@ module.exports = (sequelize, DataTypes) => {
 
   // Define associations
   zchatmsg.associate = (models) => {
+    zchatmsg.hasMany(models.zchatcoll, {
+      foreignKey: "IdChat",
+      onDelete: "CASCADE",
+    }); // Add onDelete option
+
     // Association with Chat
     zchatmsg.belongsTo(models.zchat, {
       foreignKey: "IdChat",
