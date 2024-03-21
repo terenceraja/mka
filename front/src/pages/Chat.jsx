@@ -11,10 +11,10 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import { sendMessage, getChat } from "../utils/http";
 
 const ChatComponent = () => {
+  console.log("IM MOUNTING");
   const { IdCtraCli } = useParams();
 
   const theme = useTheme();
-  console.log("color", theme.palette.orange.main);
   const [
     messageToSend,
     setMessageToSend,
@@ -29,10 +29,9 @@ const ChatComponent = () => {
     chatId,
     setChatId,
   ] = useOutletContext();
-  console.log("messageData", messageData);
+
   console.log(user);
   const [error, setError] = useState("");
-  console.log(error);
   const [inputMessage, setInputMessage] = useState("");
 
   const messagesEndRef = useRef(null); // Reference to the chat container
@@ -46,7 +45,7 @@ const ChatComponent = () => {
     const fetchChat = async () => {
       try {
         const responseChat = await getChat(IdCtraCli);
-        console.log(responseChat.data);
+        console.log(`response all msg for ${IdCtraCli}`, responseChat.data);
         // // AUTHENTIFICATION
         // if (!responseChat.auth) {
         //   handleOpenModal();
@@ -99,7 +98,7 @@ const ChatComponent = () => {
       console.log("response", response);
       console.log("response timestamp", response.data.TimeStampCreation);
       if (response.auth) {
-        // setMessageData((prev) => [...prev, response.data]);
+        setMessageData((prev) => [...prev, response.data]);
         setMessageToSend(response.data);
         setInputMessage("");
       }

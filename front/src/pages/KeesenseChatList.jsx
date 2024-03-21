@@ -29,12 +29,11 @@ const KeesenseChatList = () => {
   const [error, setError] = useState("");
 
   const { IdColl } = useParams();
-  console.log("lol", user);
   useEffect(() => {
     const fetchAllChatForColl = async () => {
       try {
         const response = await getAllChatIdColl(IdColl); //TEMPORARY IDCOLL, MUST BE INJECTED BY PARAMS
-        console.log(response);
+        console.log(`response allchatlist for collab ${IdColl}`, response);
         setAllChatLIst(response.data);
 
         setUser(parseInt(IdColl));

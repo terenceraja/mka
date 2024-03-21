@@ -103,7 +103,11 @@ router.get("/:IdCtraCli", async function (req, res, next) {
     });
 
     // Send the chat messages as the response
-    res.json({ auth: true, message: "Chat found!", data: chatMessages });
+    res.json({
+      auth: true,
+      message: `all msg for IdChat ${IdChat} found!`,
+      data: chatMessages,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message }); // Send specific error message

@@ -34,8 +34,10 @@ module.exports = (sequelize, DataTypes) => {
 
   // ASSOCIATION EXAMPLE
   zchat.associate = (models) => {
-    zchat.hasMany(models.zchatcoll, { foreignKey: "IdChat" });
+    zchat.hasMany(models.zchatcoll, {
+      foreignKey: "IdChat",
+      onDelete: "CASCADE",
+    }); // Add onDelete option
   };
-
   return zchat;
 };

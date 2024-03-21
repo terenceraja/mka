@@ -478,7 +478,6 @@ export const createChat = async (dataToPost) => {
 
 // zchatcoll TO JOIN COLL IN CHAT
 export const getAllChatIdColl = async (dataToPost) => {
-  console.log("DATATOPOST", dataToPost);
   const response = await fetch(
     `http://localhost:3000/chat/getAll/${dataToPost}`,
     {
@@ -500,7 +499,6 @@ export const getAllChatIdColl = async (dataToPost) => {
 
 // zchat TO GET CHAT ID FROM IDCTRACLI
 export const getChatId = async (dataToPost) => {
-  console.log("DATATOPOST", dataToPost);
   const response = await fetch(
     `http://localhost:3000/chat/getChat/${dataToPost}`,
     {

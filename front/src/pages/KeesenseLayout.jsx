@@ -15,11 +15,6 @@ const KeesenseLayout = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [socket, setSocket] = useState(null);
   const [messageData, setMessageData] = useState([]);
-  // console.log("onlineUsers", onlineUsers);
-  console.log("COLLAB MESSAGE SENT", messageToSend);
-  console.log("COLLAB RECIEVE MESSAGE", recievedMessage);
-  // console.log("ALLCHATLISTFORCOLLAB", chatId);
-  // console.log("lol0", user);
 
   useEffect(() => {
     setUser(parseInt(IdColl));
@@ -35,8 +30,8 @@ const KeesenseLayout = () => {
   // JOIN ROOM
   useEffect(() => {
     if (!socket || !chatId) return; // Ensure socket and chatId are defined
-    socket.emit("joinRoom", 8);
-  }, [socket, chatId]); // Listen for changes in socket and chatId
+    socket.emit("joinRoom", chatId);
+  }, [socket, chatId /*activeChatId*/]); // Listen for changes in socket and chatId
 
   // ADDONLINE USERS IN ARRAY
   useEffect(() => {
@@ -62,20 +57,20 @@ const KeesenseLayout = () => {
   }, [messageToSend, sendTimeStamp]);
 
   // // RECIEVE MESSAGING
-  console.log("ACTIVE CHAT ROOM", activeChatId);
   useEffect(() => {
     if (socket === null) return;
     socket.on("getMessage", (res) => {
+      console.log("GET MESSAGE TRIGGERED !!!");
       console.log("recieving", res);
-      // console.log("recieving2", activeChatId);
+      console.log("check !!!", res.IdChat);
+      console.log("active !!!", activeChatId);
       if (res.IdChat === activeChatId) {
-        console.log("RIGHT ROOM");
         setMessageData((prev) => [...prev, res]);
       }
     });
 
     return () => socket.off("getMessage");
-  }, [socket]);
+  }, [socket, activeChatId]);
 
   return (
     <Outlet

@@ -38,21 +38,29 @@ io.on("connection", (socket) => {
 
   // JOIN CHAT/ROOM
   socket.on("joinRoom", (IdChat) => {
+    console.log(IdChat);
     console.log(`USER JOINED ROOM : ${IdChat}`);
     socket.join(IdChat);
+    // socket.join([10]);
   });
 
   // SENDING MESSAGE
   socket.on("sendMessage", (data) => {
     console.log("THE ROOM TO SEND TO", data.messageToSend.IdChat);
-    // console.log("server recieving sent message", data);
-    // const user = onlineUsers.find((user) => user.userId === data.recipientUser);
-    // console.log("hoho", user);
-    // if (user) {
-    // console.log("sending", data.messageToSend);
-    io.to(data.messageToSend.IdChat).emit("getMessage", data.messageToSend);
-    // io.to(user.socketId).emit("getMessage", data.messageToSend);
-    // }
+
+    // Get the list of sockets in the room
+    const socketsInRoom = io
+      .of("/")
+      .adapter.rooms.get(data.messageToSend.IdChat);
+
+    // Emit the message to all sockets in the room except the sender's socket
+    if (socketsInRoom) {
+      for (const socketId of socketsInRoom) {
+        if (socketId !== socket.id) {
+          io.to(socketId).emit("getMessage", data.messageToSend);
+        }
+      }
+    }
   });
 
   // DISCONNECT

@@ -29,7 +29,9 @@ const MessageCard = ({
         }}
         direction={"column"}
       >
-        <Typography variant="messageLabel">{Name + Surname}</Typography>
+        <Typography variant="messageLabel">
+          {Name} {Surname}
+        </Typography>
 
         <Typography sx={{ overflowWrap: "break-word", marginY: "5px" }}>
           {Message}

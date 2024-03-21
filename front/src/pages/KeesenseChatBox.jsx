@@ -39,7 +39,6 @@ const KeesenseChatBox = () => {
     setActiveChatId(parseInt(IdChat));
   }, [IdChat]);
 
-  console.log("test1", allChatList);
   // Find the object in allChatList with the specified IdChat
   const targetIdCtraCli = allChatList.find(
     (chat) => chat.IdChat === parseInt(IdChat)
@@ -47,11 +46,8 @@ const KeesenseChatBox = () => {
   // Extract the IdCtraCli value from the found object
   const IdCtraCli = targetIdCtraCli ? targetIdCtraCli.zchat.IdCtraCli : null;
 
-  console.log("lol", IdCtraCli);
   const [error, setError] = useState("");
   const [inputMessage, setInputMessage] = useState("");
-  console.log(inputMessage);
-
   const messagesEndRef = useRef(null); // Reference to the chat container
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView();
@@ -62,7 +58,7 @@ const KeesenseChatBox = () => {
     const fetchChat = async () => {
       try {
         const responseChat = await getChat(IdCtraCli);
-        console.log("bap", responseChat.data);
+        console.log("response all msg from chat", responseChat.data);
         // // AUTHENTIFICATION
         // if (!responseChat.auth) {
         //   handleOpenModal();
@@ -111,10 +107,10 @@ const KeesenseChatBox = () => {
         Message: inputMessage,
         SenderType: "Collaborator",
       });
-      console.log("response", response);
+      console.log("response message sent", response);
       console.log("response timestamp", response.data.TimeStampCreation);
       if (response.auth) {
-        // setMessageData((prev) => [...prev, response.data]);
+        setMessageData((prev) => [...prev, response.data]);
         setMessageToSend(response.data);
         setInputMessage("");
       }

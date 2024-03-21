@@ -143,6 +143,13 @@ router.delete("/delete/:IdChat", async (req, res) => {
       },
     });
 
+    // Delete associated chat messages first
+    await zchatcoll.destroy({
+      where: {
+        IdChat: IdChat,
+      },
+    });
+
     // Create a new entry in zchatcoll table with the provided IdChat and IdColl
     const response = await zchat.destroy({
       where: {

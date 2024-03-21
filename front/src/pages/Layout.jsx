@@ -64,7 +64,11 @@ const Layout = () => {
   // ADD ONLINE USERS IN ARRAY
   useEffect(() => {
     if (!socket || !chatId) return; // Ensure socket and chatId are defined
-    const userData = { IdUser: user, userType: "client", room: chatId };
+    const userData = {
+      IdUser: user,
+      userType: "client",
+      room: [chatId],
+    };
     socket.emit("addNewUser", userData);
     socket.on("getOnlineUsers", (res) => {
       setOnlineUsers(res);
@@ -78,7 +82,7 @@ const Layout = () => {
   // JOIN ROOM
   useEffect(() => {
     if (!socket || !chatId) return; // Ensure socket and chatId are defined
-    socket.emit("joinRoom", chatId);
+    socket.emit("joinRoom", [chatId]);
   }, [socket, chatId]); // Listen for changes in socket and chatId
 
   // SEND MESSAGING
@@ -94,6 +98,7 @@ const Layout = () => {
   useEffect(() => {
     if (socket === null) return;
     socket.on("getMessage", (res) => {
+      console.log("GET MESSAGE TRIGGERED !!!");
       console.log("recieving", res);
       setMessageData((prev) => [...prev, res]);
     });
