@@ -52,7 +52,7 @@ const Layout = () => {
       setChatId(IdChat);
     };
     getChatIdForIdCtraCli();
-  }, []);
+  }, [messageData]);
 
   // ON CONNECTION
   useEffect(() => {

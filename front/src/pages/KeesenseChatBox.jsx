@@ -149,7 +149,7 @@ const KeesenseChatBox = () => {
         SenderType: "Collaborator",
       });
       console.log("response message sent", response);
-      console.log("response timestamp", response.data.TimeStampCreation);
+      // console.log("response timestamp", response.data.TimeStampCreation);
       if (response.auth) {
         setMessageData((prev) => [...prev, response.data]);
         setMessageToSend(response.data);
@@ -166,6 +166,7 @@ const KeesenseChatBox = () => {
   const memberList = members.map((obj, key) => {
     return (
       <Typography
+        key={key} // Add a unique key prop here
         borderRadius={1}
         p={0.5}
         bgcolor={obj.zcoll.Color}

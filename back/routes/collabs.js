@@ -7,7 +7,7 @@ const verifyJwt = require("../middleware/jwt");
 
 const { Sequelize } = require("sequelize");
 
-const { zcoll } = require("../models"); // Import your Sequelize model
+const { zcoll, zchatcoll } = require("../models"); // Import your Sequelize model
 
 // ROUTE ON PAGE ADMIN COLLABCONFIG : GET ALL COLLABS
 router.get("/", verifyJwt, async function (req, res, next) {
@@ -64,8 +64,7 @@ router.post("/add", verifyJwt, async function (req, res, next) {
 router.post("/delete", verifyJwt, async function (req, res, next) {
   try {
     const { IdColl } = req.body;
-
-    // Delete the entry from the database with the provided IdColl
+    await zchatcoll.destroy({ where: { IdColl } });
     await zcoll.destroy({ where: { IdColl } });
 
     // Fetch all collabs after deleting the entry (optional, for demonstration purposes)

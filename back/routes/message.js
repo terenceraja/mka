@@ -8,7 +8,7 @@ const verifyJwt = require("../middleware/jwt");
 const { zchatmsg, zchat, zcoll, zchatcoll, zmessage } = require("../models"); // Import your Sequelize model
 
 // SAVE MESSAGE
-router.post("/send", verifyJwt, async function (req, res, next) {
+router.post("/send", async function (req, res, next) {
   try {
     console.log("saving");
     const { IdChat, IdSender, Message, SenderType } = req.body;
@@ -40,6 +40,7 @@ router.post("/send", verifyJwt, async function (req, res, next) {
       auth: true,
       message: "Message Saved !",
       data: message,
+      status: true,
     });
   } catch (error) {
     console.error(error);

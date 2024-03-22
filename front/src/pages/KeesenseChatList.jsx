@@ -61,9 +61,15 @@ const KeesenseChatList = () => {
   // RENDER CHAT LIST FOR COLL
   const chatList = allChatList.map((obj, key) => {
     const msgArray = obj.zchat.zchatmsgs;
-    const lastPosition = msgArray.length - 1;
-    const LastMsg = msgArray[lastPosition].Message;
-    const LastDate = msgArray[lastPosition].TimeStampCreation;
+    let LastMsg = "";
+    let LastDate = "";
+
+    // Check if msgArray is not empty before accessing its properties
+    if (msgArray.length > 0) {
+      const lastPosition = msgArray.length - 1;
+      LastMsg = msgArray[lastPosition].Message;
+      LastDate = msgArray[lastPosition].TimeStampCreation;
+    }
 
     return (
       <ClientCard
@@ -71,12 +77,11 @@ const KeesenseChatList = () => {
         Client={obj.zchat.IdCtraCli}
         IdColl={IdColl}
         IdChat={obj.IdChat}
-        LastMsg={LastMsg}
-        LastDate={LastDate}
+        // LastMsg={LastMsg}
+        // LastDate={LastDate}
       />
     );
   });
-
   return (
     <Box sx={styles.mainContent}>
       <Box sx={styles.header}>
@@ -85,7 +90,13 @@ const KeesenseChatList = () => {
         </Typography>
       </Box>
       <Box sx={styles.listContainer}>
-        {chatList.length > 0 ? chatList : "nochat"}
+        {chatList.length > 0 ? (
+          chatList
+        ) : (
+          <Typography p={1} variant="subTitle">
+            Aucuns chats disponibles
+          </Typography>
+        )}
       </Box>
     </Box>
   );

@@ -99,6 +99,7 @@ const ChatComponent = () => {
   const memberList = collabs.map((obj, key) => {
     return (
       <Typography
+        key={key} // Add a unique key prop here
         borderRadius={1}
         p={0.5}
         bgcolor={obj.zcoll.Color}
@@ -121,8 +122,7 @@ const ChatComponent = () => {
         SenderType: "Client",
       });
       console.log("response", response);
-      console.log("response timestamp", response.data.TimeStampCreation);
-      if (response.auth) {
+      if (response.auth && response.status) {
         setMessageData((prev) => [...prev, response.data]);
         setMessageToSend(response.data);
         setInputMessage("");
