@@ -1,12 +1,12 @@
 import React from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Button, Box, Stack, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 import { useParams, useOutletContext } from "react-router-dom";
 import ClientCard from "../components/ClientCard";
 
 //HTTPL
-import { getAllChatIdColl } from "../utils/http";
+import { getAllChatIdColl, triggerFM } from "../utils/http";
 const KeesenseChatList = () => {
   const [
     activeChatId,
@@ -29,10 +29,50 @@ const KeesenseChatList = () => {
     setLastMsg,
     lastDate,
     setLastDate,
+    allClientInfo,
+    setAllClientInfo,
   ] = useOutletContext();
   const [error, setError] = useState("");
-  console.log("last", lastDate);
+  console.log(allClientInfo);
   const { IdColl } = useParams();
+
+  // //IMPORT NAMES FROM FM
+  useEffect(() => {
+    const getClientName = async () => {
+      try {
+        if (allChatList.length > 0) {
+          const myArray = allChatList.map((obj, key) => {
+            return obj.zchat.IdCtraCli;
+          });
+          console.log(myArray);
+          const jsonString = JSON.stringify(myArray); // Serialize array to JSON string
+          FileMaker.PerformScript("RecieveDataFromWebApp", jsonString);
+        }
+      } catch (error) {
+        setError({ message: error.message || "custom error message" });
+      }
+    };
+    getClientName();
+  }, [allChatList]);
+
+  // useEffect hook to listen for messages from the window object
+  useEffect(() => {
+    // Event listener function to handle changes in the window object
+    const handleWindowData = (event) => {
+      if (event.detail) {
+        // JSONparse data
+        const data = JSON.parse(event.detail);
+        setAllClientInfo(data);
+      }
+    };
+    // Listen for the custom event dispatched in index.html
+    window.addEventListener("fileMakerDataUpdated", handleWindowData);
+    // Clean up event listener when component unmounts
+    return () => {
+      window.removeEventListener("fileMakerDataUpdated", handleWindowData);
+    };
+  }, []);
+
   useEffect(() => {
     const fetchAllChatForColl = async () => {
       try {
@@ -77,6 +117,16 @@ const KeesenseChatList = () => {
         Client={obj.zchat.IdCtraCli}
         IdColl={IdColl}
         IdChat={obj.IdChat}
+        Name={
+          allClientInfo && allClientInfo[key + 1]
+            ? allClientInfo[key + 1].Name
+            : ""
+        }
+        LastName={
+          allClientInfo && allClientInfo[key + 1]
+            ? allClientInfo[key + 1].LastName
+            : ""
+        }
         // LastMsg={LastMsg}
         // LastDate={LastDate}
       />
@@ -84,6 +134,7 @@ const KeesenseChatList = () => {
   });
   return (
     <Box sx={styles.mainContent}>
+      {/* <Button onClick={getClientName}></Button> */}
       <Box sx={styles.header}>
         <Typography color={"white"} variant="title">
           CHAT LIST

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 // UTILS
 import { formatDate, formatTime } from "../utils/functions";
 
-const ClientCard = ({ Client, IdChat, LastMsg, LastDate }) => {
+const ClientCard = ({ Client, IdChat, LastMsg, LastDate, Name, LastName }) => {
   console.log(LastMsg);
   const navigate = useNavigate();
 
@@ -15,8 +15,14 @@ const ClientCard = ({ Client, IdChat, LastMsg, LastDate }) => {
   return (
     <Box sx={styles.card} onClick={handleClick}>
       <Stack direction={"column"} spacing={1}>
-        <Stack direction={"row"} justifyContent={"space-between"}>
-          <Typography variant="title">{Client}</Typography>
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <Typography variant="title">
+            {Name} {LastName} - Id#{Client}
+          </Typography>
           {/* <Typography variant="subTitle">{formatDate(LastDate)}</Typography> */}
         </Stack>
 

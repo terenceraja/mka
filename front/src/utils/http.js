@@ -517,3 +517,19 @@ export const getChatId = async (dataToPost) => {
 
   return resData;
 };
+
+// FM TRIGGER
+export const triggerFM = async (dataToPost) => {
+  console.log("DATATOPOST", dataToPost);
+  const response = await fetch(`http://localhost:3000/filemaker/clientInfo`, {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+  });
+
+  const resData = await response.json();
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return resData;
+};

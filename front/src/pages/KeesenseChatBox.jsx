@@ -55,6 +55,8 @@ const KeesenseChatBox = () => {
     setLastMsg,
     lastDate,
     setLastDate,
+    allClientInfo,
+    setAllClientInfo,
   ] = useOutletContext();
 
   const { IdChat } = useParams();
@@ -70,6 +72,11 @@ const KeesenseChatBox = () => {
   );
   // Extract the IdCtraCli value from the found object
   const IdCtraCli = targetIdCtraCli ? targetIdCtraCli.zchat.IdCtraCli : null;
+
+  // LASTNAME & NAME EXTRACT
+  const clientInfo = Object.values(allClientInfo).find(
+    (obj) => obj.Id === IdCtraCli
+  );
 
   const [error, setError] = useState("");
   const [inputMessage, setInputMessage] = useState("");
@@ -127,8 +134,10 @@ const KeesenseChatBox = () => {
     return (
       <MessageCard
         key={key}
-        Name={obj.Collaborator ? obj.Collaborator.Name : obj.IdSender}
-        Surname={obj.Collaborator ? obj.Collaborator.Surname : ""}
+        Name={obj.Collaborator ? obj.Collaborator.Name : clientInfo.Name}
+        Surname={
+          obj.Collaborator ? obj.Collaborator.Surname : clientInfo.LastName
+        }
         Color={obj.Collaborator ? obj.Collaborator.Color : ""}
         Message={obj.Message}
         sendTimeStamp={obj.TimeStampCreation}
@@ -202,7 +211,7 @@ const KeesenseChatBox = () => {
         >
           <ReturnIcon onClick={handleReturn} fill="white" size="20" />
           <Typography color={"white"} variant="title">
-            CLIENT {IdCtraCli}
+            {clientInfo.Name} {clientInfo.LastName}
           </Typography>
         </Stack>
         <>

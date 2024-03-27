@@ -17,6 +17,7 @@ const KeesenseLayout = () => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [socket, setSocket] = useState(null);
   const [messageData, setMessageData] = useState([]);
+  const [allClientInfo, setAllClientInfo] = useState(null);
 
   useEffect(() => {
     setUser(parseInt(IdColl));
@@ -97,6 +98,8 @@ const KeesenseLayout = () => {
         setLastMsg,
         lastDate,
         setLastDate,
+        allClientInfo,
+        setAllClientInfo,
       ]}
     />
   );

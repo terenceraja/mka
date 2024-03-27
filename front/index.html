@@ -19,6 +19,16 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <script>
+      // Function to store data received from FileMaker in the window object
+      function test(data) {
+        window.fileMakerData = data;
+        // Dispatch an event to notify listeners of the change
+        const event = new CustomEvent("fileMakerDataUpdated", { detail: data });
+        window.dispatchEvent(event);
+      }
+    </script>
     <script type="module" src="/src/main.jsx"></script>
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
   </body>

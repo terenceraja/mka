@@ -12,6 +12,7 @@ var newsRouter = require("./routes/news");
 var iisRouter = require("./routes/iisTest");
 var messageRouter = require("./routes/message");
 var chatRouter = require("./routes/chat");
+var filemakerRouter = require("./routes/filemaker");
 
 var app = express();
 
@@ -32,6 +33,7 @@ app.use("/news", newsRouter);
 app.use("/message", messageRouter);
 app.use("/chat", chatRouter);
 app.use("/iis", iisRouter);
+app.use("/filemaker", filemakerRouter);
 
 // ///////// IIS CONFIG ///////////
 app.listen(process.env.PORT);

@@ -56,25 +56,28 @@ router.post(
       console.log(FileId);
       const { filename, path } = req.file;
 
-      // Update the record in the database
-      const updateResult = await zfile.update(
-        {
-          FileName: filename,
-          FilePath: path,
-          TimeStampUpload: Sequelize.literal("CURRENT_TIMESTAMP"),
-          TimeStampModification: Sequelize.literal("CURRENT_TIMESTAMP"),
-          Status: "pending",
-        },
-        { where: { IdFile: FileId } }
-      );
+      const filePath = path.resolve(req.file.path);
+      console.log(filePath);
 
-      console.log("RESPONSE", updateResult);
+      // // Update the record in the database
+      // const updateResult = await zfile.update(
+      //   {
+      //     FileName: filename,
+      //     FilePath: path,
+      //     TimeStampUpload: Sequelize.literal("CURRENT_TIMESTAMP"),
+      //     TimeStampModification: Sequelize.literal("CURRENT_TIMESTAMP"),
+      //     Status: "pending",
+      //   },
+      //   { where: { IdFile: FileId } }
+      // );
 
-      res.json({
-        auth: true,
-        message: "File stored in backend !",
-        data: updateResult,
-      });
+      // console.log("RESPONSE", updateResult);
+
+      // res.json({
+      //   auth: true,
+      //   message: "File stored in backend !",
+      //   data: updateResult,
+      // });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
