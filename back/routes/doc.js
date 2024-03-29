@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 var path = require("path");
 const fs = require("fs");
+const fetch = require("node-fetch");
+
 //JWT
 const verifyJwt = require("../middleware/jwt");
 
@@ -51,13 +53,65 @@ router.post(
   upload.single("file"),
   async function (req, res, next) {
     try {
+      // WARNING///////////////////////////////////////////////////
+      // Set NODE_TLS_REJECT_UNAUTHORIZED environment variable to 0
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
       console.log(req.file);
       const FileId = req.body.FileId;
       console.log(FileId);
-      const { filename, path } = req.file;
+      const { filename, path, originalname } = req.file;
 
-      const filePath = path.resolve(req.file.path);
-      console.log(filePath);
+      console.log(filename);
+      // console.log(path);
+
+      // TOKEN SESSION
+      const myHeadersToken = new Headers();
+      myHeadersToken.append("Content-Type", "application/json");
+      myHeadersToken.append("Authorization", "Basic MEFkbWluOjAwMDA=");
+
+      const requestOptionsToken = {
+        method: "POST",
+        headers: myHeadersToken,
+        redirect: "follow",
+      };
+
+      try {
+        const response = await fetch(
+          "https://TR-LAPTOP/fmi/data/v1/databases/sandbox2/sessions",
+          requestOptionsToken
+        );
+        const jsonResponse = await response.json();
+        const token = jsonResponse.response.token;
+
+        console.log(token);
+
+        // / RUN FM SCRIPT
+        const myHeadersFM = new Headers();
+        myHeadersFM.append("Content-Type", "application/json");
+        myHeadersFM.append("Authorization", `Bearer ${token}`);
+
+        const requestOptionsFM = {
+          method: "GET",
+          headers: myHeadersFM,
+          redirect: "follow",
+        };
+
+        try {
+          const response = await fetch(
+            `https://TR-LAPTOP/fmi/data/v1/databases/sandbox2/layouts/coll/script/UpdateContainer?script.param=${originalname}`,
+            requestOptionsFM
+          );
+          const result = await response.text();
+          console.log(result);
+        } catch (error) {
+          console.error(error);
+        }
+        //
+      } catch (error) {
+        console.error(error);
+      }
+      ////
 
       // // Update the record in the database
       // const updateResult = await zfile.update(

@@ -56,7 +56,7 @@ const Layout = () => {
 
   // ON CONNECTION
   useEffect(() => {
-    const newSocket = io.connect("http://localhost:3000"); // Create the socket connection outside the component
+    const newSocket = io.connect("http://localhost:4000"); // Create the socket connection outside the component
     setSocket(newSocket);
     return () => newSocket.disconnect();
   }, [user]);

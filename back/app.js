@@ -22,7 +22,7 @@ app.use(cors());
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true })); ////////////////////////////////////// FALSE ORIGINALY
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -35,7 +35,7 @@ app.use("/chat", chatRouter);
 app.use("/iis", iisRouter);
 app.use("/filemaker", filemakerRouter);
 
-// ///////// IIS CONFIG ///////////
-app.listen(process.env.PORT);
+// // ///////// IIS CONFIG ///////////
+// app.listen(process.env.PORT);
 
 module.exports = { app, http }; // Export both the app and the http server

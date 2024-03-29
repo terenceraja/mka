@@ -8,12 +8,9 @@ const filemakerScript = require("../middleware/filemakerScript");
 router.post("/clientinfo", async function (req, res, next) {
   try {
     console.log("req.body", req.body);
-    const clientInfo = req.body;
 
     res.json({
-      auth: true,
       message: "All names and lastnames found !",
-      data: clientInfo,
     });
   } catch (error) {
     console.error(error);
