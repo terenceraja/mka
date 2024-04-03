@@ -65,53 +65,64 @@ router.post(
       console.log(filename);
       // console.log(path);
 
-      // TOKEN SESSION
-      const myHeadersToken = new Headers();
-      myHeadersToken.append("Content-Type", "application/json");
-      myHeadersToken.append("Authorization", "Basic MEFkbWluOjAwMDA=");
+      // Read the file asynchronously
+      fs.readFile(req.file.path, async function (err, data) {
+        if (err) {
+          console.error("Error reading file:", err);
+          return res.status(500).json({ error: "Error reading file" });
+        }
+        // Encode the file contents in Base64
+        const base64Data = data.toString("base64");
+        // console.log(base64Data);
 
-      const requestOptionsToken = {
-        method: "POST",
-        headers: myHeadersToken,
-        redirect: "follow",
-      };
+        // TOKEN SESSION
+        const myHeadersToken = new Headers();
+        myHeadersToken.append("Content-Type", "application/json");
+        myHeadersToken.append("Authorization", "Basic MEFkbWluOjAwMDA=");
 
-      try {
-        const response = await fetch(
-          "https://TR-LAPTOP/fmi/data/v1/databases/sandbox2/sessions",
-          requestOptionsToken
-        );
-        const jsonResponse = await response.json();
-        const token = jsonResponse.response.token;
-
-        console.log(token);
-
-        // / RUN FM SCRIPT
-        const myHeadersFM = new Headers();
-        myHeadersFM.append("Content-Type", "application/json");
-        myHeadersFM.append("Authorization", `Bearer ${token}`);
-
-        const requestOptionsFM = {
-          method: "GET",
-          headers: myHeadersFM,
+        const requestOptionsToken = {
+          method: "POST",
+          headers: myHeadersToken,
           redirect: "follow",
         };
 
         try {
           const response = await fetch(
-            `https://TR-LAPTOP/fmi/data/v1/databases/sandbox2/layouts/coll/script/UpdateContainer?script.param=${originalname}`,
-            requestOptionsFM
+            "https://TR-LAPTOP/fmi/data/v1/databases/sandbox2/sessions",
+            requestOptionsToken
           );
-          const result = await response.text();
-          console.log(result);
+          const jsonResponse = await response.json();
+          const token = jsonResponse.response.token;
+
+          console.log(token);
+
+          // / RUN FM SCRIPT
+          const myHeadersFM = new Headers();
+          myHeadersFM.append("Content-Type", "application/json");
+          myHeadersFM.append("Authorization", `Bearer ${token}`);
+
+          const requestOptionsFM = {
+            method: "GET",
+            headers: myHeadersFM,
+            redirect: "follow",
+          };
+
+          try {
+            const response = await fetch(
+              `https://TR-LAPTOP/fmi/data/v1/databases/sandbox2/layouts/coll/script/Proxy?script.param=${path}`,
+              requestOptionsFM
+            );
+            const result = await response.json();
+            console.log(result);
+          } catch (error) {
+            console.error(error);
+          }
+          //
         } catch (error) {
           console.error(error);
         }
-        //
-      } catch (error) {
-        console.error(error);
-      }
-      ////
+        ////
+      });
 
       // // Update the record in the database
       // const updateResult = await zfile.update(
