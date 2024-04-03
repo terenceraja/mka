@@ -7,7 +7,7 @@ const fs = require("fs");
 const filemakerScript = require("../middleware/filemakerScript");
 
 // // ROUTE ON PAGE NEWSADMIN : DELETE NEWS BY ID
-router.post("/clientinfo", async function (req, res, next) {
+router.post("/updateFMContainer", async function (req, res, next) {
   try {
     console.log("req.body", req.body);
     console.log("FILENAME:", req.body.param);

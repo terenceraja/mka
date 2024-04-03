@@ -153,6 +153,7 @@ const Doc = () => {
         title={obj.Title}
         desc={obj.Description}
         file={obj}
+        IdCtraCli={IdCtraCli}
         remove={handleRemove}
       />
     );

@@ -118,11 +118,12 @@ export const fetchMvt = async (dataToPost) => {
 };
 
 // UPLOAD FILE
-export const postFile = async (fileToPost, FileId) => {
+export const postFile = async (fileToPost, FileId, IdCtraCli) => {
   console.log("file upload", fileToPost);
   const formData = new FormData();
   formData.append("file", fileToPost);
   formData.append("FileId", FileId); // Append the document ID to the FormData
+  formData.append("IdCtraCli", IdCtraCli); // Append the document ID to the FormData
 
   console.log("formdata", formData.values);
   try {

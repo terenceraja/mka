@@ -58,12 +58,10 @@ router.post(
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
       console.log(req.file);
+      const IdCtraCli = req.body.IdCtraCli;
       const FileId = req.body.FileId;
-      console.log(FileId);
-      const { filename, path, originalname } = req.file;
 
-      console.log(filename);
-      // console.log(path);
+      const { filename, path, originalname } = req.file;
 
       // Read the file asynchronously
       fs.readFile(req.file.path, async function (err, data) {
@@ -109,7 +107,7 @@ router.post(
 
           try {
             const response = await fetch(
-              `https://TR-LAPTOP/fmi/data/v1/databases/sandbox2/layouts/coll/script/Proxy?script.param=${path}`,
+              `https://TR-LAPTOP/fmi/data/v1/databases/sandbox2/layouts/cli/script/Proxy?script.param=${path}%7C${filename}%7C${IdCtraCli}`,
               requestOptionsFM
             );
             const result = await response.json();

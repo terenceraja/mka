@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useRef } from "react";
 import CustomModal from "./CustomModal";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Snack from "./Snack";
 import {
@@ -36,7 +37,8 @@ import { fileChecker } from "../utils/fileChecker";
 // HTTP
 import { postFile } from "../utils/http";
 
-const DemandCard = ({ date, title, desc, file, remove }) => {
+const DemandCard = ({ date, title, desc, file, remove, IdCtraCli }) => {
+  console.log("ROROROR", IdCtraCli);
   const theme = useTheme();
   const [isSent, setIsSent] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -123,7 +125,7 @@ const DemandCard = ({ date, title, desc, file, remove }) => {
   const upload = async (fileToPost) => {
     const IdFile = file.IdFile;
     try {
-      const response = await postFile(fileToPost, IdFile);
+      const response = await postFile(fileToPost, IdFile, IdCtraCli);
 
       // AUTHENTIFICATION
       console.log("response", response);
