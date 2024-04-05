@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 
 import CustomModal from "../components/CustomModal";
 
+// HTTP
 import { getNews } from "../utils/http";
 
 const NewsPosts = () => {
@@ -81,6 +82,7 @@ const NewsPosts = () => {
         subtitle={file.Subtitle}
         date={file.TimeStampCreation}
         fileName={file.FileName}
+        filePath={file.FilePath}
       />
     );
   });

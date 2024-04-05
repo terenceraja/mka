@@ -274,6 +274,23 @@ export const getNews = async () => {
   return resData;
 };
 
+// znews TO DOWNLOAD NEWS
+export const downloadNews = async (dataToPost) => {
+  const response = await fetch(`http://localhost:4000/news/download`, {
+    method: "POST",
+    body: JSON.stringify(dataToPost),
+    headers: {
+      "Content-Type": "application/json", // Set Content-Type header
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+
+  return response;
+};
+
 // zcoll TO DELETE COLL
 export const deleteNews = async (dataToPost) => {
   const response = await fetch("http://localhost:4000/news/delete", {

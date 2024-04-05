@@ -8,20 +8,42 @@ import Stack from "@mui/material/Stack";
 import InfoIcon from "./icons/InfoIcon";
 import { useTheme } from "@mui/material/styles";
 import ViewFileIcon from "./ViewFileIcon";
-import { Link } from "react-router-dom";
-import DownloadIcon from "./icons/DownloadIcon";
+
 import { formatISODate } from "../utils/functions";
 
-const NewsCard = ({ title, subtitle, date, fileName }) => {
+// HTTP
+import { downloadNews } from "../utils/http";
+
+const NewsCard = ({ title, subtitle, date, fileName, filePath }) => {
   const theme = useTheme();
 
-  const handleClick = () => {
-    console.log("click");
+  const handleDownload = async () => {
+    try {
+      const path = { path: filePath };
+      const response = await downloadNews(path);
+      // Create a blob from the response
+      const blob = await response.blob();
+
+      // Create a URL for the blob
+      const url = window.URL.createObjectURL(blob);
+
+      // Create an anchor element to trigger the download
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${fileName}`; // Set desired file name
+      document.body.appendChild(a);
+      a.click();
+
+      // Cleanup
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
   };
 
   return (
     <Box
-      onClick={handleClick}
       sx={{
         ...styles.fileCard,
         borderLeft: `5px solid ${theme.palette.orange.main}`,
@@ -35,27 +57,16 @@ const NewsCard = ({ title, subtitle, date, fileName }) => {
         </Typography>
       </Stack>
       <Divider />
-      <Link
-        to={`../../../newsPost/${fileName}`}
-        download={fileName}
-        target="_blank"
-        rel="noreferrer"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          textDecoration: "none",
+      <Button
+        onClick={() => handleDownload()}
+        sx={{
+          width: "auto",
+          p: 0,
+          color: theme.palette.orange.main,
         }}
       >
-        <Button
-          sx={{
-            width: "auto",
-            p: 0,
-            color: theme.palette.orange.main,
-          }}
-        >
-          TELECHARGER
-        </Button>
-      </Link>
+        TELECHARGER
+      </Button>
     </Box>
   );
 };

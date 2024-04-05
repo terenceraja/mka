@@ -116,4 +116,18 @@ router.post("/delete", verifyJwt, async function (req, res, next) {
   }
 });
 
+// Define a route to serve files
+router.post("/download", (req, res) => {
+  const { path } = req.body;
+  console.log(path);
+
+  // Set appropriate headers for download
+  res.setHeader("Content-Disposition", `attachment; filename=filename.pdf`);
+  res.setHeader("Content-Type", "application/pdf");
+
+  // Create a read stream from the file and pipe it to the response
+  const fileStream = fs.createReadStream(path);
+  fileStream.pipe(res);
+});
+
 module.exports = router;
