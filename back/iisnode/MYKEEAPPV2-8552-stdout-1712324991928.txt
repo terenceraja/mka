@@ -1,0 +1,104 @@
+Executing (default): SELECT `IdCtraCli`, `ISOCode_lmt`, `Login_lmt`, `Password_lmt`, `WebDerniereMAJ_lsd`, `TimeStampCreation`, `TimeStampModification` FROM `zctracli` AS `zctracli` WHERE `zctracli`.`Login_lmt` = 'user1364' AND `zctracli`.`Password_lmt` = 'passe1364' LIMIT 1;
+zctracli {
+  dataValues: {
+    IdCtraCli: 1364,
+    ISOCode_lmt: 'EUR',
+    Login_lmt: 'user1364',
+    Password_lmt: 'passe1364',
+    WebDerniereMAJ_lsd: null,
+    TimeStampCreation: 2022-07-21T08:48:46.000Z,
+    TimeStampModification: 2022-07-21T09:08:31.000Z
+  },
+  _previousDataValues: {
+    IdCtraCli: 1364,
+    ISOCode_lmt: 'EUR',
+    Login_lmt: 'user1364',
+    Password_lmt: 'passe1364',
+    WebDerniereMAJ_lsd: null,
+    TimeStampCreation: 2022-07-21T08:48:46.000Z,
+    TimeStampModification: 2022-07-21T09:08:31.000Z
+  },
+  uniqno: 1,
+  _changed: Set(0) {},
+  _options: {
+    isNewRecord: false,
+    _schema: null,
+    _schemaDelimiter: '',
+    raw: true,
+    attributes: [
+      'IdCtraCli',
+      'ISOCode_lmt',
+      'Login_lmt',
+      'Password_lmt',
+      'WebDerniereMAJ_lsd',
+      'TimeStampCreation',
+      'TimeStampModification'
+    ]
+  },
+  isNewRecord: false
+}
+[0mPOST /zctracli [32m200 [0m57.823 ms - 205[0m
+[0mGET /auth [36m304 [0m5.109 ms - -[0m
+Executing (default): SELECT `IdCtraPtf`, `IdCtraCli`, `ISOCode_lmt`, `MktValAaiDevCLIAuc_lcn`, `NomLocalProfil_lmt`, `NumeroPtfDep_lmt`, `RaisonSociale_lmt`, `TimeStampCreation`, `TimeStampModification` FROM `zctraptf` AS `zctraptf` WHERE `zctraptf`.`IdCtraCli` = 1364;
+[0mPOST /zctraptf [32m200 [0m5.251 ms - 672[0m
+{ IdCtraCli: '1364' }
+Executing (default): SELECT `zchat`.*, `zchatcolls`.`id` AS `zchatcolls.id`, `zchatcolls`.`IdColl` AS `zchatcolls.IdColl`, `zchatcolls->zcoll`.`IdColl` AS `zchatcolls.zcoll.IdColl`, `zchatcolls->zcoll`.`Name` AS `zchatcolls.zcoll.Name`, `zchatcolls->zcoll`.`Surname` AS `zchatcolls.zcoll.Surname`, `zchatcolls->zcoll`.`Color` AS `zchatcolls.zcoll.Color` FROM (SELECT `zchat`.`IdChat`, `zchat`.`IdCtraCli`, `zchat`.`TimeStampCreation`, `zchat`.`TimeStampModification` FROM `zchat` AS `zchat` WHERE `zchat`.`IdCtraCli` = '1364' LIMIT 1) AS `zchat` LEFT OUTER JOIN `zchatcoll` AS `zchatcolls` ON `zchat`.`IdChat` = `zchatcolls`.`IdChat` LEFT OUTER JOIN `zcoll` AS `zchatcolls->zcoll` ON `zchatcolls`.`IdColl` = `zchatcolls->zcoll`.`IdColl`;
+[0mGET /chat/getChat/1364 [36m304 [0m11.876 ms - -[0m
+Executing (default): SELECT `IdOpe`, `IdTypOp`, `IdCtraPtf`, `CapitalDevLIGN_lsn`, `CodeIsin_lst`, `CotOPEASSETDevASSET_lsn`, `CptaMontantQte_lcn`, `DateCptaOPE_lsd`, `ISOCode_lmt`, `Libelle_lmt`, `NomLocalTypOp_lmt`, `TimeStampCreation`, `TimeStampModification` FROM `zope` AS `zope` WHERE `zope`.`IdCtraPtf` IN (1364, 2861);
+[0mPOST /zope [32m200 [0m13.392 ms - 1248[0m
+{ IdCtraPtf: [ 1364, 2861 ] }
+id [ 1364, 2861 ]
+Executing (default): SELECT `IdLignPtf`, `IdCtraPtf`, `IdAsset`, `CodeIsin_lst`, `CpnCourusTotDevCLI_lsn`, `CpnCourusTotDevPTF_lsn`, `CurrISOCode_lxt`, `DateMaturite_lsd`, `EtatActiviteLign_lsn`, `LangueNomLocalAlloc_lmt`, `Libelle_lmt`, `MktCOTDevLIGN_lsn`, `MktCotYieldDevLIGNAff_lcn`, `MVAaiJCptaDevCLI_lsn`, `MVAaiJCptaDevPTF_lsn`, `MVJCptaDevCLI_lsn`, `MVJCptaDevLIGN_lsn`, `MVJCptaDevPTF_lsn`, `NomLocalAlloc_lmt`, `PCTPlusValKpYtoDDevLIGNDebutAnnee_lcn`, `PMA_lsn`, `SoldeCptaDateArrete_lsn`, `TauxBase_lmn`, `TimeStampCreation`, `TimeStampModification` FROM `zlignptf` AS `zlignptf` WHERE `zlignptf`.`IdCtraPtf` IN (1364, 2861) ORDER BY `zlignptf`.`LangueNomLocalAlloc_lmt` ASC;
+[0mPOST /zlignptf [32m200 [0m30.818 ms - 30993[0m
+Executing (default): SELECT `IdCtraCli`, `ISOCode_lmt`, `Login_lmt`, `Password_lmt`, `WebDerniereMAJ_lsd`, `TimeStampCreation`, `TimeStampModification` FROM `zctracli` AS `zctracli` WHERE `zctracli`.`Login_lmt` = 'user1364' AND `zctracli`.`Password_lmt` = 'passe1364' LIMIT 1;
+zctracli {
+  dataValues: {
+    IdCtraCli: 1364,
+    ISOCode_lmt: 'EUR',
+    Login_lmt: 'user1364',
+    Password_lmt: 'passe1364',
+    WebDerniereMAJ_lsd: null,
+    TimeStampCreation: 2022-07-21T08:48:46.000Z,
+    TimeStampModification: 2022-07-21T09:08:31.000Z
+  },
+  _previousDataValues: {
+    IdCtraCli: 1364,
+    ISOCode_lmt: 'EUR',
+    Login_lmt: 'user1364',
+    Password_lmt: 'passe1364',
+    WebDerniereMAJ_lsd: null,
+    TimeStampCreation: 2022-07-21T08:48:46.000Z,
+    TimeStampModification: 2022-07-21T09:08:31.000Z
+  },
+  uniqno: 1,
+  _changed: Set(0) {},
+  _options: {
+    isNewRecord: false,
+    _schema: null,
+    _schemaDelimiter: '',
+    raw: true,
+    attributes: [
+      'IdCtraCli',
+      'ISOCode_lmt',
+      'Login_lmt',
+      'Password_lmt',
+      'WebDerniereMAJ_lsd',
+      'TimeStampCreation',
+      'TimeStampModification'
+    ]
+  },
+  isNewRecord: false
+}
+[0mPOST /zctracli [32m200 [0m10.457 ms - 205[0m
+[0mGET /auth [32m200 [0m1.771 ms - 41[0m
+Executing (default): SELECT `IdCtraPtf`, `IdCtraCli`, `ISOCode_lmt`, `MktValAaiDevCLIAuc_lcn`, `NomLocalProfil_lmt`, `NumeroPtfDep_lmt`, `RaisonSociale_lmt`, `TimeStampCreation`, `TimeStampModification` FROM `zctraptf` AS `zctraptf` WHERE `zctraptf`.`IdCtraCli` = 1364;
+{ IdCtraCli: '1364' }
+Executing (default): SELECT `zchat`.*, `zchatcolls`.`id` AS `zchatcolls.id`, `zchatcolls`.`IdColl` AS `zchatcolls.IdColl`, `zchatcolls->zcoll`.`IdColl` AS `zchatcolls.zcoll.IdColl`, `zchatcolls->zcoll`.`Name` AS `zchatcolls.zcoll.Name`, `zchatcolls->zcoll`.`Surname` AS `zchatcolls.zcoll.Surname`, `zchatcolls->zcoll`.`Color` AS `zchatcolls.zcoll.Color` FROM (SELECT `zchat`.`IdChat`, `zchat`.`IdCtraCli`, `zchat`.`TimeStampCreation`, `zchat`.`TimeStampModification` FROM `zchat` AS `zchat` WHERE `zchat`.`IdCtraCli` = '1364' LIMIT 1) AS `zchat` LEFT OUTER JOIN `zchatcoll` AS `zchatcolls` ON `zchat`.`IdChat` = `zchatcolls`.`IdChat` LEFT OUTER JOIN `zcoll` AS `zchatcolls->zcoll` ON `zchatcolls`.`IdColl` = `zchatcolls->zcoll`.`IdColl`;
+[0mPOST /zctraptf [32m200 [0m4.192 ms - 672[0m
+[0mGET /chat/getChat/1364 [32m200 [0m8.071 ms - 421[0m
+Executing (default): SELECT `IdOpe`, `IdTypOp`, `IdCtraPtf`, `CapitalDevLIGN_lsn`, `CodeIsin_lst`, `CotOPEASSETDevASSET_lsn`, `CptaMontantQte_lcn`, `DateCptaOPE_lsd`, `ISOCode_lmt`, `Libelle_lmt`, `NomLocalTypOp_lmt`, `TimeStampCreation`, `TimeStampModification` FROM `zope` AS `zope` WHERE `zope`.`IdCtraPtf` IN (1364, 2861);
+[0mPOST /zope [32m200 [0m14.524 ms - 1248[0m
+{ IdCtraPtf: [ 1364, 2861 ] }
+id [ 1364, 2861 ]
+Executing (default): SELECT `IdLignPtf`, `IdCtraPtf`, `IdAsset`, `CodeIsin_lst`, `CpnCourusTotDevCLI_lsn`, `CpnCourusTotDevPTF_lsn`, `CurrISOCode_lxt`, `DateMaturite_lsd`, `EtatActiviteLign_lsn`, `LangueNomLocalAlloc_lmt`, `Libelle_lmt`, `MktCOTDevLIGN_lsn`, `MktCotYieldDevLIGNAff_lcn`, `MVAaiJCptaDevCLI_lsn`, `MVAaiJCptaDevPTF_lsn`, `MVJCptaDevCLI_lsn`, `MVJCptaDevLIGN_lsn`, `MVJCptaDevPTF_lsn`, `NomLocalAlloc_lmt`, `PCTPlusValKpYtoDDevLIGNDebutAnnee_lcn`, `PMA_lsn`, `SoldeCptaDateArrete_lsn`, `TauxBase_lmn`, `TimeStampCreation`, `TimeStampModification` FROM `zlignptf` AS `zlignptf` WHERE `zlignptf`.`IdCtraPtf` IN (1364, 2861) ORDER BY `zlignptf`.`LangueNomLocalAlloc_lmt` ASC;
+[0mPOST /zlignptf [32m200 [0m20.536 ms - 30993[0m

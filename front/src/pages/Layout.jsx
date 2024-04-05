@@ -145,7 +145,7 @@ const styles = {
     justifyContent: "space-between",
     // bgcolor: "background.main",
 
-    height: "calc(100vh - 112px)", // MINUS NAV & HEADER
+    height: "calc(100% - 112px)", // MINUS NAV & HEADER
     // padding: "10px 0px 0px 0px",
     overflow: "auto",
     maxWidth: "100vw",

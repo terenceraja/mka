@@ -1,6 +1,6 @@
 // zctracli TO FIND AND GET USER ID
 export const fetchId = async (dataToPost) => {
-  const response = await fetch("http://localhost:4000/zctracli", {
+  const response = await fetch("https://mykeeapp.keesystem.com:4000/zctracli", {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
@@ -19,7 +19,7 @@ export const fetchId = async (dataToPost) => {
 // zctraptf TO FIND ALL PTF WITH USER ID
 export const fetchPtf = async (dataToPost) => {
   try {
-    const response = await fetch("http://localhost:4000/zctraptf", {
+    const response = await fetch("https://mykeeapp.keesystem.com:4000/zctraptf", {
       method: "POST",
       body: JSON.stringify(dataToPost),
       headers: {
@@ -46,7 +46,7 @@ export const fetchPtf = async (dataToPost) => {
 // zope TO FIND ALL OPE WITH USER ID
 export const fetchOpe = async (dataToPost) => {
   try {
-    const response = await fetch("http://localhost:4000/zope", {
+    const response = await fetch("https://mykeeapp.keesystem.com:4000/zope", {
       method: "POST",
       body: JSON.stringify(dataToPost),
       headers: {
@@ -72,7 +72,7 @@ export const fetchOpe = async (dataToPost) => {
 // zlignptf TO FIND ALL LIGNS WITH PTF ID
 export const fetchLign = async (dataToPost) => {
   try {
-    const response = await fetch("http://localhost:4000/zlignptf", {
+    const response = await fetch("https://mykeeapp.keesystem.com:4000/zlignptf", {
       method: "POST",
       body: JSON.stringify(dataToPost),
       headers: {
@@ -96,7 +96,7 @@ export const fetchLign = async (dataToPost) => {
 // zmvt TO FIND ALL MVT WITH ASSET ID
 export const fetchMvt = async (dataToPost) => {
   try {
-    const response = await fetch("http://localhost:4000/zmvt", {
+    const response = await fetch("https://mykeeapp.keesystem.com:4000/zmvt", {
       method: "POST",
       body: JSON.stringify(dataToPost),
       headers: {
@@ -127,7 +127,7 @@ export const postFile = async (fileToPost, FileId, IdCtraCli) => {
 
   console.log("formdata", formData.values);
   try {
-    const response = await fetch("http://localhost:4000/doc/upload", {
+    const response = await fetch("https://mykeeapp.keesystem.com:4000/doc/upload", {
       method: "POST",
       body: formData,
       headers: {
@@ -150,7 +150,7 @@ export const postFile = async (fileToPost, FileId, IdCtraCli) => {
 // zfile GET ONDEMAND DOCS
 export const fetchOnDemandDocs = async (dataToPost) => {
   try {
-    const response = await fetch("http://localhost:4000/doc/onDemand", {
+    const response = await fetch("https://mykeeapp.keesystem.com:4000/doc/onDemand", {
       method: "POST",
       body: JSON.stringify(dataToPost),
       headers: {
@@ -174,7 +174,7 @@ export const fetchOnDemandDocs = async (dataToPost) => {
 // zfile GET SENT DOCS
 export const fetchSentDocs = async (dataToPost) => {
   try {
-    const response = await fetch("http://localhost:4000/doc/sent", {
+    const response = await fetch("https://mykeeapp.keesystem.com:4000/doc/sent", {
       method: "POST",
       body: JSON.stringify(dataToPost),
       headers: {
@@ -198,7 +198,7 @@ export const fetchSentDocs = async (dataToPost) => {
 // AUTHENTICATE
 export const auth = async () => {
   try {
-    const response = await fetch("http://localhost:4000/auth", {
+    const response = await fetch("https://mykeeapp.keesystem.com:4000/auth", {
       method: "GET",
       headers: {
         "x-access-token": localStorage.getItem("token"),
@@ -221,7 +221,7 @@ export const auth = async () => {
 
 // zmessage TO SAVE MESSAGE
 export const sendMessage = async (dataToPost) => {
-  const response = await fetch("http://localhost:4000/message/send", {
+  const response = await fetch("https://mykeeapp.keesystem.com:4000/message/send", {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
@@ -240,7 +240,7 @@ export const sendMessage = async (dataToPost) => {
 
 // zmessage TO GET MESSAGE BY IDCHAT
 export const getChat = async (dataToPost) => {
-  const response = await fetch(`http://localhost:4000/message/${dataToPost}`, {
+  const response = await fetch(`https://mykeeapp.keesystem.com:4000/message/${dataToPost}`, {
     method: "GET",
     headers: {
       "x-access-token": localStorage.getItem("token"),
@@ -258,7 +258,7 @@ export const getChat = async (dataToPost) => {
 
 // znews TO GET ALL NEWS
 export const getNews = async () => {
-  const response = await fetch("http://localhost:4000/news", {
+  const response = await fetch("https://mykeeapp.keesystem.com:4000/news", {
     method: "GET",
     headers: {
       "x-access-token": localStorage.getItem("token"),
@@ -276,7 +276,7 @@ export const getNews = async () => {
 
 // znews TO DOWNLOAD NEWS
 export const downloadNews = async (dataToPost) => {
-  const response = await fetch(`http://localhost:4000/news/download`, {
+  const response = await fetch(`https://mykeeapp.keesystem.com:4000/news/download`, {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
@@ -293,7 +293,7 @@ export const downloadNews = async (dataToPost) => {
 
 // zcoll TO DELETE COLL
 export const deleteNews = async (dataToPost) => {
-  const response = await fetch("http://localhost:4000/news/delete", {
+  const response = await fetch("https://mykeeapp.keesystem.com:4000/news/delete", {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
@@ -320,7 +320,7 @@ export const postNews = async (form, fileToPost) => {
 
   console.log("formdata", formData.values);
   try {
-    const response = await fetch("http://localhost:4000/news/upload", {
+    const response = await fetch("https://mykeeapp.keesystem.com:4000/news/upload", {
       method: "POST",
       body: formData,
       headers: {
@@ -342,7 +342,7 @@ export const postNews = async (form, fileToPost) => {
 
 // zcoll TO GET ALL COLLABS
 export const getCollabs = async () => {
-  const response = await fetch("http://localhost:4000/collabs", {
+  const response = await fetch("https://mykeeapp.keesystem.com:4000/collabs", {
     method: "GET",
     headers: {
       "x-access-token": localStorage.getItem("token"),
@@ -360,7 +360,7 @@ export const getCollabs = async () => {
 
 // zcoll TO SAVE COLL
 export const addColl = async (dataToPost) => {
-  const response = await fetch("http://localhost:4000/collabs/add", {
+  const response = await fetch("https://mykeeapp.keesystem.com:4000/collabs/add", {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
@@ -379,7 +379,7 @@ export const addColl = async (dataToPost) => {
 
 // zcoll TO DELETE COLL
 export const deleteColl = async (dataToPost) => {
-  const response = await fetch("http://localhost:4000/collabs/delete", {
+  const response = await fetch("https://mykeeapp.keesystem.com:4000/collabs/delete", {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
@@ -398,7 +398,7 @@ export const deleteColl = async (dataToPost) => {
 
 // zcoll TO check COLL USER
 export const getAllChat = async () => {
-  const response = await fetch("http://localhost:4000/chat/getAllChat", {
+  const response = await fetch("https://mykeeapp.keesystem.com:4000/chat/getAllChat", {
     method: "GET",
     headers: {
       "x-access-token": localStorage.getItem("token"),
@@ -417,7 +417,7 @@ export const getAllChat = async () => {
 // zchatcoll TO JOIN COLL IN CHAT
 export const addCollabInChat = async (dataToPost) => {
   console.log("DATATOPOST", dataToPost);
-  const response = await fetch("http://localhost:4000/chat/addCollab", {
+  const response = await fetch("https://mykeeapp.keesystem.com:4000/chat/addCollab", {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
@@ -436,7 +436,7 @@ export const addCollabInChat = async (dataToPost) => {
 
 // zchatcoll TO JOIN COLL IN CHAT
 export const deleteCollabFromChat = async (dataToPost) => {
-  const response = await fetch("http://localhost:4000/chat/deleteCollab", {
+  const response = await fetch("https://mykeeapp.keesystem.com:4000/chat/deleteCollab", {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
@@ -456,7 +456,7 @@ export const deleteCollabFromChat = async (dataToPost) => {
 // zchat TO JOIN COLL IN CHAT
 export const deleteChat = async (dataToPost) => {
   const response = await fetch(
-    `http://localhost:4000/chat/delete/${dataToPost}`,
+    `https://mykeeapp.keesystem.com:4000/chat/delete/${dataToPost}`,
     {
       method: "DELETE",
       headers: {
@@ -477,7 +477,7 @@ export const deleteChat = async (dataToPost) => {
 // zchat TO JOIN COLL IN CHAT
 export const createChat = async (dataToPost) => {
   console.log("DATATOPOST", dataToPost);
-  const response = await fetch(`http://localhost:4000/chat/createChat`, {
+  const response = await fetch(`https://mykeeapp.keesystem.com:4000/chat/createChat`, {
     method: "POST",
     body: JSON.stringify(dataToPost),
     headers: {
@@ -497,7 +497,7 @@ export const createChat = async (dataToPost) => {
 // zchatcoll TO JOIN COLL IN CHAT
 export const getAllChatIdColl = async (dataToPost) => {
   const response = await fetch(
-    `http://localhost:4000/chat/getAll/${dataToPost}`,
+    `https://mykeeapp.keesystem.com:4000/chat/getAll/${dataToPost}`,
     {
       method: "GET",
       headers: {
@@ -518,7 +518,7 @@ export const getAllChatIdColl = async (dataToPost) => {
 // zchat TO GET CHAT ID FROM IDCTRACLI
 export const getChatId = async (dataToPost) => {
   const response = await fetch(
-    `http://localhost:4000/chat/getChat/${dataToPost}`,
+    `https://mykeeapp.keesystem.com:4000/chat/getChat/${dataToPost}`,
     {
       method: "GET",
       headers: {
@@ -539,7 +539,7 @@ export const getChatId = async (dataToPost) => {
 // FM TRIGGER
 export const triggerFM = async (dataToPost) => {
   console.log("DATATOPOST", dataToPost);
-  const response = await fetch(`http://localhost:4000/filemaker/clientInfo`, {
+  const response = await fetch(`https://mykeeapp.keesystem.com:4000/filemaker/clientInfo`, {
     method: "POST",
     body: JSON.stringify(dataToPost),
   });

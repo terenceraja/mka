@@ -18,6 +18,7 @@ const NewsCard = ({ title, subtitle, date, fileName, filePath }) => {
   const theme = useTheme();
 
   const handleDownload = async () => {
+    console.log("DOWNLOAD !!!")
     try {
       const path = { path: filePath };
       const response = await downloadNews(path);

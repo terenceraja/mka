@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "TR",
-    "password": "ferrari",
+    "username": "mykeeapp",
+    "password": "Ferrari123!",
     "database": "mykeeapp",
-    "host": "mykeeapp",
+    "host": "192.168.20.10",
     "dialect": "mysql"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
+    "username": "mykeeapp",
+    "password": "Ferrari123!",
+    "database": "mykeeapp",
+    "host": "192.168.20.10",
     "dialect": "mysql"
   },
   "production": {
     "username": "mykeeapp",
-    "password": "ferrari",
+    "password": "Ferrari123!",
     "database": "mykeeapp",
-    "host": "mykeeapp",
+    "host": "192.168.20.10",
     "dialect": "mysql"
   }
 }

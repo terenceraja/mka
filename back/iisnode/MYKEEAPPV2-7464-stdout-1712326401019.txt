@@ -1,0 +1,351 @@
+Executing (default): SELECT `IdCtraCli`, `ISOCode_lmt`, `Login_lmt`, `Password_lmt`, `WebDerniereMAJ_lsd`, `TimeStampCreation`, `TimeStampModification` FROM `zctracli` AS `zctracli` WHERE `zctracli`.`Login_lmt` = 'user1364' AND `zctracli`.`Password_lmt` = 'passe1364' LIMIT 1;
+zctracli {
+  dataValues: {
+    IdCtraCli: 1364,
+    ISOCode_lmt: 'EUR',
+    Login_lmt: 'user1364',
+    Password_lmt: 'passe1364',
+    WebDerniereMAJ_lsd: null,
+    TimeStampCreation: 2022-07-21T08:48:46.000Z,
+    TimeStampModification: 2022-07-21T09:08:31.000Z
+  },
+  _previousDataValues: {
+    IdCtraCli: 1364,
+    ISOCode_lmt: 'EUR',
+    Login_lmt: 'user1364',
+    Password_lmt: 'passe1364',
+    WebDerniereMAJ_lsd: null,
+    TimeStampCreation: 2022-07-21T08:48:46.000Z,
+    TimeStampModification: 2022-07-21T09:08:31.000Z
+  },
+  uniqno: 1,
+  _changed: Set(0) {},
+  _options: {
+    isNewRecord: false,
+    _schema: null,
+    _schemaDelimiter: '',
+    raw: true,
+    attributes: [
+      'IdCtraCli',
+      'ISOCode_lmt',
+      'Login_lmt',
+      'Password_lmt',
+      'WebDerniereMAJ_lsd',
+      'TimeStampCreation',
+      'TimeStampModification'
+    ]
+  },
+  isNewRecord: false
+}
+[0mPOST /zctracli [32m200 [0m74.942 ms - 205[0m
+[0mGET /auth [36m304 [0m4.245 ms - -[0m
+Executing (default): SELECT `IdCtraPtf`, `IdCtraCli`, `ISOCode_lmt`, `MktValAaiDevCLIAuc_lcn`, `NomLocalProfil_lmt`, `NumeroPtfDep_lmt`, `RaisonSociale_lmt`, `TimeStampCreation`, `TimeStampModification` FROM `zctraptf` AS `zctraptf` WHERE `zctraptf`.`IdCtraCli` = 1364;
+{ IdCtraCli: '1364' }
+Executing (default): SELECT `zchat`.*, `zchatcolls`.`id` AS `zchatcolls.id`, `zchatcolls`.`IdColl` AS `zchatcolls.IdColl`, `zchatcolls->zcoll`.`IdColl` AS `zchatcolls.zcoll.IdColl`, `zchatcolls->zcoll`.`Name` AS `zchatcolls.zcoll.Name`, `zchatcolls->zcoll`.`Surname` AS `zchatcolls.zcoll.Surname`, `zchatcolls->zcoll`.`Color` AS `zchatcolls.zcoll.Color` FROM (SELECT `zchat`.`IdChat`, `zchat`.`IdCtraCli`, `zchat`.`TimeStampCreation`, `zchat`.`TimeStampModification` FROM `zchat` AS `zchat` WHERE `zchat`.`IdCtraCli` = '1364' LIMIT 1) AS `zchat` LEFT OUTER JOIN `zchatcoll` AS `zchatcolls` ON `zchat`.`IdChat` = `zchatcolls`.`IdChat` LEFT OUTER JOIN `zcoll` AS `zchatcolls->zcoll` ON `zchatcolls`.`IdColl` = `zchatcolls->zcoll`.`IdColl`;
+[0mPOST /zctraptf [32m200 [0m7.448 ms - 672[0m
+[0mGET /chat/getChat/1364 [36m304 [0m13.612 ms - -[0m
+Executing (default): SELECT `IdOpe`, `IdTypOp`, `IdCtraPtf`, `CapitalDevLIGN_lsn`, `CodeIsin_lst`, `CotOPEASSETDevASSET_lsn`, `CptaMontantQte_lcn`, `DateCptaOPE_lsd`, `ISOCode_lmt`, `Libelle_lmt`, `NomLocalTypOp_lmt`, `TimeStampCreation`, `TimeStampModification` FROM `zope` AS `zope` WHERE `zope`.`IdCtraPtf` IN (1364, 2861);
+[0mPOST /zope [32m200 [0m15.050 ms - 1248[0m
+{ IdCtraPtf: [ 1364, 2861 ] }
+id [ 1364, 2861 ]
+Executing (default): SELECT `IdLignPtf`, `IdCtraPtf`, `IdAsset`, `CodeIsin_lst`, `CpnCourusTotDevCLI_lsn`, `CpnCourusTotDevPTF_lsn`, `CurrISOCode_lxt`, `DateMaturite_lsd`, `EtatActiviteLign_lsn`, `LangueNomLocalAlloc_lmt`, `Libelle_lmt`, `MktCOTDevLIGN_lsn`, `MktCotYieldDevLIGNAff_lcn`, `MVAaiJCptaDevCLI_lsn`, `MVAaiJCptaDevPTF_lsn`, `MVJCptaDevCLI_lsn`, `MVJCptaDevLIGN_lsn`, `MVJCptaDevPTF_lsn`, `NomLocalAlloc_lmt`, `PCTPlusValKpYtoDDevLIGNDebutAnnee_lcn`, `PMA_lsn`, `SoldeCptaDateArrete_lsn`, `TauxBase_lmn`, `TimeStampCreation`, `TimeStampModification` FROM `zlignptf` AS `zlignptf` WHERE `zlignptf`.`IdCtraPtf` IN (1364, 2861) ORDER BY `zlignptf`.`LangueNomLocalAlloc_lmt` ASC;
+[0mPOST /zlignptf [32m200 [0m20.135 ms - 30993[0m
+Executing (default): SELECT `IdChat`, `IdCtraCli`, `TimeStampCreation`, `TimeStampModification` FROM `zchat` AS `zchat` WHERE `zchat`.`IdCtraCli` = '1364' LIMIT 1;
+Executing (default): SELECT `id`, `IdChat`, `IdColl`, `TimeStampCreation`, `TimeStampModification` FROM `zchatcoll` AS `zchatcoll` WHERE `zchatcoll`.`IdChat` = 19;
+[
+  zchatcoll {
+    dataValues: {
+      id: 29,
+      IdChat: 19,
+      IdColl: 123,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    _previousDataValues: {
+      id: 29,
+      IdChat: 19,
+      IdColl: 123,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    uniqno: 1,
+    _changed: Set(0) {},
+    _options: {
+      isNewRecord: false,
+      _schema: null,
+      _schemaDelimiter: '',
+      raw: true,
+      attributes: [Array]
+    },
+    isNewRecord: false
+  },
+  zchatcoll {
+    dataValues: {
+      id: 30,
+      IdChat: 19,
+      IdColl: 124,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    _previousDataValues: {
+      id: 30,
+      IdChat: 19,
+      IdColl: 124,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    uniqno: 1,
+    _changed: Set(0) {},
+    _options: {
+      isNewRecord: false,
+      _schema: null,
+      _schemaDelimiter: '',
+      raw: true,
+      attributes: [Array]
+    },
+    isNewRecord: false
+  },
+  zchatcoll {
+    dataValues: {
+      id: 34,
+      IdChat: 19,
+      IdColl: 125,
+      TimeStampCreation: 2024-03-29T15:18:46.000Z,
+      TimeStampModification: 2024-03-29T15:18:46.000Z
+    },
+    _previousDataValues: {
+      id: 34,
+      IdChat: 19,
+      IdColl: 125,
+      TimeStampCreation: 2024-03-29T15:18:46.000Z,
+      TimeStampModification: 2024-03-29T15:18:46.000Z
+    },
+    uniqno: 1,
+    _changed: Set(0) {},
+    _options: {
+      isNewRecord: false,
+      _schema: null,
+      _schemaDelimiter: '',
+      raw: true,
+      attributes: [Array]
+    },
+    isNewRecord: false
+  }
+]
+Executing (default): SELECT `zchatmsg`.`IdMsg`, `zchatmsg`.`IdChat`, `zchatmsg`.`IdSender`, `zchatmsg`.`Message`, `zchatmsg`.`SenderType`, `zchatmsg`.`TimeStampCreation`, `zchatmsg`.`TimeStampModification`, `Collaborator`.`IdColl` AS `Collaborator.IdColl`, `Collaborator`.`Name` AS `Collaborator.Name`, `Collaborator`.`Surname` AS `Collaborator.Surname`, `Collaborator`.`Color` AS `Collaborator.Color`, `Collaborator`.`TimeStampCreation` AS `Collaborator.TimeStampCreation`, `Collaborator`.`TimeStampModification` AS `Collaborator.TimeStampModification` FROM `zchatmsg` AS `zchatmsg` LEFT OUTER JOIN `zcoll` AS `Collaborator` ON `zchatmsg`.`IdSender` = `Collaborator`.`IdColl` AND `zchatmsg`.`IdSender` WHERE `zchatmsg`.`IdChat` = 19 ORDER BY `zchatmsg`.`TimeStampCreation` ASC;
+[0mGET /message/1364 [36m304 [0m19.752 ms - -[0m
+{ IdCtraCli: '1364' }
+Executing (default): SELECT `zchat`.*, `zchatcolls`.`id` AS `zchatcolls.id`, `zchatcolls`.`IdColl` AS `zchatcolls.IdColl`, `zchatcolls->zcoll`.`IdColl` AS `zchatcolls.zcoll.IdColl`, `zchatcolls->zcoll`.`Name` AS `zchatcolls.zcoll.Name`, `zchatcolls->zcoll`.`Surname` AS `zchatcolls.zcoll.Surname`, `zchatcolls->zcoll`.`Color` AS `zchatcolls.zcoll.Color` FROM (SELECT `zchat`.`IdChat`, `zchat`.`IdCtraCli`, `zchat`.`TimeStampCreation`, `zchat`.`TimeStampModification` FROM `zchat` AS `zchat` WHERE `zchat`.`IdCtraCli` = '1364' LIMIT 1) AS `zchat` LEFT OUTER JOIN `zchatcoll` AS `zchatcolls` ON `zchat`.`IdChat` = `zchatcolls`.`IdChat` LEFT OUTER JOIN `zcoll` AS `zchatcolls->zcoll` ON `zchatcolls`.`IdColl` = `zchatcolls->zcoll`.`IdColl`;
+[0mGET /chat/getChat/1364 [36m304 [0m5.392 ms - -[0m
+{ IdCtraCli: 1364 }
+Executing (default): SELECT `IdFile`, `IdCtraCli`, `IdManager`, `Title`, `Description`, `FileName`, `FilePath`, `TimeStampUpload`, `TimeStampCreation`, `TimeStampModification`, `Status` FROM `zfile` AS `zfile` WHERE `zfile`.`IdCtraCli` = 1364 AND `zfile`.`Status` = 'demand';
+{ IdCtraCli: 1364 }
+Executing (default): SELECT `IdFile`, `IdCtraCli`, `IdManager`, `Title`, `Description`, `FileName`, `FilePath`, `TimeStampUpload`, `TimeStampCreation`, `TimeStampModification`, `Status` FROM `zfile` AS `zfile` WHERE `zfile`.`IdCtraCli` = 1364 AND `zfile`.`Status` != 'demand';
+[0mPOST /doc/onDemand [32m200 [0m18.831 ms - 55[0m
+[0mPOST /doc/sent [32m200 [0m7.450 ms - 721[0m
+{ IdCtraCli: 1364 }
+Executing (default): SELECT `IdFile`, `IdCtraCli`, `IdManager`, `Title`, `Description`, `FileName`, `FilePath`, `TimeStampUpload`, `TimeStampCreation`, `TimeStampModification`, `Status` FROM `zfile` AS `zfile` WHERE `zfile`.`IdCtraCli` = 1364 AND `zfile`.`Status` != 'demand';
+[0mPOST /doc/sent [32m200 [0m13.451 ms - 721[0m
+Executing (default): SELECT `IdChat`, `IdCtraCli`, `TimeStampCreation`, `TimeStampModification` FROM `zchat` AS `zchat` WHERE `zchat`.`IdCtraCli` = '1364' LIMIT 1;
+Executing (default): SELECT `id`, `IdChat`, `IdColl`, `TimeStampCreation`, `TimeStampModification` FROM `zchatcoll` AS `zchatcoll` WHERE `zchatcoll`.`IdChat` = 19;
+[
+  zchatcoll {
+    dataValues: {
+      id: 29,
+      IdChat: 19,
+      IdColl: 123,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    _previousDataValues: {
+      id: 29,
+      IdChat: 19,
+      IdColl: 123,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    uniqno: 1,
+    _changed: Set(0) {},
+    _options: {
+      isNewRecord: false,
+      _schema: null,
+      _schemaDelimiter: '',
+      raw: true,
+      attributes: [Array]
+    },
+    isNewRecord: false
+  },
+  zchatcoll {
+    dataValues: {
+      id: 30,
+      IdChat: 19,
+      IdColl: 124,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    _previousDataValues: {
+      id: 30,
+      IdChat: 19,
+      IdColl: 124,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    uniqno: 1,
+    _changed: Set(0) {},
+    _options: {
+      isNewRecord: false,
+      _schema: null,
+      _schemaDelimiter: '',
+      raw: true,
+      attributes: [Array]
+    },
+    isNewRecord: false
+  },
+  zchatcoll {
+    dataValues: {
+      id: 34,
+      IdChat: 19,
+      IdColl: 125,
+      TimeStampCreation: 2024-03-29T15:18:46.000Z,
+      TimeStampModification: 2024-03-29T15:18:46.000Z
+    },
+    _previousDataValues: {
+      id: 34,
+      IdChat: 19,
+      IdColl: 125,
+      TimeStampCreation: 2024-03-29T15:18:46.000Z,
+      TimeStampModification: 2024-03-29T15:18:46.000Z
+    },
+    uniqno: 1,
+    _changed: Set(0) {},
+    _options: {
+      isNewRecord: false,
+      _schema: null,
+      _schemaDelimiter: '',
+      raw: true,
+      attributes: [Array]
+    },
+    isNewRecord: false
+  }
+]
+Executing (default): SELECT `zchatmsg`.`IdMsg`, `zchatmsg`.`IdChat`, `zchatmsg`.`IdSender`, `zchatmsg`.`Message`, `zchatmsg`.`SenderType`, `zchatmsg`.`TimeStampCreation`, `zchatmsg`.`TimeStampModification`, `Collaborator`.`IdColl` AS `Collaborator.IdColl`, `Collaborator`.`Name` AS `Collaborator.Name`, `Collaborator`.`Surname` AS `Collaborator.Surname`, `Collaborator`.`Color` AS `Collaborator.Color`, `Collaborator`.`TimeStampCreation` AS `Collaborator.TimeStampCreation`, `Collaborator`.`TimeStampModification` AS `Collaborator.TimeStampModification` FROM `zchatmsg` AS `zchatmsg` LEFT OUTER JOIN `zcoll` AS `Collaborator` ON `zchatmsg`.`IdSender` = `Collaborator`.`IdColl` AND `zchatmsg`.`IdSender` WHERE `zchatmsg`.`IdChat` = 19 ORDER BY `zchatmsg`.`TimeStampCreation` ASC;
+[0mGET /message/1364 [36m304 [0m14.044 ms - -[0m
+{ IdCtraCli: '1364' }
+Executing (default): SELECT `zchat`.*, `zchatcolls`.`id` AS `zchatcolls.id`, `zchatcolls`.`IdColl` AS `zchatcolls.IdColl`, `zchatcolls->zcoll`.`IdColl` AS `zchatcolls.zcoll.IdColl`, `zchatcolls->zcoll`.`Name` AS `zchatcolls.zcoll.Name`, `zchatcolls->zcoll`.`Surname` AS `zchatcolls.zcoll.Surname`, `zchatcolls->zcoll`.`Color` AS `zchatcolls.zcoll.Color` FROM (SELECT `zchat`.`IdChat`, `zchat`.`IdCtraCli`, `zchat`.`TimeStampCreation`, `zchat`.`TimeStampModification` FROM `zchat` AS `zchat` WHERE `zchat`.`IdCtraCli` = '1364' LIMIT 1) AS `zchat` LEFT OUTER JOIN `zchatcoll` AS `zchatcolls` ON `zchat`.`IdChat` = `zchatcolls`.`IdChat` LEFT OUTER JOIN `zcoll` AS `zchatcolls->zcoll` ON `zchatcolls`.`IdColl` = `zchatcolls->zcoll`.`IdColl`;
+[0mGET /chat/getChat/1364 [36m304 [0m6.892 ms - -[0m
+Executing (default): SELECT `IdCtraPtf`, `IdCtraCli`, `ISOCode_lmt`, `MktValAaiDevCLIAuc_lcn`, `NomLocalProfil_lmt`, `NumeroPtfDep_lmt`, `RaisonSociale_lmt`, `TimeStampCreation`, `TimeStampModification` FROM `zctraptf` AS `zctraptf` WHERE `zctraptf`.`IdCtraCli` = 1364;
+[0mPOST /zctraptf [32m200 [0m4.204 ms - 672[0m
+Executing (default): SELECT `IdOpe`, `IdTypOp`, `IdCtraPtf`, `CapitalDevLIGN_lsn`, `CodeIsin_lst`, `CotOPEASSETDevASSET_lsn`, `CptaMontantQte_lcn`, `DateCptaOPE_lsd`, `ISOCode_lmt`, `Libelle_lmt`, `NomLocalTypOp_lmt`, `TimeStampCreation`, `TimeStampModification` FROM `zope` AS `zope` WHERE `zope`.`IdCtraPtf` IN (1364, 2861);
+[0mPOST /zope [32m200 [0m4.258 ms - 1248[0m
+{ IdCtraPtf: [ 1364, 2861 ] }
+id [ 1364, 2861 ]
+Executing (default): SELECT `IdLignPtf`, `IdCtraPtf`, `IdAsset`, `CodeIsin_lst`, `CpnCourusTotDevCLI_lsn`, `CpnCourusTotDevPTF_lsn`, `CurrISOCode_lxt`, `DateMaturite_lsd`, `EtatActiviteLign_lsn`, `LangueNomLocalAlloc_lmt`, `Libelle_lmt`, `MktCOTDevLIGN_lsn`, `MktCotYieldDevLIGNAff_lcn`, `MVAaiJCptaDevCLI_lsn`, `MVAaiJCptaDevPTF_lsn`, `MVJCptaDevCLI_lsn`, `MVJCptaDevLIGN_lsn`, `MVJCptaDevPTF_lsn`, `NomLocalAlloc_lmt`, `PCTPlusValKpYtoDDevLIGNDebutAnnee_lcn`, `PMA_lsn`, `SoldeCptaDateArrete_lsn`, `TauxBase_lmn`, `TimeStampCreation`, `TimeStampModification` FROM `zlignptf` AS `zlignptf` WHERE `zlignptf`.`IdCtraPtf` IN (1364, 2861) ORDER BY `zlignptf`.`LangueNomLocalAlloc_lmt` ASC;
+[0mPOST /zlignptf [32m200 [0m15.842 ms - 30993[0m
+{ IdCtraCli: 1364 }
+Executing (default): SELECT `IdFile`, `IdCtraCli`, `IdManager`, `Title`, `Description`, `FileName`, `FilePath`, `TimeStampUpload`, `TimeStampCreation`, `TimeStampModification`, `Status` FROM `zfile` AS `zfile` WHERE `zfile`.`IdCtraCli` = 1364 AND `zfile`.`Status` = 'demand';
+{ IdCtraCli: 1364 }
+Executing (default): SELECT `IdFile`, `IdCtraCli`, `IdManager`, `Title`, `Description`, `FileName`, `FilePath`, `TimeStampUpload`, `TimeStampCreation`, `TimeStampModification`, `Status` FROM `zfile` AS `zfile` WHERE `zfile`.`IdCtraCli` = 1364 AND `zfile`.`Status` != 'demand';
+[0mPOST /doc/onDemand [32m200 [0m14.071 ms - 55[0m
+[0mPOST /doc/sent [32m200 [0m3.920 ms - 721[0m
+{ IdCtraCli: 1364 }
+Executing (default): SELECT `IdFile`, `IdCtraCli`, `IdManager`, `Title`, `Description`, `FileName`, `FilePath`, `TimeStampUpload`, `TimeStampCreation`, `TimeStampModification`, `Status` FROM `zfile` AS `zfile` WHERE `zfile`.`IdCtraCli` = 1364 AND `zfile`.`Status` != 'demand';
+[0mPOST /doc/sent [32m200 [0m4.508 ms - 721[0m
+Executing (default): SELECT `IdNews`, `Title`, `Subtitle`, `FileName`, `FileOriginalName`, `FilePath`, `TimeStampCreation`, `TimeStampModification` FROM `znews` AS `znews` ORDER BY `znews`.`TimeStampCreation` DESC;
+[0mGET /news [36m304 [0m6.361 ms - -[0m
+storeNews\1712310845502.pdf
+[0mPOST /news/download [32m200 [0m10.141 ms - -[0m
+Executing (default): SELECT `IdChat`, `IdCtraCli`, `TimeStampCreation`, `TimeStampModification` FROM `zchat` AS `zchat` WHERE `zchat`.`IdCtraCli` = '1364' LIMIT 1;
+Executing (default): SELECT `id`, `IdChat`, `IdColl`, `TimeStampCreation`, `TimeStampModification` FROM `zchatcoll` AS `zchatcoll` WHERE `zchatcoll`.`IdChat` = 19;
+[
+  zchatcoll {
+    dataValues: {
+      id: 29,
+      IdChat: 19,
+      IdColl: 123,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    _previousDataValues: {
+      id: 29,
+      IdChat: 19,
+      IdColl: 123,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    uniqno: 1,
+    _changed: Set(0) {},
+    _options: {
+      isNewRecord: false,
+      _schema: null,
+      _schemaDelimiter: '',
+      raw: true,
+      attributes: [Array]
+    },
+    isNewRecord: false
+  },
+  zchatcoll {
+    dataValues: {
+      id: 30,
+      IdChat: 19,
+      IdColl: 124,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    _previousDataValues: {
+      id: 30,
+      IdChat: 19,
+      IdColl: 124,
+      TimeStampCreation: 2024-03-25T14:04:53.000Z,
+      TimeStampModification: 2024-03-25T14:04:53.000Z
+    },
+    uniqno: 1,
+    _changed: Set(0) {},
+    _options: {
+      isNewRecord: false,
+      _schema: null,
+      _schemaDelimiter: '',
+      raw: true,
+      attributes: [Array]
+    },
+    isNewRecord: false
+  },
+  zchatcoll {
+    dataValues: {
+      id: 34,
+      IdChat: 19,
+      IdColl: 125,
+      TimeStampCreation: 2024-03-29T15:18:46.000Z,
+      TimeStampModification: 2024-03-29T15:18:46.000Z
+    },
+    _previousDataValues: {
+      id: 34,
+      IdChat: 19,
+      IdColl: 125,
+      TimeStampCreation: 2024-03-29T15:18:46.000Z,
+      TimeStampModification: 2024-03-29T15:18:46.000Z
+    },
+    uniqno: 1,
+    _changed: Set(0) {},
+    _options: {
+      isNewRecord: false,
+      _schema: null,
+      _schemaDelimiter: '',
+      raw: true,
+      attributes: [Array]
+    },
+    isNewRecord: false
+  }
+]
+Executing (default): SELECT `zchatmsg`.`IdMsg`, `zchatmsg`.`IdChat`, `zchatmsg`.`IdSender`, `zchatmsg`.`Message`, `zchatmsg`.`SenderType`, `zchatmsg`.`TimeStampCreation`, `zchatmsg`.`TimeStampModification`, `Collaborator`.`IdColl` AS `Collaborator.IdColl`, `Collaborator`.`Name` AS `Collaborator.Name`, `Collaborator`.`Surname` AS `Collaborator.Surname`, `Collaborator`.`Color` AS `Collaborator.Color`, `Collaborator`.`TimeStampCreation` AS `Collaborator.TimeStampCreation`, `Collaborator`.`TimeStampModification` AS `Collaborator.TimeStampModification` FROM `zchatmsg` AS `zchatmsg` LEFT OUTER JOIN `zcoll` AS `Collaborator` ON `zchatmsg`.`IdSender` = `Collaborator`.`IdColl` AND `zchatmsg`.`IdSender` WHERE `zchatmsg`.`IdChat` = 19 ORDER BY `zchatmsg`.`TimeStampCreation` ASC;
+[0mGET /message/1364 [36m304 [0m13.884 ms - -[0m
+{ IdCtraCli: '1364' }
+Executing (default): SELECT `zchat`.*, `zchatcolls`.`id` AS `zchatcolls.id`, `zchatcolls`.`IdColl` AS `zchatcolls.IdColl`, `zchatcolls->zcoll`.`IdColl` AS `zchatcolls.zcoll.IdColl`, `zchatcolls->zcoll`.`Name` AS `zchatcolls.zcoll.Name`, `zchatcolls->zcoll`.`Surname` AS `zchatcolls.zcoll.Surname`, `zchatcolls->zcoll`.`Color` AS `zchatcolls.zcoll.Color` FROM (SELECT `zchat`.`IdChat`, `zchat`.`IdCtraCli`, `zchat`.`TimeStampCreation`, `zchat`.`TimeStampModification` FROM `zchat` AS `zchat` WHERE `zchat`.`IdCtraCli` = '1364' LIMIT 1) AS `zchat` LEFT OUTER JOIN `zchatcoll` AS `zchatcolls` ON `zchat`.`IdChat` = `zchatcolls`.`IdChat` LEFT OUTER JOIN `zcoll` AS `zchatcolls->zcoll` ON `zchatcolls`.`IdColl` = `zchatcolls->zcoll`.`IdColl`;
+[0mGET /chat/getChat/1364 [36m304 [0m7.168 ms - -[0m
+Executing (default): SELECT `IdCtraPtf`, `IdCtraCli`, `ISOCode_lmt`, `MktValAaiDevCLIAuc_lcn`, `NomLocalProfil_lmt`, `NumeroPtfDep_lmt`, `RaisonSociale_lmt`, `TimeStampCreation`, `TimeStampModification` FROM `zctraptf` AS `zctraptf` WHERE `zctraptf`.`IdCtraCli` = 1364;
+[0mPOST /zctraptf [32m200 [0m4.843 ms - 672[0m
+Executing (default): SELECT `IdOpe`, `IdTypOp`, `IdCtraPtf`, `CapitalDevLIGN_lsn`, `CodeIsin_lst`, `CotOPEASSETDevASSET_lsn`, `CptaMontantQte_lcn`, `DateCptaOPE_lsd`, `ISOCode_lmt`, `Libelle_lmt`, `NomLocalTypOp_lmt`, `TimeStampCreation`, `TimeStampModification` FROM `zope` AS `zope` WHERE `zope`.`IdCtraPtf` IN (1364, 2861);
+[0mPOST /zope [32m200 [0m11.143 ms - 1248[0m
+{ IdCtraPtf: [ 1364, 2861 ] }
+id [ 1364, 2861 ]
+Executing (default): SELECT `IdLignPtf`, `IdCtraPtf`, `IdAsset`, `CodeIsin_lst`, `CpnCourusTotDevCLI_lsn`, `CpnCourusTotDevPTF_lsn`, `CurrISOCode_lxt`, `DateMaturite_lsd`, `EtatActiviteLign_lsn`, `LangueNomLocalAlloc_lmt`, `Libelle_lmt`, `MktCOTDevLIGN_lsn`, `MktCotYieldDevLIGNAff_lcn`, `MVAaiJCptaDevCLI_lsn`, `MVAaiJCptaDevPTF_lsn`, `MVJCptaDevCLI_lsn`, `MVJCptaDevLIGN_lsn`, `MVJCptaDevPTF_lsn`, `NomLocalAlloc_lmt`, `PCTPlusValKpYtoDDevLIGNDebutAnnee_lcn`, `PMA_lsn`, `SoldeCptaDateArrete_lsn`, `TauxBase_lmn`, `TimeStampCreation`, `TimeStampModification` FROM `zlignptf` AS `zlignptf` WHERE `zlignptf`.`IdCtraPtf` IN (1364, 2861) ORDER BY `zlignptf`.`LangueNomLocalAlloc_lmt` ASC;
+[0mPOST /zlignptf [32m200 [0m15.313 ms - 30993[0m

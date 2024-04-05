@@ -248,8 +248,7 @@ const styles = {
   content: {
     display: "flex",
     flexDirection: "column",
-
-    minHeight: "calc(100vh - 112px)",
+flexGrow:1
   },
   chatContainer: {
     display: "flex",
