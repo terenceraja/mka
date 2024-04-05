@@ -1,4 +1,0 @@
-[0mGET / [36m304 [0m2.380 ms - -[0m
-[0mGET /stylesheets/style.css [36m304 [0m0.515 ms - -[0m
-[0mPOST /zctracli [31m500 [0m2709.058 ms - 33[0m
-[0mGET /upload [33m404 [0m1.021 ms - 145[0m

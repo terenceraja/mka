@@ -1,3 +1,0 @@
-[0mGET / [36m304 [0m2.352 ms - -[0m
-[0mGET /stylesheets/style.css [36m304 [0m0.465 ms - -[0m
-[0mGET /iis [32m200 [0m1.496 ms - 30[0m
