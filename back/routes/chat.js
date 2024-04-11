@@ -92,6 +92,7 @@ router.post("/createChat", async (req, res) => {
   try {
     // Extract IdCtraCli from the request body
     const { IdCtraCli } = req.body;
+    // const IdCtraCli = 60;
 
     // Check if IdCtraCli already exists in zchat
     const existingChat = await zchat.findOne({ where: { IdCtraCli } });
@@ -104,30 +105,32 @@ router.post("/createChat", async (req, res) => {
     }
 
     // Create a new entry in zchatcoll table with the provided IdCtraCli
-    await zchat.create({
+    const chatCreated = await zchat.create({
       IdCtraCli,
     });
 
-    const updatedChatList = await zchat.findAll({
-      include: [
-        {
-          model: zchatcoll,
-          attributes: ["IdColl"], // Select only the IdColl field from zchatcoll
-          include: [
-            {
-              model: zcoll, // Include the zcoll model
-              attributes: ["Name", "Surname", "Color"], // Select specific attributes from zcoll
-            },
-          ],
-        },
-      ],
-    });
+    // const updatedChatList = await zchat.findAll({
+    //   include: [
+    //     {
+    //       model: zchatcoll,
+    //       attributes: ["IdColl"], // Select only the IdColl field from zchatcoll
+    //       include: [
+    //         {
+    //           model: zcoll, // Include the zcoll model
+    //           attributes: ["Name", "Surname", "Color"], // Select specific attributes from zcoll
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // });
+
+    // console.log(chatCreated);
 
     // Send the created entry as the response
     res.json({
       auth: true,
       message: `Chat for ${IdCtraCli} created`,
-      data: updatedChatList,
+      data: chatCreated,
     });
   } catch (error) {
     console.error("Error adding collaborator:", error);

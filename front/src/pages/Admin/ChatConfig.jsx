@@ -164,7 +164,7 @@ function CollConfig() {
       />
       <Card title="CONFIGURATION CHAT">
         <Box>
-          <Button
+          {/* <Button
             disableRipple={true}
             endIcon={<AddIcon fill={theme.palette.orange.main} />}
             onClick={handleOpen}
@@ -172,7 +172,7 @@ function CollConfig() {
             <Typography marginTop={"2px"} variant="link">
               Créer une conversation
             </Typography>
-          </Button>
+          </Button> */}
 
           <Box
             sx={styles.docsContainer}
@@ -187,7 +187,7 @@ function CollConfig() {
             )}
           </Box>
 
-          <Modal
+          {/* <Modal
             open={open}
             onClose={handleClose}
             // Center the modal vertically and horizontally
@@ -258,7 +258,7 @@ function CollConfig() {
                 </Alert>
               )}
             </Box>
-          </Modal>
+          </Modal> */}
         </Box>
       </Card>
     </Box>

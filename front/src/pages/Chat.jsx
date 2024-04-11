@@ -17,7 +17,7 @@ import QuestIcon from "../components/icons/QuestIcon";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
 // HTTP
-import { sendMessage, getChat } from "../utils/http";
+import { sendMessage, getChat, createChat } from "../utils/http";
 
 const ChatComponent = () => {
   console.log("IM MOUNTING");
@@ -45,6 +45,21 @@ const ChatComponent = () => {
   const [inputMessage, setInputMessage] = useState("");
 
   const messagesEndRef = useRef(null); // Reference to the chat container
+
+  // CHAT CREATION FOR USER
+  useEffect(() => {
+    const creatingChat = async () => {
+      try {
+        const response = await createChat({ IdCtraCli: parseInt(IdCtraCli) });
+
+        console.log("CREATE CHAT RESPONSE", response);
+      } catch (error) {
+        setError({ message: error.message || "custom error message" });
+      }
+    };
+
+    creatingChat();
+  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView();
@@ -83,7 +98,7 @@ const ChatComponent = () => {
     return (
       <MessageCard
         key={key}
-        Name={obj.Collaborator ? obj.Collaborator.Name : obj.IdSender}
+        Name={obj.Collaborator ? obj.Collaborator.Name : ""}
         Surname={obj.Collaborator ? obj.Collaborator.Surname : ""}
         Color={obj.Collaborator ? obj.Collaborator.Color : ""}
         Message={obj.Message}
@@ -151,94 +166,84 @@ const ChatComponent = () => {
         <div ref={messagesEndRef} />
       </Box>
 
-      {error ? (
-        <Alert
-          icon={<ErrorOutlineIcon fontSize="inherit" />}
-          severity="success"
-          color="info"
-        >
-          {error}
-        </Alert>
-      ) : (
-        <Stack
+      <Stack
+        bgcolor={theme.palette.background.main}
+        direction={"row"}
+        alignItems={"center"}
+        px={2}
+        spacing={2}
+      >
+        <>
+          <QuestIcon
+            fill={theme.palette.orange.main}
+            onClick={handlePopoverClick}
+          />
+
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+          >
+            <Stack sx={{ p: 1 }} direction={"column"} spacing={1}>
+              <Typography
+                borderRadius={1}
+                p={0.5}
+                sx={{ border: `solid 1px lightgrey` }}
+                variant="title"
+              >
+                Client {IdCtraCli}
+              </Typography>
+
+              {memberList}
+            </Stack>
+          </Popover>
+        </>
+
+        <Box
+          component="form"
+          autoComplete="off"
+          onSubmit={(e) => handleSendMessage(e)}
+          id="form"
+          height={"100%"}
+          py={2}
+          flex={1}
           bgcolor={theme.palette.background.main}
-          direction={"row"}
-          alignItems={"center"}
-          px={2}
-          spacing={2}
         >
-          <>
-            <QuestIcon
-              fill={theme.palette.orange.main}
-              onClick={handlePopoverClick}
+          <Stack sx={styles.formContainer}>
+            <TextField
+              onChange={(e) => setInputMessage(e.target.value)}
+              placeholder="Message...
+          "
+              value={inputMessage}
+              size="small"
+              InputProps={{
+                sx: {
+                  bgcolor: "white",
+                  "& fieldset": { border: "none" },
+                },
+              }}
+              fullWidth
             />
 
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handlePopoverClose}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
+            <IconButton
+              type="submit"
+              sx={{
+                borderRadius: 2,
+                height: "30px",
+                width: "30px",
+                bgcolor: theme.palette.primary.main,
               }}
             >
-              <Stack sx={{ p: 1 }} direction={"column"} spacing={1}>
-                <Typography
-                  borderRadius={1}
-                  p={0.5}
-                  sx={{ border: `solid 1px lightgrey` }}
-                  variant="title"
-                >
-                  Client {IdCtraCli}
-                </Typography>
-
-                {memberList}
-              </Stack>
-            </Popover>
-          </>
-
-          <Box
-            component="form"
-            autoComplete="off"
-            onSubmit={(e) => handleSendMessage(e)}
-            id="form"
-            height={"100%"}
-            py={2}
-            flex={1}
-            bgcolor={theme.palette.background.main}
-          >
-            <Stack sx={styles.formContainer}>
-              <TextField
-                onChange={(e) => setInputMessage(e.target.value)}
-                placeholder="Message...
-          "
-                value={inputMessage}
-                size="small"
-                InputProps={{
-                  sx: {
-                    bgcolor: "white",
-                    "& fieldset": { border: "none" },
-                  },
-                }}
-                fullWidth
-              />
-
-              <IconButton
-                type="submit"
-                sx={{
-                  borderRadius: 2,
-                  height: "30px",
-                  width: "30px",
-                  bgcolor: theme.palette.primary.main,
-                }}
-              >
-                <SendIcon fill={"white"} />
-              </IconButton>
-            </Stack>
-          </Box>
-        </Stack>
-      )}
+              <SendIcon fill={"white"} />
+            </IconButton>
+          </Stack>
+        </Box>
+      </Stack>
     </Box>
   );
 };
@@ -248,7 +253,8 @@ const styles = {
   content: {
     display: "flex",
     flexDirection: "column",
-flexGrow:1
+
+    minHeight: "calc(100vh - 112px)",
   },
   chatContainer: {
     display: "flex",

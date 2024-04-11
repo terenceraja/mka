@@ -47,6 +47,7 @@ router.post("/send", async function (req, res, next) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 // ROUTE TO GET CHAT MESSAGES BY CLIENT ID
 router.get("/:IdCtraCli", async function (req, res, next) {
   try {
@@ -59,34 +60,8 @@ router.get("/:IdCtraCli", async function (req, res, next) {
       },
     });
 
-    // If chat doesn't exist, return an error message
-    if (!chat) {
-      return res.json({
-        auth: true,
-        error: true,
-        message: "Configuration chat requise côté support : Création chat",
-        description: `Chat for ${IdCtraCli} not created `,
-      });
-    }
-
     // Fetch chat messages associated with the found chat ID
     const { IdChat } = chat;
-
-    const chatcoll = await zchatcoll.findAll({
-      where: { IdChat: IdChat },
-    });
-
-    console.log(chatcoll);
-
-    if (chatcoll.length === 0) {
-      return res.json({
-        auth: true,
-        error: true,
-        message:
-          "Configuration chat requise côté support : Importation collaborateurs",
-        description: `No Collobarators in chat with ${IdCtraCli} `,
-      });
-    }
 
     const chatMessages = await zchatmsg.findAll({
       where: {
