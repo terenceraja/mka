@@ -75,7 +75,7 @@ const Header = () => {
             onClick={() => navigate("/layout/ptf")}
             component="img"
             width={30}
-            src="/src/assets/img/kslogo.png"
+            src="/src/assets/kslogo.png"
           />
           {showReturn() ? (
             <ReturnIcon onClick={handleReturn} fill="white" size="25" />
