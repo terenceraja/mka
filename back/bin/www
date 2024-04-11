@@ -1,158 +1,158 @@
-#!/usr/bin/env node
+// #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
+// /**
+//  * Module dependencies.
+//  */
 
-const { Server } = require("socket.io");
-var { app, http } = require("../app"); // Import the app and http server from app.js
-var debug = require("debug")("back:server");
-var http = require("http");
+// const { Server } = require("socket.io");
+// var { app } = require("../app"); // Import the app and http server from app.js
+// var debug = require("debug")("back:server");
 
-/**
- * Get port from environment and store in Express.
- */
 
-var port = normalizePort(process.env.PORT || "4000");
+// /**
+//  * Get port from environment and store in Express.
+//  */
 
-app.set("port", port);
+// var port = normalizePort(process.env.PORT || "4000");
 
-/**
- * Create HTTP server.
- */
+// app.set("port", port);
 
-var server = http.createServer(app);
-// // var io = socketIo(server); // Attach Socket.IO to the HTTP server
+// /**
+//  * Create HTTP server.
+//  */
 
-var io = new Server(server, {
-  cors: {
-    origin: ["http://localhost:5173", "http://127.0.0.1:5500, https://mykeeapp.keesystem.com"],
-    methods: ["GET", "POST"],
-  },
-}); // Attach Socket.IO to the HTTP server
+// var server = http.createServer(app);
+// // // var io = socketIo(server); // Attach Socket.IO to the HTTP server
 
-// Socket.IO event handling
-let onlineUsers = [];
-io.on("connection", (socket) => {
-  console.log(`socket connection ${socket.id}`);
+// var io = new Server(server, {
+//   cors: {
+//     origin: ["http://localhost:5173", "http://127.0.0.1:5500", "https://mykeeapp.keesystem.com"],
+//     methods: ["GET", "POST"],
+//   },
+// }); // Attach Socket.IO to the HTTP server
 
-  // JOIN CHAT/ROOM
-  socket.on("joinRoom", (IdChat) => {
-    console.log(IdChat);
-    console.log(`USER JOINED ROOM : ${IdChat}`);
-    socket.join(IdChat);
-    // socket.join([10]);
-  });
+// // Socket.IO event handling
+// let onlineUsers = [];
+// io.on("connection", (socket) => {
+//   console.log(`socket connection ${socket.id}`);
 
-  // SENDING MESSAGE
-  socket.on("sendMessage", (data) => {
-    console.log("THE ROOM TO SEND TO", data.messageToSend.IdChat);
+//   // JOIN CHAT/ROOM
+//   socket.on("joinRoom", (IdChat) => {
+//     console.log(IdChat);
+//     console.log(`USER JOINED ROOM : ${IdChat}`);
+//     socket.join(IdChat);
+//     // socket.join([10]);
+//   });
 
-    // Get the list of sockets in the room
-    const socketsInRoom = io
-      .of("/")
-      .adapter.rooms.get(data.messageToSend.IdChat);
+//   // SENDING MESSAGE
+//   socket.on("sendMessage", (data) => {
+//     console.log("THE ROOM TO SEND TO", data.messageToSend.IdChat);
 
-    // Emit the message to all sockets in the room except the sender's socket
-    if (socketsInRoom) {
-      for (const socketId of socketsInRoom) {
-        if (socketId !== socket.id) {
-          io.to(socketId).emit("getMessage", data.messageToSend);
-        }
-      }
-    }
-  });
+//     // Get the list of sockets in the room
+//     const socketsInRoom = io
+//       .of("/")
+//       .adapter.rooms.get(data.messageToSend.IdChat);
 
-  // DISCONNECT
-  socket.on("disconnect", () => {
-    console.log("socket disconnected", socket.id);
-    onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
-    console.log("onlineUsers", onlineUsers);
-    io.emit("getOnlineUsers", onlineUsers);
-  });
+//     // Emit the message to all sockets in the room except the sender's socket
+//     if (socketsInRoom) {
+//       for (const socketId of socketsInRoom) {
+//         if (socketId !== socket.id) {
+//           io.to(socketId).emit("getMessage", data.messageToSend);
+//         }
+//       }
+//     }
+//   });
 
-  // ADD ONLINE USERS
-  socket.on("addNewUser", (userData) => {
-    console.log("USER DATA");
-    const existingUser = onlineUsers.find(
-      (user) => user.IdUser === userData.IdUser
-    );
-    if (existingUser) {
-      existingUser.socketId = socket.id;
-    } else {
-      onlineUsers.push({
-        IdUser: userData.IdUser,
-        Room: userData.room,
-        userType: userData.userType,
-        socketId: socket.id,
-      });
-    }
-    console.log("onlineUsers", onlineUsers);
-    io.emit("getOnlineUsers", onlineUsers);
-  });
-});
+//   // DISCONNECT
+//   socket.on("disconnect", () => {
+//     console.log("socket disconnected", socket.id);
+//     onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
+//     console.log("onlineUsers", onlineUsers);
+//     io.emit("getOnlineUsers", onlineUsers);
+//   });
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+//   // ADD ONLINE USERS
+//   socket.on("addNewUser", (userData) => {
+//     console.log("USER DATA");
+//     const existingUser = onlineUsers.find(
+//       (user) => user.IdUser === userData.IdUser
+//     );
+//     if (existingUser) {
+//       existingUser.socketId = socket.id;
+//     } else {
+//       onlineUsers.push({
+//         IdUser: userData.IdUser,
+//         Room: userData.room,
+//         userType: userData.userType,
+//         socketId: socket.id,
+//       });
+//     }
+//     console.log("onlineUsers", onlineUsers);
+//     io.emit("getOnlineUsers", onlineUsers);
+//   });
+// });
 
-server.listen(port);
-server.on("error", onError);
-server.on("listening", onListening);
+// /**
+//  * Listen on provided port, on all network interfaces.
+//  */
 
-/**
- * Normalize a port into a number, string, or false.
- */
+// server.listen(port);
+// server.on("error", onError);
+// server.on("listening", onListening);
 
-function normalizePort(val) {
-  var port = parseInt(val, 10);
+// /**
+//  * Normalize a port into a number, string, or false.
+//  */
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+// function normalizePort(val) {
+//   var port = parseInt(val, 10);
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+//   if (isNaN(port)) {
+//     // named pipe
+//     return val;
+//   }
 
-  return false;
-}
+//   if (port >= 0) {
+//     // port number
+//     return port;
+//   }
 
-/**
- * Event listener for HTTP server "error" event.
- */
+//   return false;
+// }
 
-function onError(error) {
-  if (error.syscall !== "listen") {
-    throw error;
-  }
+// /**
+//  * Event listener for HTTP server "error" event.
+//  */
 
-  var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+// function onError(error) {
+//   if (error.syscall !== "listen") {
+//     throw error;
+//   }
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case "EACCES":
-      console.error(bind + " requires elevated privileges");
-      process.exit(1);
-      break;
-    case "EADDRINUSE":
-      console.error(bind + " is already in use");
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
+//   var bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
 
-/**
- * Event listener for HTTP server "listening" event.
- */
+//   // handle specific listen errors with friendly messages
+//   switch (error.code) {
+//     case "EACCES":
+//       console.error(bind + " requires elevated privileges");
+//       process.exit(1);
+//       break;
+//     case "EADDRINUSE":
+//       console.error(bind + " is already in use");
+//       process.exit(1);
+//       break;
+//     default:
+//       throw error;
+//   }
+// }
 
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  debug("Listening on " + bind);
-  console.log("Server is listening on port " + addr.port); // Add this line to log the port
-}
+// /**
+//  * Event listener for HTTP server "listening" event.
+//  */
+
+// function onListening() {
+//   var addr = server.address();
+//   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+//   debug("Listening on " + bind);
+//   console.log("Server is listening on port " + addr.port); // Add this line to log the port
+// }
